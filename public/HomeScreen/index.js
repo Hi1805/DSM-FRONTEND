@@ -5,7 +5,7 @@ const iFrame = document.querySelector('.iFrame');
 const addTeacher = document.getElementById('add-Teacher');
 const listTeacher = document.getElementById('all-Teachers');
 const addFaceStudent = document.querySelector('.add-face-student');
-let url = 'home';
+const url = 'home';
 const formLogout = document.querySelector('.formLogout'); // form hien thi log out
 const btnLogout = document.querySelector('#btnLogout'); // button hien thi form
 const agreeLogout = document.querySelector('#agreeLogout'); // dong y dang xuat
@@ -14,7 +14,6 @@ const auth = firebase.auth();
 
 function setNameOfTeacher(name) {
   // remove @gmail.com
-
   let nameTmp = '' + name;
   nameTmp = nameTmp.replace('@gmail.com', '');
   document.querySelector('#nameOfTeacher').innerHTML = nameTmp;
