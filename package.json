@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "firebase": "^9.0.1"
+  },
+  "type": "module",
+  "name": "software-testing",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "webpack": "^5.51.2",
+    "webpack-cli": "^4.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huytruong01/software-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huytruong01/software-testing/issues"
+  },
+  "homepage": "https://github.com/huytruong01/software-testing#readme"
+}
