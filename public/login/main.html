@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../css/main.css">
-
+    <link rel="stylesheet" href="./main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="login_wrapper">
-        <form action="" class="form" id="form_login">   
+        <form action="" class="form" id="form_login">
             <img src="../img/img2.jpg" alt="">
-            <h2 style="padding: 0px 150px;" >Login</h2>
+            <div class="w-100 text-center">
+                <h2 class="text-center">Login</h2>
+            </div>
             <div class="input_group">
                 <input type="text" name="loginUser" id="loginUser" required>
-                <label for="loginUser">User name</label> 
+                <label for="loginUser">User name</label>
             </div>
 
             <div class="input_group">
                 <input type="password" name="loginPassword" id="loginPassword" required>
                 <label for="loginPassword">Password</label>
             </div>
-            <input type="submit" value="Login" class="submit_btn">
-           <div id="forgot">
-            <a  href="#forgot_pw" class="forgot_pw" style="color:black;">Forgot Password?</a>
-           </div>
-        </form> 
+            <div class="w-100 d-flex justify-content-end">
+                <button type="submit" class="submit_btn btn btn-primary">Login</button>
+            </div>
+            <div id="forgot">
+                <a href="#forgot_pw" class="forgot_pw" style="color:black;">Forgot Password?</a>
+            </div>
+        </form>
 
         <!-- forgotPassword -->
         <div id="forgot_pw">
             <form action="" class="form">
                 <img src="../img/img2.jpg" alt="">
                 <a href="#" id="closeModal" class="close">&times;</a>
-                <h2 style="margin: 15px 69px;">Reset Password</h2>
+                <div class="w-100 text-center">
+                    <h2 class="text-center">Reset Password</h2>
+                </div>
                 <div class="input_group">
                     <input type="email" name="email" id="email" required>
                     <label for="email">Email</label>
@@ -46,4 +55,5 @@
 
     <script src="./main.js"></script>
 </body>
+
 </html>
