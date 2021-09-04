@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/main.css">
+
+</head>
+<body>
+    <div class="login_wrapper">
+        <form action="" class="form" id="form_login">   
+            <img src="../img/img2.jpg" alt="">
+            <h2 style="padding: 0px 150px;" >Login</h2>
+            <div class="input_group">
+                <input type="text" name="loginUser" id="loginUser" required>
+                <label for="loginUser">User name</label> 
+            </div>
+
+            <div class="input_group">
+                <input type="password" name="loginPassword" id="loginPassword" required>
+                <label for="loginPassword">Password</label>
+            </div>
+            <input type="submit" value="Login" class="submit_btn">
+           <div id="forgot">
+            <a  href="#forgot_pw" class="forgot_pw" style="color:black;">Forgot Password?</a>
+           </div>
+        </form> 
+
+        <!-- forgotPassword -->
+        <div id="forgot_pw">
+            <form action="" class="form">
+                <img src="../img/img2.jpg" alt="">
+                <a href="#" id="closeModal" class="close">&times;</a>
+                <h2 style="margin: 15px 69px;">Reset Password</h2>
+                <div class="input_group">
+                    <input type="email" name="email" id="email" required>
+                    <label for="email">Email</label>
+                </div>
+                <input type="submit" value="submit" class="submit_btn">
+            </form>
+        </div>
+
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>
