@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import './layoutMangement.css';
+import './layoutManagement.css';
 
 export const LayoutManagement: React.FC = ({ children }) => {
   const history = useHistory();

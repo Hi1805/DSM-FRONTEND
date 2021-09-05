@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+
 import { Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { LoginScreen } from './screens/LoginScreen';
@@ -21,7 +21,6 @@ function App() {
 
   return (
     <div className='app'>
-      <div className='app__title'></div>
       <Router history={history}>
         <Switch>
           <React.Fragment>
