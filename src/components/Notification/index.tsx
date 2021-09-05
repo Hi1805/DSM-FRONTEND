@@ -23,9 +23,7 @@ export const Notification: React.FC<NotificationProps> = (props) => {
     setOpenState(false);
   };
   setTimeout(() => {
-    setTimeout(() => {
-      setOpenState(false);
-    });
+    setOpenState(false);
   }, duration + 500);
   const classNames =
     type === 'success'
