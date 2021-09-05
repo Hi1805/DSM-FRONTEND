@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <div className='App'>
+    <div className='app'>
       <Router history={history}>
         <Switch>
           <React.Fragment>
