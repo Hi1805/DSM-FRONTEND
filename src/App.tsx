@@ -9,7 +9,6 @@ import {
   TeacherManageScreen as TeacherManagementScreen,
 } from './screens';
 import { isSafePath } from './helpers';
-import { db } from './services';
 
 const history = createBrowserHistory();
 function App() {
@@ -22,6 +21,7 @@ function App() {
 
   return (
     <div className='app'>
+      <div className='app__title'></div>
       <Router history={history}>
         <Switch>
           <React.Fragment>

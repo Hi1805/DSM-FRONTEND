@@ -1,10 +1,18 @@
-# Getting Started with Create React App
+# Getting Started with LEARN TOGETHER REACT-APP
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn install`
+
+install npm package
+
+### `insert folder config`
+
+config contains file env.js have environment variables
 
 ### `yarn start`
 
