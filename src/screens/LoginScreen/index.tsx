@@ -4,9 +4,11 @@ import './LoginScreen.scss';
 export const LoginScreen = () => {
   return (
     <div id='login-screen'>
-      <Notification type='success' message='Update Teacher Successfully' />
-      <Notification type='error' message='Update Teacher Successfully' />
-      <Notification type='warning' message='Update Teacher Successfully' />
+      <Notification
+        type='success'
+        message='Truong thanh huy'
+        duration={100000000}
+      />
     </div>
   );
 };

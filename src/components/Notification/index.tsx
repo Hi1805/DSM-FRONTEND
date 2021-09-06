@@ -109,10 +109,10 @@ export const Notification: React.FC<NotificationProps> = (props) => {
         <div className='notification__icon col-2 d-flex justify-content-center align-items-center'>
           {renderIcon()}
         </div>
-        <div className='notification__body col-8'>
+        <div className='notification__body d-flex flex-column flex-wrap col-8'>
           <h3>
             {type == 'success'
-              ? 'Success'
+              ? 'Successfully'
               : type === 'warning'
               ? 'Warning'
               : 'Error'}

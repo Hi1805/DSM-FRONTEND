@@ -5,7 +5,6 @@
 
   .notification {
     box-sizing: border-box;
-    width: 350px;
     background-color: rgb(251, 251, 251);
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
@@ -27,16 +26,26 @@
         opacity: 0;
       }
     }
-    svg {
-      height: 50px;
-      width: 50px;
+    &__icon {
+      svg {
+        height: 80px;
+        width: 50px;
+      }
     }
+
     &__body {
       padding: 10px;
       line-height: 20px;
       h3 {
         font-size: 30px;
-        font-weight: 600;
+        font-weight: 550;
+      }
+      p {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        font-weight: 500;
+        text-overflow: ellipsis;
       }
     }
     &__exit {
@@ -44,6 +53,7 @@
       svg {
         width: 20px;
         height: 20px;
+
         color: #1987544d;
         margin-top: 8px;
         float: right;
