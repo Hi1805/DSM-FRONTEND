@@ -96,6 +96,11 @@
   }
   .notification--warning {
     border-right: 10px solid $warning-color;
+    .notification__icon {
+      svg {
+        color: $warning-color;
+      }
+    }
     .notification__exit {
       svg:hover {
         color: $warning-color;
@@ -107,11 +112,6 @@
       }
       p {
         font-size: 15px;
-      }
-    }
-    .notification__icon {
-      svg {
-        color: $warning-color;
       }
     }
   }
