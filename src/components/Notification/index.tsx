@@ -24,13 +24,21 @@ export const Notification: React.FC<NotificationProps> = (props) => {
   };
   setTimeout(() => {
     setOpenState(false);
-  }, duration + 500);
-  const classNames =
-    type === 'success'
-      ? successClassName
-      : type === 'warning'
-      ? warningClassName
-      : errorClassName;
+  }, duration + 1000);
+  const notificationClassName = (() => {
+    if (openState)
+      switch (type) {
+        case 'success':
+          return successClassName;
+        case 'warning':
+          return warningClassName;
+        case 'error':
+          return errorClassName;
+        default:
+          break;
+      }
+    return 'd-none';
+  })();
   const renderIcon = () => {
     switch (type) {
       case 'success':
@@ -92,9 +100,11 @@ export const Notification: React.FC<NotificationProps> = (props) => {
     <div id='toast'>
       <div
         style={{
-          animation: 'SlideInLeft ease 0.5s, fadeOut linear 1s 3s forwards',
+          animation: `SlideInLeft ease 0.5s, fadeOut linear 1s ${
+            duration / 1000
+          }s forwards`,
         }}
-        className={` ${openState ? classNames : 'd-none'}`}
+        className={` ${notificationClassName}`}
       >
         <div className='notification__icon col-2 d-flex justify-content-center align-items-center'>
           {renderIcon()}
