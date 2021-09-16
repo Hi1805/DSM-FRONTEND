@@ -29,8 +29,8 @@ export const Notification: React.FC<NotificationProps> = (props) => {
     type === 'success'
       ? successClassName
       : type === 'warning'
-      ? warningClassName
-      : errorClassName;
+        ? warningClassName
+        : errorClassName;
   const renderIcon = () => {
     switch (type) {
       case 'success':
@@ -104,12 +104,13 @@ export const Notification: React.FC<NotificationProps> = (props) => {
             {type == 'success'
               ? 'Success'
               : type === 'warning'
-              ? 'Warning'
-              : 'Error'}
+                ? 'Warning'
+                : 'Error'}
           </h3>
           <p>{message}</p>
         </div>
         <div className='notification__exit col-2' onClick={turnOffNotification}>
+
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='16'

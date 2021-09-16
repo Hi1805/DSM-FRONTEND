@@ -14,13 +14,14 @@ const history = createBrowserHistory();
 function App() {
   React.useEffect(() => {
     if (!isSafePath(history.location.pathname)) {
-      history.push('/login');
+      history.push('/manage/student');
     }
+    
     console.log();
   }, []);
 
   return (
-    <div className='app'>
+    <React.Fragment>
       <Router history={history}>
         <Switch>
           <React.Fragment>
@@ -39,7 +40,7 @@ function App() {
           </React.Fragment>
         </Switch>
       </Router>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -1,238 +1,143 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import './layoutManagement.css';
+import './LayoutManagement.scss';
+import logoAdmin from "./img/admin.jpg"
+type typeTab = "teacher" | "student" | "email";
+const tabs: Array<{
+  type: typeTab,
+  render: string;
+}> = [{
+  type: "teacher",
+  render: "Teachers"
+}, {
+  type: "student",
+  render: "Students"
+}, {
+  type: "email",
+  render: "Send E-email"
+}];
 
 export const LayoutManagement: React.FC = ({ children }) => {
   const history = useHistory();
+  const [tabActiveState, setTabActiveState] = React.useState<typeTab>("teacher");
+  const [searchActiveState, setSearchActiveState] = React.useState(false);
+  const [inputSearchState, setInputSearchState] = React.useState("")
   const handlePathName = (path: string) => {
     const location = {
       pathname: path,
     };
     history.push(location);
   };
-  return (
-    <div id='homepage'>
-      <div id='wrapper'>
-        {/* Sidebar */}
-        <ul
-          className='navbar-nav bg-success sidebar sidebar-dark accordion'
-          id='accordionSidebar'
-        >
-          <a
-            className='sidebar-brand d-flex align-items-center justify-content-center'
-            href='index.html'
-          >
-            <div className='sidebar-brand-icon rotate-n-15'>
-              <i className='fas fa-laugh-wink' />
-            </div>
-            <div className='sidebar-brand-text mx-3'>Admin</div>
-          </a>
-          {/* Divider */}
-          <hr className='sidebar-divider my-0' />
-          {/* Divider */}
-          <hr className='sidebar-divider' />
-          {/* Nav Item - Pages Collapse Menu */}
-          <li
-            className='nav-item active'
-            id='firstTimeActive'
-            onClick={() => {
-              handlePathName('/manage/teacher');
-            }}
-          >
-            <a
-              className='nav-link collapsed'
-              href='#'
-              data-toggle='collapse'
-              data-target='#collapseTwo'
-              aria-expanded='true'
-              aria-controls='collapseTwo'
-              id='all-Teachers'
-            >
-              <i className='fas fa-user-tie' />
-              <span>Teacher Management</span>
-            </a>
-          </li>
-          {/* Nav Item - Utilities Collapse Menu */}
-          <li
-            className='nav-item'
-            onClick={() => {
-              handlePathName('/manage/student');
-            }}
-          >
-            <a
-              className='nav-link collapsed'
-              href='#'
-              data-toggle='collapse'
-              data-target='#collapseUtilities'
-              aria-expanded='true'
-              aria-controls='collapseUtilities'
-              id='all-Students'
-            >
-              <i className='fas fa-user-graduate' />
-              <span>Teacher Management</span>
-            </a>
-          </li>
+  const activeTabClassName = "layout__dashboard__tabs-control__item--active";
 
-          {/* Divider */}
-          <hr className='sidebar-divider' />
-          {/* Sidebar Toggler (Sidebar) */}
-          {/* <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div> */}
-        </ul>
-        {/* End of Sidebar */}
-        {/* Content Wrapper */}
-        <div
-          id='content-wrapper'
-          className='d-flex flex-column'
-          style={{ overflow: 'hidden' }}
-        >
-          {/* Main Content */}
-          <div id='content' style={{ overflow: 'hidden' }}>
-            <nav className='navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow'>
-              {/* Sidebar Toggle (Topbar) */}
-              <button
-                id='sidebarToggleTop'
-                className='btn btn-link d-md-none rounded-circle mr-3'
-              >
-                <i className='fa fa-bars' />
-              </button>
-              {/* Topbar Search */}
-              {/* Topbar Navbar */}
-              <ul className='navbar-nav ml-auto'>
-                {/* Nav Item - Search Dropdown (Visible Only XS) */}
-                <li className='nav-item dropdown no-arrow d-sm-none'>
-                  <a
-                    className='nav-link dropdown-toggle'
-                    href='#'
-                    id='searchDropdown'
-                    role='button'
-                    data-toggle='dropdown'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='fas fa-search fa-fw' />
-                  </a>
-                  {/* Dropdown - Messages */}
-                  <div
-                    className='dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in'
-                    aria-labelledby='searchDropdown'
-                  >
-                    <form className='form-inline mr-auto w-100 navbar-search'>
-                      <div className='input-group'>
-                        <input
-                          type='text'
-                          className='form-control bg-light border-0 small'
-                          placeholder='Search for...'
-                          aria-label='Search'
-                          aria-describedby='basic-addon2'
-                        />
-                        <div className='input-group-append'>
-                          <button className='btn btn-primary' type='button'>
-                            <i className='fas fa-search fa-sm' />
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </li>
-                {/* Nav Item - Alerts */}
-                <li className='nav-item dropdown no-arrow mx-1'>
-                  <a
-                    className='nav-link dropdown-toggle'
-                    href='#'
-                    id='alertsDropdown'
-                    role='button'
-                    data-toggle='dropdown'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='fas fa-bell fa-fw' />
-                    {/* Counter - Alerts */}
-                    <span className='badge badge-danger badge-counter'>3+</span>
-                  </a>
-                  {/* Dropdown - Alerts */}
-                  <div
-                    className='dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in'
-                    aria-labelledby='alertsDropdown'
-                  ></div>
-                </li>
-                {/* Nav Item - Messages */}
-                <li className='nav-item dropdown no-arrow mx-1'>
-                  <a
-                    className='nav-link dropdown-toggle'
-                    href='#'
-                    id='messagesDropdown'
-                    role='button'
-                    data-toggle='dropdown'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <i className='fas fa-envelope fa-fw' />
-                    {/* Counter - Messages */}
-                    <span className='badge badge-danger badge-counter'>7</span>
-                  </a>
-                  {/* Dropdown - Messages */}
-                  <div
-                    className='dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in'
-                    aria-labelledby='messagesDropdown'
-                  ></div>
-                </li>
-                <div className='topbar-divider d-none d-sm-block' />
-                {/* Nav Item - User Information */}
-                <li className='nav-item dropdown no-arrow'>
-                  <a
-                    className='nav-link dropdown-toggle'
-                    href='#'
-                    id='userDropdown'
-                    role='button'
-                    data-toggle='dropdown'
-                    aria-haspopup='true'
-                    aria-expanded='false'
-                  >
-                    <span
-                      className='mr-2 d-none d-lg-inline text-gray-600 small'
-                      id='nameOfTeacher'
-                    >
-                      cin
-                    </span>
-                    <img
-                      className='img-profile rounded-circle'
-                      src='https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg'
-                    />
-                  </a>
-                  {/* Dropdown - User Information */}
-                  <div
-                    className='dropdown-menu dropdown-menu-right shadow animated--grow-in'
-                    aria-labelledby='userDropdown'
-                  >
-                    <a className='dropdown-item' href='#'>
-                      <i className='fas fa-user fa-sm fa-fw mr-2 text-gray-400' />
-                      Hồ sơ
-                    </a>
-                    <a className='dropdown-item' href='#'>
-                      <i className='fas fa-cogs fa-sm fa-fw mr-2 text-gray-400' />
-                      Cài đặt
-                    </a>
-                    <div className='dropdown-divider' />
-                    <a
-                      className='dropdown-item'
-                      href='#'
-                      data-toggle='modal'
-                      id='btnLogout'
-                    >
-                      <i className='fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400' />
-                      Đăng xuất
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </nav>
-            {/* iFrames */}
-            <div style={{ width: '100%', height: '100%' }}>{children}</div>
+  const renderTabControl = (icon: JSX.Element, name: string, type: typeTab, active: boolean = false) => {
+    return <div className={`layout__dashboard__tabs-control__item d-flex ${active ? activeTabClassName : ""}`} onClick={() => {
+      setTabActiveState(type);
+    }}>
+      <div className="layout__dashboard__tabs-control__item__icon d-flex justify-content-center align-items-center">
+        {icon}
+      </div>
+      <div className="layout__dashboard__tabs-control__item__name">
+        {name}
+      </div>
+    </div>
+  }
+  const getIconTab = (type: typeTab) => {
+    switch (type) {
+      case "teacher":
+        return <svg width={24} height={21} viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.125 14.25C8.03164 14.25 7.93828 14.2637 7.84922 14.2926C7.34297 14.457 6.81055 14.5625 6.25 14.5625C5.68946 14.5625 5.15703 14.457 4.65039 14.2926C4.56133 14.2637 4.46836 14.25 4.375 14.25C1.95078 14.25 -0.0128886 16.2219 2.06949e-06 18.6492C0.00547082 19.675 0.84883 20.5 1.875 20.5H10.625C11.6512 20.5 12.4945 19.675 12.5 18.6492C12.5129 16.2219 10.5492 14.25 8.125 14.25ZM6.25 13C8.3211 13 10 11.3211 10 9.25C10 7.17891 8.3211 5.5 6.25 5.5C4.17891 5.5 2.5 7.17891 2.5 9.25C2.5 11.3211 4.17891 13 6.25 13ZM23.125 0.5H8.125C7.09102 0.5 6.25 1.36914 6.25 2.43711V4.25C7.16485 4.25 8.01172 4.51484 8.75 4.94531V3H22.5V14.25H20V11.75H15V14.25H12.0219C12.768 14.902 13.3156 15.7629 13.5723 16.75H23.125C24.159 16.75 25 15.8809 25 14.8129V2.43711C25 1.36914 24.159 0.5 23.125 0.5Z" fill="#DDE2FF" />
+        </svg>
+      case 'student':
+        return <svg width={24} height={16} viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path opacity="0.4" d="M7 8C9.20938 8 11 6.20937 11 4C11 1.79063 9.20938 0 7 0C4.79063 0 3 1.79063 3 4C3 6.20937 4.79063 8 7 8ZM9.99375 9.01875L8.5 15L7.5 10.75L8.5 9H5.5L6.5 10.75L5.5 15L4.00625 9.01875C1.77812 9.125 0 10.9469 0 13.2V14.5C0 15.3281 0.671875 16 1.5 16H12.5C13.3281 16 14 15.3281 14 14.5V13.2C14 10.9469 12.2219 9.125 9.99375 9.01875Z" fill="#9FA2B4" />
+        </svg>
+
+      case "email":
+        return <svg width={20} height={16} viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clipPath="url(#clip0)">
+            <path d="M2.7273 0.888916H17.2728C18.2728 0.888916 19.0909 1.68892 19.0909 2.66669V13.3334C19.0909 14.3111 18.2728 15.1111 17.2728 15.1111H2.7273C1.7273 15.1111 0.909119 14.3111 0.909119 13.3334V2.66669C0.909119 1.68892 1.7273 0.888916 2.7273 0.888916Z" stroke="#9FA2B4" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M18.6869 2.66663L9.79801 14.303L0.909119 2.66663" stroke="#9FA2B4" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0">
+              <rect width={20} height={16} fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+    }
+  }
+  return (
+    <div className='layout d-flex flex-wrap' onMouseMove={() => {
+      if (!inputSearchState.trim()) {
+        setSearchActiveState(false);
+      }
+    }}>
+      <div className='layout__dashboard'>
+        <div className='layout__dashboard__title d-flex'>
+          <div className='layout__dashboard__title__logo'>
+            <svg width={32} height={32} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx={16} cy={16} r={16} fill="#3751FF" />
+              <path d="M11 10C11 9.44772 11.4477 9 12 9H15.9905C18.2127 9 19.9333 9.60955 21.1524 10.8287C22.3841 12.0478 23 13.765 23 15.9803C23 18.2088 22.3841 19.9391 21.1524 21.1713C19.9333 22.3904 18.2127 23 15.9905 23H12C11.4477 23 11 22.5523 11 22V10Z" fill="url(#paint0_linear)" />
+              <defs>
+                <linearGradient id="paint0_linear" x1={11} y1={9} x2={23} y2={23} gradientUnits="userSpaceOnUse">
+                  <stop stopColor="white" stopOpacity="0.7" />
+                  <stop offset={1} stopColor="white" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+
+          </div>
+          <div className="layout__dashboard__title__content">
+            School Data Management
+          </div>
+        </div>
+        <div className="layout__dashboard__tabs-control">
+          {(() => {
+            return tabs.map((tab, index) => {
+              return <React.Fragment key={index}>{renderTabControl(getIconTab(tab.type), tab.render, tab.type, tab.type === tabActiveState)}</React.Fragment>
+            });
+          })()}
+
+        </div>
+      </div>
+
+      <div className="layout__content" >
+        <div className="layout__content__navbar">
+          <div className="layout__content__navbar__title">
+            {tabs.find((tab) => tab.type === tabActiveState)?.render}
+          </div>
+          <div className="layout__content__navbar__tools d-flex flex-wrap" >
+            <div className="layout__content__navbar__tools__search d-flex flex-wrap">
+              {searchActiveState ? <input
+                autoFocus={true}
+                onChange={(e) => {
+                  setInputSearchState(e.target.value)
+                }}
+                className='layout__content__navbar__tools__search__input form-success' placeholder='Search......' />
+                : null}
+              <div className='d-flex justify-content-center align-items-center' onClick={() => {
+                setSearchActiveState(!searchActiveState);
+              }}>
+                <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="6.5" cy="6.5" r="5.75" stroke="#C5C7CD" strokeWidth="1.5" />
+                  <path d="M11 11L15 15" stroke="#C5C7CD" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+
+              </div>
+            </div>
+            <div className="layout__content__navbar__tools__info d-flex flex-wrap">
+              <div className="layout__content__navbar__tools__info__name d-flex justify-content-center align-items-center"><span>ADMIN</span></div>
+              <div className="layout__content__navbar__tools__info__avt">
+                <img src={logoAdmin} alt="logo-admin"></img>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
+
+//get student , get teacher in here, 
