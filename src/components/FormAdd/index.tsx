@@ -1,8 +1,9 @@
 import React from 'react'
-import { profileTemplate, ClassAttributes } from "../../services";
+import { profileTemplate, ClassAttributes, addTeacher } from "../../services";
 import "./FormAdd.scss";
 import { startCase, toNumber, toString } from "lodash"
 import { getAllClass } from '../../services/classes/index';
+import { createID } from '../../helpers';
 interface FormAddProps {
     info?: profileTemplate;
     type: "teacher" | "student" | "email";
@@ -30,7 +31,6 @@ export const FormAdd = (props: FormAddProps) => {
         loading: true,
         payload: []
     });
-    console.log(infoState);
 
     React.useEffect(() => {
         async function fetchClasses() {
@@ -43,6 +43,21 @@ export const FormAdd = (props: FormAddProps) => {
         fetchClasses();
     }, [])
 
+    const infoGarden = classesState.payload.find(item => item.id === chooseGardenState) || {
+        total: 0,
+        values: []
+    };
+    const saveForm = () => {
+        if (type === "teacher") {
+            addTeacher({
+                ...infoState,
+                id: toString(createID('teacher', infoGarden.total, infoState)),
+            }).then(() => {
+                console.log("add sucess");
+
+            })
+        }
+    }
     return (
         <div className="td-form-add">
             <div className="td-form-add__title">
@@ -108,7 +123,7 @@ export const FormAdd = (props: FormAddProps) => {
                                 setInfoState({ ...infoState, class: e.target.value })
                             }} className="form-select form-control" aria-label="">
                                 <option selected>Select classes</option>
-                                {classesState.payload.find(item => item.id === chooseGardenState)?.values.map((Class) => <option key={Class} value={Class}>{Class}</option>)}
+                                {infoGarden?.values.map((Class) => <option key={Class} value={Class}>{Class}</option>)}
                             </select>
                         </div>
                     </div>
@@ -131,7 +146,7 @@ export const FormAdd = (props: FormAddProps) => {
                 </div>
                 <div className="td-form-add__control d-flex justify-content-between mt-5">
                     <button type="button" className="td-form-add__control__btn-back btn" onClick={turnOffForm}>Back</button>
-                    <button type="button" className="td-form-add__control__btn-save btn">Save</button>
+                    <button type="button" className="td-form-add__control__btn-save btn" onClick={saveForm}>Save</button>
 
                 </div>
             </div>
