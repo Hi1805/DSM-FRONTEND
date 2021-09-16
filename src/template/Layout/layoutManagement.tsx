@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './LayoutManagement.scss';
 import logoAdmin from "./img/admin.jpg"
+import { ListTeachers } from '../../containers';
+import { FormAdd } from '../../components';
 type typeTab = "teacher" | "student" | "email";
 const tabs: Array<{
   type: typeTab,
@@ -17,17 +19,25 @@ const tabs: Array<{
   render: "Send E-email"
 }];
 
-export const LayoutManagement: React.FC = ({ children }) => {
+export const LayoutManagement: React.FC = () => {
   const history = useHistory();
   const [tabActiveState, setTabActiveState] = React.useState<typeTab>("teacher");
   const [searchActiveState, setSearchActiveState] = React.useState(false);
-  const [inputSearchState, setInputSearchState] = React.useState("")
+  const [openFormAddState, setOpenFormAddState] = React.useState(false);
+
+  const [inputSearchState, setInputSearchState] = React.useState("");
   const handlePathName = (path: string) => {
     const location = {
       pathname: path,
     };
     history.push(location);
   };
+  const turnOffForm = () => {
+    setOpenFormAddState(false)
+  }
+  const turnOnForm = () => {
+    setOpenFormAddState(true);
+  }
   const activeTabClassName = "layout__dashboard__tabs-control__item--active";
 
   const renderTabControl = (icon: JSX.Element, name: string, type: typeTab, active: boolean = false) => {
@@ -68,75 +78,80 @@ export const LayoutManagement: React.FC = ({ children }) => {
     }
   }
   return (
-    <div className='layout d-flex flex-wrap' onMouseMove={() => {
-      if (!inputSearchState.trim()) {
-        setSearchActiveState(false);
-      }
-    }}>
-      <div className='layout__dashboard'>
-        <div className='layout__dashboard__title d-flex'>
-          <div className='layout__dashboard__title__logo'>
-            <svg width={32} height={32} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx={16} cy={16} r={16} fill="#3751FF" />
-              <path d="M11 10C11 9.44772 11.4477 9 12 9H15.9905C18.2127 9 19.9333 9.60955 21.1524 10.8287C22.3841 12.0478 23 13.765 23 15.9803C23 18.2088 22.3841 19.9391 21.1524 21.1713C19.9333 22.3904 18.2127 23 15.9905 23H12C11.4477 23 11 22.5523 11 22V10Z" fill="url(#paint0_linear)" />
-              <defs>
-                <linearGradient id="paint0_linear" x1={11} y1={9} x2={23} y2={23} gradientUnits="userSpaceOnUse">
-                  <stop stopColor="white" stopOpacity="0.7" />
-                  <stop offset={1} stopColor="white" />
-                </linearGradient>
-              </defs>
-            </svg>
+    <React.Fragment>
+      {openFormAddState ? <div className='box'>
+        <div className='d-flex justify-content-center align-items-center'><FormAdd turnOffForm={turnOffForm} type={tabActiveState} status="add" /></div>
+      </div> : null}
+      <div className={`layout d-flex flex-wrap ${openFormAddState ? "layout--disabled" : ""}`}>
+
+        <div className='layout__dashboard'>
+          <div className='layout__dashboard__title d-flex'>
+            <div className='layout__dashboard__title__logo'>
+              <svg width={32} height={32} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx={16} cy={16} r={16} fill="#3751FF" />
+                <path d="M11 10C11 9.44772 11.4477 9 12 9H15.9905C18.2127 9 19.9333 9.60955 21.1524 10.8287C22.3841 12.0478 23 13.765 23 15.9803C23 18.2088 22.3841 19.9391 21.1524 21.1713C19.9333 22.3904 18.2127 23 15.9905 23H12C11.4477 23 11 22.5523 11 22V10Z" fill="url(#paint0_linear)" />
+                <defs>
+                  <linearGradient id="paint0_linear" x1={11} y1={9} x2={23} y2={23} gradientUnits="userSpaceOnUse">
+                    <stop stopColor="white" stopOpacity="0.7" />
+                    <stop offset={1} stopColor="white" />
+                  </linearGradient>
+                </defs>
+              </svg>
 
 
-          </div>
-          <div className="layout__dashboard__title__content">
-            School Data Management
-          </div>
-        </div>
-        <div className="layout__dashboard__tabs-control">
-          {(() => {
-            return tabs.map((tab, index) => {
-              return <React.Fragment key={index}>{renderTabControl(getIconTab(tab.type), tab.render, tab.type, tab.type === tabActiveState)}</React.Fragment>
-            });
-          })()}
-
-        </div>
-      </div>
-
-      <div className="layout__content" >
-        <div className="layout__content__navbar">
-          <div className="layout__content__navbar__title">
-            {tabs.find((tab) => tab.type === tabActiveState)?.render}
-          </div>
-          <div className="layout__content__navbar__tools d-flex flex-wrap" >
-            <div className="layout__content__navbar__tools__search d-flex flex-wrap">
-              {searchActiveState ? <input
-                autoFocus={true}
-                onChange={(e) => {
-                  setInputSearchState(e.target.value)
-                }}
-                className='layout__content__navbar__tools__search__input form-success' placeholder='Search......' />
-                : null}
-              <div className='d-flex justify-content-center align-items-center' onClick={() => {
-                setSearchActiveState(!searchActiveState);
-              }}>
-                <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="6.5" cy="6.5" r="5.75" stroke="#C5C7CD" strokeWidth="1.5" />
-                  <path d="M11 11L15 15" stroke="#C5C7CD" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-
-              </div>
             </div>
-            <div className="layout__content__navbar__tools__info d-flex flex-wrap">
-              <div className="layout__content__navbar__tools__info__name d-flex justify-content-center align-items-center"><span>ADMIN</span></div>
-              <div className="layout__content__navbar__tools__info__avt">
-                <img src={logoAdmin} alt="logo-admin"></img>
-              </div>
+            <div className="layout__dashboard__title__content">
+              School Data Management
             </div>
           </div>
+          <div className="layout__dashboard__tabs-control">
+            {(() => {
+              return tabs.map((tab, index) => {
+                return <React.Fragment key={index}>{renderTabControl(getIconTab(tab.type), tab.render, tab.type, tab.type === tabActiveState)}</React.Fragment>
+              });
+            })()}
+
+          </div>
         </div>
-      </div>
-    </div >
+
+        <div className="layout__content" >
+          <div className="layout__content__navbar">
+            <div className="layout__content__navbar__title">
+              {tabs.find((tab) => tab.type === tabActiveState)?.render}
+            </div>
+            <div className="layout__content__navbar__tools d-flex flex-wrap" >
+              <div className="layout__content__navbar__tools__search d-flex flex-wrap">
+                {searchActiveState ? <input
+                  autoFocus={true}
+                  onChange={(e) => {
+                    setInputSearchState(e.target.value)
+                  }}
+                  className='layout__content__navbar__tools__search__input form-success' placeholder='Search......' />
+                  : null}
+                <div className='d-flex justify-content-center align-items-center' onClick={() => {
+                  setSearchActiveState(!searchActiveState);
+                }}>
+                  <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="6.5" cy="6.5" r="5.75" stroke="#C5C7CD" strokeWidth="1.5" />
+                    <path d="M11 11L15 15" stroke="#C5C7CD" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+
+                </div>
+              </div>
+              <div className="layout__content__navbar__tools__info d-flex flex-wrap">
+                <div className="layout__content__navbar__tools__info__name d-flex justify-content-center align-items-center"><span>ADMIN</span></div>
+                <div className="layout__content__navbar__tools__info__avt">
+                  <img src={logoAdmin} alt="logo-admin"></img>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="layout__content__listing">
+            <ListTeachers turnOnForm={turnOnForm} />
+          </div>
+        </div>
+      </div >
+    </React.Fragment>
   );
 };
 

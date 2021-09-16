@@ -1,5 +1,7 @@
 .layout{
     height:100%;
+    // position: relative;
+    z-index: 0;
     &__dashboard{
         width: 225px;
         height: 100%;
@@ -110,5 +112,23 @@
                 
             }
         }
+        &__listing{
+            margin-top: 30px;
+            background: #FFFFFF;
+            border: 1px solid #DFE0EB;
+            box-sizing: border-box;
+            border-radius: 8px;
+        }
     }
+}
+.layout--disabled{
+    opacity: 0.6;
+}
+.box{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
 }

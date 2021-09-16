@@ -5,18 +5,18 @@ import { createBrowserHistory } from 'history';
 import { LoginScreen } from './screens/LoginScreen';
 import {
   LogoutScreen,
-  StudentManagementScreen,
-  TeacherManageScreen as TeacherManagementScreen,
+
 } from './screens';
 import { isSafePath } from './helpers';
+import { LayoutManagement } from './template/Layout/layoutManagement';
 
 const history = createBrowserHistory();
 function App() {
   React.useEffect(() => {
     if (!isSafePath(history.location.pathname)) {
-      history.push('/manage/student');
+      history.push('/manage');
     }
-    
+
     console.log();
   }, []);
 
@@ -29,13 +29,8 @@ function App() {
             <Route exact path='/logout' component={LogoutScreen} />
             <Route
               exact
-              path='/manage/student'
-              component={StudentManagementScreen}
-            />
-            <Route
-              exact
-              path='/manage/teacher'
-              component={TeacherManagementScreen}
+              path='/manage'
+              component={LayoutManagement}
             />
           </React.Fragment>
         </Switch>
