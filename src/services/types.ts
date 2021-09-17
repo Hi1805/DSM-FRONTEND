@@ -1,5 +1,5 @@
 
-export interface profileTemplate{
+export interface ProfileTemplate{
     id:string;
     first_name:string;
     last_name:string;

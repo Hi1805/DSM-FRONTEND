@@ -1,8 +1,6 @@
 .td-form-add{
-
     background: #FFFFFF;
     border-radius: 15px;
-    padding-bottom: 43px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     &__title{
         font-weight: bold;
@@ -26,10 +24,14 @@
             input,select{
                 border-radius: 10px;
             }
+            span{
+                margin-top: 2px;
+                color: #dc3545fc;
+            }
         }
     }
     &__control{
-        padding: 0px 10px;
+        padding: 0px 30px;
         &__btn-back{
             background: #F3F2F2;
             border: 1px solid #C8C8C8;
@@ -43,7 +45,8 @@
             box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
             border-radius: 8px;
             color:#ffff;
-            padding:10px 50px;
+            padding:10px 30px;
         }
+        padding-bottom: 43px;
     }
 }

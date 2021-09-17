@@ -20,18 +20,12 @@ const tabs: Array<{
 }];
 
 export const LayoutManagement: React.FC = () => {
-  const history = useHistory();
   const [tabActiveState, setTabActiveState] = React.useState<typeTab>("teacher");
   const [searchActiveState, setSearchActiveState] = React.useState(false);
   const [openFormAddState, setOpenFormAddState] = React.useState(false);
 
-  const [inputSearchState, setInputSearchState] = React.useState("");
-  const handlePathName = (path: string) => {
-    const location = {
-      pathname: path,
-    };
-    history.push(location);
-  };
+  const [searchValueState, setSearchValueState] = React.useState("");
+
   const turnOffForm = () => {
     setOpenFormAddState(false)
   }
@@ -124,7 +118,7 @@ export const LayoutManagement: React.FC = () => {
                 {searchActiveState ? <input
                   autoFocus={true}
                   onChange={(e) => {
-                    setInputSearchState(e.target.value)
+                    setSearchValueState(e.target.value)
                   }}
                   className='layout__content__navbar__tools__search__input form-success' placeholder='Search......' />
                   : null}
@@ -147,7 +141,7 @@ export const LayoutManagement: React.FC = () => {
             </div>
           </div>
           <div className="layout__content__listing">
-            <ListTeachers turnOnForm={turnOnForm} />
+            <ListTeachers valueSeacrch={searchValueState} turnOnForm={turnOnForm} />
           </div>
         </div>
       </div >

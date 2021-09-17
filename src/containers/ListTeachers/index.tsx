@@ -1,10 +1,34 @@
 import React from 'react'
 import "../listingStyle.scss";
+import { Loading } from '../../components/Loading/index';
+import { getListTeacher, ProfileTemplate } from '../../services';
+import { convertFullName } from '../../helpers';
 interface ListingTeacherProps {
     turnOnForm: () => void;
+    valueSeacrch: string;
 }
 export const ListTeachers = (props: ListingTeacherProps) => {
-    const { turnOnForm } = props;
+    const { turnOnForm, valueSeacrch } = props;
+    const [teacherState, setTeacherState] = React.useState<{
+        loading: boolean,
+        payload: ProfileTemplate[]
+    }>({
+        loading: true,
+        payload: []
+    })
+    React.useEffect(() => {
+        async function fetchListTeacher() {
+            const teachers = await getListTeacher();
+            setTeacherState({
+                loading: false,
+                payload: teachers
+            })
+        }
+        fetchListTeacher();
+    }, [])
+    const listingRender = () => {
+        return teacherState.payload.filter((teacher) => Object.values(teacher).map(item => item.toLocaleLowerCase()).join("").includes(valueSeacrch.toLocaleLowerCase()))
+    }
     return (
         <div className={`td-listing`}>
             <div className="td-listing__functions d-flex justify-content-end">
@@ -19,10 +43,11 @@ export const ListTeachers = (props: ListingTeacherProps) => {
                     <span>Sort</span>
                 </div>
             </div>
-            <div className="td-listing__container">
+            <div className="td-listing__container table-responsive">
                 <table className="table">
                     <thead>
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Date Of Birth</th>
@@ -33,24 +58,19 @@ export const ListTeachers = (props: ListingTeacherProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        {listingRender().map((teacher, index) => <React.Fragment key={teacher.id}>
+                            <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{teacher.id}</td>
+                                <td>{convertFullName(teacher.first_name, teacher.last_name)}</td>
+                                <td>{teacher.date_of_birth}</td>
+                                <td>{teacher.gender}</td>
+                                <td>{teacher.email}</td>
+                                <td>{teacher.class}</td>
+                                <td>{teacher.address}</td>
+                            </tr>
+                        </React.Fragment>)}
+
                     </tbody>
                 </table>
 
