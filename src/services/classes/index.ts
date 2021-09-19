@@ -1,4 +1,4 @@
-import { merge, toNumber ,toString} from "lodash"
+import {toNumber ,toString} from "lodash"
 import { db } from ".."
 export interface ClassAttributes{
     id:number;
@@ -23,11 +23,8 @@ export async function  getAllClass(){
     }
 }
 
-export const updateTotalGrade=(id_grade:number,new_total:number)=>{
-    try {
-        console.log(new_total);
-      return db.collection("classes").doc(toString(id_grade)).set({total:new_total},{merge:true});
-    } catch (error) {
-       console.log(error);
-    }
+export const updateTotalGrade= (id_grade:number,new_total:number)=>{
+    console.log(new_total);
+    
+     return db.collection("classes").doc(toString(id_grade)).set({total:new_total},{merge:true});
 }

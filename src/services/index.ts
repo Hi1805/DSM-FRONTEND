@@ -2,7 +2,6 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { firebaseConfig } from '../config/env';
-import exp from 'constants';
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
@@ -11,8 +10,9 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
-export const Provider = new firebase.auth.GoogleAuthProvider();
 // Provider.addScope("https://www.googleapis.com/auth/contacts.readonly";
 export * from "./teachers";
 export * from "./types";
-export * from "./classes"
+export * from "./classes";
+export * from "./context/index";
+export * from "./students"

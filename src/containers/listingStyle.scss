@@ -32,7 +32,12 @@
     }
     &__container{
         padding:0 14px;
+        min-height: 400px;
+        tbody{
+            position: relative;
+        }
         table{
+    
             thead th{
                 color:#9FA2B4;
                 text-align: center;
@@ -43,6 +48,50 @@
             }
             tbody tr{
                 text-align: center;
+                z-index: 1;
+                td{
+                    padding:25px 0px;
+                    vertical-align: middle;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 20px;
+                    letter-spacing: 0.2px;
+                    color: #252733;
+                    z-index: 1;
+                }
+             
+                .gender--female span , .gender--male span {
+                        font-size: 12px;
+                        font-weight: bold;
+                        color: #fff;
+                        text-transform: uppercase;
+                        border-radius: 100px;
+                        padding:10px;
+                }
+                .gender--male{
+                    span{
+                       background: #56CCF2; 
+                   }
+               }
+               .gender--female{
+                    span{
+                        background: #F5BCDB;
+                     }
+                }
+            }
+            tbody tr:hover{
+                background-color:#F7F8FC !important;
+                position: relative;
+                z-index: 1;
+                td{
+                    position: relative;
+                    font-weight: bold;
+                    cursor: pointer;
+                    z-index: 1;
+                }     
+            }
+            tbody th{
+                vertical-align: middle;
             }
         }
         .table>:not(:last-child)>:last-child>* {
