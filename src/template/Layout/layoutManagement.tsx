@@ -1,27 +1,27 @@
 import React, { useContext } from 'react';
 import './LayoutManagement.scss';
 import { ListTeachers, ListStudents, SendEmail, DashBoard, Navbar } from '../../containers';
-import { FormAdd } from '../../components';
-import { GlobalContext } from "../../services"
-import { tabs } from '../../types/tab';
+import { FormTemplate } from '../../components';
+import { controlFormContext, GlobalContext } from "../../services"
 
 
 
 export const LayoutManagement: React.FC = () => {
-  const [openFormAddState, setOpenFormAddState] = React.useState(false);
   //"asc" ->true | "desc"-> false
   const [modeSortState, setModeSortState] = React.useState<boolean>(true);
   const [searchValueState, setSearchValueState] = React.useState("");
   const { typeTab } = useContext(GlobalContext);
-  console.log(modeSortState);
-
+  const { setOpenForm, openForm, setTypeForm } = useContext(controlFormContext)
   const turnOffForm = () => {
-    setOpenFormAddState(false);
+    setOpenForm(false);
   }
   const turnOnForm = () => {
-    setOpenFormAddState(true);
+    setOpenForm(true);
   }
-
+  const handleClickAdd = () => {
+    setTypeForm("add");
+    turnOnForm()
+  }
   const renderTabActive = () => {
     switch (typeTab) {
       case "email":
@@ -29,29 +29,27 @@ export const LayoutManagement: React.FC = () => {
       case "student":
         return <ListStudents />
       case "teacher":
-        return <ListTeachers mode={modeSortState} valueSeacrch={searchValueState} />
+        return <ListTeachers mode={modeSortState} valueSeacrch={searchValueState.trim()} />
     }
   }
-
   return (
     <React.Fragment>
-      {openFormAddState ?
+      {openForm ?
         <div className='box'>
           <div className='d-flex justify-content-center align-items-center'>
-            <FormAdd turnOffForm={turnOffForm} status="add" />
+            <FormTemplate turnOffForm={turnOffForm} />
           </div>
         </div> : null}
-      <div className={`layout d-flex flex-wrap ${openFormAddState ? "layout--disabled" : ""}`}>
+      <div className={`layout d-flex flex-wrap ${openForm ? "layout--disabled" : ""}`}>
         <DashBoard />
         <div className="layout__content" >
           <Navbar valueSearch={searchValueState} handleSearch={setSearchValueState} />
           <div className="layout__content__listing">
             <div className={`td-listing`}>
               <div className="td-listing__functions d-flex justify-content-end">
-                <button className="td-listing__functions__add" onClick={turnOnForm}>
+                <button className="td-listing__functions__add" onClick={handleClickAdd}>
                   + Add
                 </button>
-
                 <div className="td-listing__functions__sort d-flex justify-content-center align-items-center"
                   onClick={
                     () => {

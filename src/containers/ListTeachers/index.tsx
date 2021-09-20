@@ -1,7 +1,8 @@
 import React from 'react'
 import "../listingStyle.scss";
-import { Loading } from '../../components/Loading/index';
+// import { Loading } from '../../components';
 import { GlobalContext } from '../../services';
+import { toString } from 'lodash';
 import { ItemListing } from '../../components/ItemListing/index';
 interface ListingTeacherProps {
     valueSeacrch: string;
@@ -12,7 +13,7 @@ export const ListTeachers = (props: ListingTeacherProps) => {
     const { teachers } = React.useContext(GlobalContext);
 
     const listingRender = () => {
-        const filterList = teachers.filter((teacher) => Object.values(teacher).map(item => item.toLocaleLowerCase()).join("").includes(valueSeacrch.toLocaleLowerCase()));
+        const filterList = teachers.filter((teacher) => Object.values(teacher).map((item: string) => toString(item).toLocaleLowerCase()).join("").includes(valueSeacrch.toLocaleLowerCase()));
         if (mode) {
             return filterList.sort((prev, next) => {
                 if (!next.first_name.localeCompare(prev.first_name, "vn")) {
@@ -22,13 +23,12 @@ export const ListTeachers = (props: ListingTeacherProps) => {
             })
         }
         else {
-            const sorted = filterList.sort((prev, next) => {
+            return filterList.sort((prev, next) => {
                 if (!prev.first_name.localeCompare(next.first_name, "vn")) {
                     return prev.last_name.localeCompare(next.last_name, "vn");
                 }
                 return prev.first_name.localeCompare(next.first_name, "vn");
             })
-            return [...sorted];
         }
     }
     return (

@@ -9,14 +9,14 @@ import {
 } from './screens';
 import { isSafePath } from './helpers';
 import { LayoutManagement } from './template/Layout/layoutManagement';
-import { GlobalProvider } from "../src/services"
+import { ControlFormProvider, GlobalProvider } from "../src/services"
 import { ToastContainer } from 'react-toastify';
 const history = createBrowserHistory();
 
 function App() {
   React.useEffect(() => {
     if (!isSafePath(history.location.pathname)) {
-      history.push('/');
+      history.push('/manage');
     }
   }, []);
 
@@ -29,10 +29,13 @@ function App() {
             <React.Fragment>
               <Route exact path='/login' component={LoginScreen} />
               <Route exact path='/logout' component={LogoutScreen} />
-              <Route
-                path='/'
-                component={LayoutManagement}
-              />
+              <ControlFormProvider>
+                <Route
+                  path='/:id'
+                  component={LayoutManagement}
+                />
+              </ControlFormProvider>
+
             </React.Fragment>
           </Switch>
         </Router>

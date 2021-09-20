@@ -101,7 +101,7 @@ export const Notification: React.FC<NotificationProps> = (props) => {
         </div>
         <div className='notification__body col-8'>
           <h3>
-            {type == 'success'
+            {type === 'success'
               ? 'Success'
               : type === 'warning'
                 ? 'Warning'

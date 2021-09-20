@@ -12,7 +12,6 @@ export const auth = firebase.auth();
 export const db = firebase.firestore();
 // Provider.addScope("https://www.googleapis.com/auth/contacts.readonly";
 export * from "./teachers";
-export * from "./types";
 export * from "./classes";
 export * from "./context/index";
 export * from "./students"

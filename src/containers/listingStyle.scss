@@ -1,16 +1,18 @@
-.td-listing{
-    &__functions{
+.td-listing {
+    &__functions {
         padding: 28px 122px;
-        &__add:hover{
-            background-color: rgb(54,55,64) !important;
+
+        &__add:hover {
+            background-color: rgb(54, 55, 64) !important;
             font-weight: bold;
         }
-        &__add{
+
+        &__add {
             font-weight: 600;
             font-size: 18px;
             line-height: 20px;
-            outline:none;
-            padding:9px 20px;
+            outline: none;
+            padding: 9px 20px;
             background: #3751FF;
             border: none;
             box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
@@ -18,39 +20,47 @@
             border-radius: 30px;
             color: #fff;
             margin-right: 52px;
-           
+
         }
-        &__sort{
+
+        &__sort {
             cursor: pointer;
-            svg{
+
+            svg {
                 margin-right: 9px;
             }
-            :hover{
+
+            :hover {
                 color: green;
             }
         }
     }
-    &__container{
-        padding:0 14px;
-        min-height: 400px;
-        tbody{
+
+    &__container {
+        padding: 0 14px;
+        min-height: 550px;
+
+        tbody {
             position: relative;
         }
-        table{
-    
-            thead th{
-                color:#9FA2B4;
+
+        table {
+
+            thead th {
+                color: #9FA2B4;
                 text-align: center;
                 font-weight: bold;
                 font-size: 14px;
                 line-height: 18px;
                 letter-spacing: 0.2px;
             }
-            tbody tr{
+
+            tbody tr {
                 text-align: center;
                 z-index: 1;
-                td{
-                    padding:25px 0px;
+
+                td {
+                    padding: 25px 0px;
                     vertical-align: middle;
                     font-weight: 500;
                     font-size: 14px;
@@ -59,46 +69,54 @@
                     color: #252733;
                     z-index: 1;
                 }
-             
-                .gender--female span , .gender--male span {
-                        font-size: 12px;
-                        font-weight: bold;
-                        color: #fff;
-                        text-transform: uppercase;
-                        border-radius: 100px;
-                        padding:10px;
+
+                .gender--female span,
+                .gender--male span {
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: #fff;
+                    text-transform: uppercase;
+                    border-radius: 100px;
+                    padding: 10px;
                 }
-                .gender--male{
-                    span{
-                       background: #56CCF2; 
-                   }
-               }
-               .gender--female{
-                    span{
+
+                .gender--male {
+                    span {
+                        background: #56CCF2;
+                    }
+                }
+
+                .gender--female {
+                    span {
                         background: #F5BCDB;
-                     }
+                    }
                 }
             }
-            tbody tr:hover{
-                background-color:#F7F8FC !important;
+
+            tbody tr:hover {
+                background-color: #F7F8FC !important;
                 position: relative;
                 z-index: 1;
-                td{
+
+                td {
                     position: relative;
                     font-weight: bold;
                     cursor: pointer;
                     z-index: 1;
-                }     
+                }
             }
-            tbody th{
+
+            tbody th {
                 vertical-align: middle;
             }
         }
+
         .table>:not(:last-child)>:last-child>* {
             border-bottom-color: inherit;
         }
     }
 }
-.td-listing-disabled{
+
+.td-listing-disabled {
     opacity: 0.2;
 }

@@ -1,6 +1,6 @@
 import { ClassAttributes, db, updateTotalGrade } from ".."
-import { ProfileTemplate } from "../types";
 import { toNumber } from 'lodash';
+import { ProfileTemplate } from "../../types";
 
 export const addStudent = async (id:string,infoGrade:ClassAttributes,Student:ProfileTemplate) => {    
     return db.collection("students").doc(id).set({
@@ -17,6 +17,12 @@ export const getListStudent = async () =>{
             list.push({...student.data() as ProfileTemplate})
         })
         return list;
+    })
+}
+export const setStudent = (id:string, teacher:ProfileTemplate)=>{
+    return db.collection("students").doc(id).set({
+        ...teacher,
+        id:id
     })
 }
 export const deleteStudent = async (id:string) =>{

@@ -1,5 +1,5 @@
 import { ClassAttributes, db, updateTotalGrade } from ".."
-import { ProfileTemplate } from "../types";
+import { ProfileTemplate } from "../../types";
 
 export const addTeacher =  (id:string,infoGrade:ClassAttributes,teacher:ProfileTemplate) => {    
     return db.collection("teachers").doc(id).set({
@@ -18,6 +18,9 @@ export const getListTeacher = async () =>{
         })
         return list;
     })
+}
+export const setTeacher = (id:string,teacher:ProfileTemplate)=>{
+    return db.collection("teachers").doc(id).set(teacher,{merge:true});
 }
 export const deleteTeacher =  (id:string) =>{
     return  db.collection("teachers").doc(id).delete();

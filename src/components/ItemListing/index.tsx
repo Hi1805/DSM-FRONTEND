@@ -1,12 +1,13 @@
 import React, { useContext, useRef } from 'react';
 import { convertFullName } from '../../helpers';
-import { ProfileTemplate } from '../../services/types';
 import { format } from "date-fns";
 import "./ItemListing.scss"
 import { useOnClickOutside } from '../../hooks';
 import Swal from "sweetalert2"
-import { GlobalContext } from '../../services';
+import { controlFormContext, GlobalContext } from '../../services';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import { ProfileTemplate } from '../../types';
 interface ItemListProps {
     info: ProfileTemplate,
     index: number;
@@ -14,13 +15,13 @@ interface ItemListProps {
 
 export const ItemListing = (props: ItemListProps) => {
     const { info, index } = props;
-    const { deleteItem, typeTab } = useContext(GlobalContext)
-    const styleGender = info.gender === "female" ? "gender--female" : "gender--male";
+    const history = useHistory();
+    const { deleteItem, typeTab } = useContext(GlobalContext);
+    const { setOpenForm, setTypeForm } = useContext(controlFormContext)
     const [openFunctionState, setOpenFunctionState] = React.useState(false);
     const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
     useOnClickOutside(refItem, (e: MouseEvent) => {
         if (refItem.current.contains(e.target as Node)) return;
-        //Ngược lại thì thực hiện việc thay đổi state
         setOpenFunctionState(false);
     });
     const handleDelete = () => {
@@ -43,14 +44,22 @@ export const ItemListing = (props: ItemListProps) => {
 
         })
     }
+    const handleClickEdit = () => {
+        const location = {
+            pathname: `/${info.id}`
+        }
+        history.push(location)
+        setOpenForm(true);
+        setTypeForm("edit")
+    }
     const renderFunctions = () => {
         if (openFunctionState) {
             return <div className="item-listing__functions" ref={refItem} >
                 <div className="item-listing__functions__cancel" onClick={handleMore}>
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="window-close" className="svg-inline--fa fa-window-close fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z" /></svg>
                 </div>
-                <div className="item-listing__functions__edit">
-                    <button type="button" className="item-listing__functions__btn btn--edit">Edit</button>
+                <div className="item-listing__functions__edit" >
+                    <button type="button" className="item-listing__functions__btn btn--edit" onClick={handleClickEdit}>Edit</button>
                     <svg width={22} height={19} viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.366 12.7333L16.5882 11.6315C16.7792 11.4593 17.1115 11.5798 17.1115 11.8277V16.8341C17.1115 17.7465 16.2903 18.4868 15.2781 18.4868H1.83337C0.821198 18.4868 0 17.7465 0 16.8341V4.71415C0 3.80171 0.821198 3.06143 1.83337 3.06143H12.2798C12.551 3.06143 12.6885 3.35754 12.4975 3.53314L11.2752 4.63496C11.218 4.6866 11.1416 4.71415 11.0575 4.71415H1.83337V16.8341H15.2781V12.9261C15.2781 12.8538 15.3087 12.7849 15.366 12.7333ZM21.3473 5.78497L11.3173 14.8267L7.86441 15.171C6.86369 15.2709 6.01194 14.5099 6.1227 13.601L6.50465 10.4883L16.5347 1.44659C17.4094 0.658104 18.8226 0.658104 19.6935 1.44659L21.3435 2.93403C22.2182 3.72252 22.2182 4.99993 21.3473 5.78497ZM17.5736 6.84891L15.3545 4.84843L8.25782 11.2493L7.97899 13.4977L10.4731 13.2463L17.5736 6.84891ZM20.0487 4.10471L18.3987 2.61726C18.2421 2.47609 17.9862 2.47609 17.8334 2.61726L16.6531 3.6812L18.8723 5.68168L20.0525 4.61774C20.2053 4.47313 20.2053 4.24588 20.0487 4.10471Z" fill="black" />
                     </svg>
@@ -69,6 +78,7 @@ export const ItemListing = (props: ItemListProps) => {
     const handleMore = () => {
         setOpenFunctionState(!openFunctionState);
     }
+    const styleGender = info.gender === "female" ? "gender--female" : "gender--male";
 
     return (
         <React.Fragment >

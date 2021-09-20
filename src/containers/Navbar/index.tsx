@@ -1,8 +1,8 @@
 import React, { useContext, useRef } from 'react'
-import { tabs } from '../../types/tab';
 import { GlobalContext } from '../../services/context/globalContext';
 import logoAdmin from "./img/admin.jpg"
 import useOnClickOutside from '../../hooks/useOnclickoutside';
+import { tabs } from '../../types';
 interface NavBarProps {
     handleSearch: (value: string) => void;
     valueSearch: string;
@@ -15,7 +15,6 @@ export const Navbar = (props: NavBarProps) => {
     useOnClickOutside(refSearch, (e) => {
         if (refSearch.current.contains(e.target as Node)) return;
         setSearchActiveState(false);
-
     })
     return (
         <div className="layout__content__navbar">

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from '../../services';
-import { tabs } from '../../types/tab';
 import { typeTab } from '../../services/context/globalContext';
+import { tabs } from '../../types';
 
 export const DashBoard = () => {
     const activeTabClassName = "layout__dashboard__tabs-control__item--active";
