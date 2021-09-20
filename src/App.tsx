@@ -15,9 +15,9 @@ const history = createBrowserHistory();
 
 function App() {
   React.useEffect(() => {
-    if (!isSafePath(history.location.pathname)) {
-      history.push('/manage');
-    }
+    // if (!isSafePath(history.location.pathname)) {
+    //   history.push('/');
+    // }
   }, []);
 
   return (
@@ -31,7 +31,7 @@ function App() {
               <Route exact path='/logout' component={LogoutScreen} />
               <ControlFormProvider>
                 <Route
-                  path='/:id'
+                  path='/manage/:id'
                   component={LayoutManagement}
                 />
               </ControlFormProvider>

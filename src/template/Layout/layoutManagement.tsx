@@ -44,7 +44,7 @@ export const LayoutManagement: React.FC = () => {
         <DashBoard />
         <div className="layout__content" >
           <Navbar valueSearch={searchValueState} handleSearch={setSearchValueState} />
-          <div className="layout__content__listing">
+          {typeTab !== "email" ? <div className="layout__content__listing">
             <div className={`td-listing`}>
               <div className="td-listing__functions d-flex justify-content-end">
                 <button className="td-listing__functions__add" onClick={handleClickAdd}>
@@ -65,7 +65,7 @@ export const LayoutManagement: React.FC = () => {
               </div>
               {renderTabActive()}
             </div>
-          </div>
+          </div> : renderTabActive()}
         </div>
       </div >
     </React.Fragment>

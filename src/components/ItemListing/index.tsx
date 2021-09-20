@@ -46,7 +46,7 @@ export const ItemListing = (props: ItemListProps) => {
     }
     const handleClickEdit = () => {
         const location = {
-            pathname: `/${info.id}`
+            pathname: `/manage/${info.id}`
         }
         history.push(location)
         setOpenForm(true);

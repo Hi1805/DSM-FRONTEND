@@ -37,7 +37,7 @@ export const FormTemplate = (props: FormAddProps) => {
   const { turnOffForm } = props;
   const { handleAdd, typeTab, teachers, students, handleEdit } =
     React.useContext(GlobalContext);
-  const { typeForm } = React.useContext(controlFormContext);
+  const { typeForm,classes } = React.useContext(controlFormContext);  
   const {
     register,
     handleSubmit,
@@ -54,7 +54,6 @@ export const FormTemplate = (props: FormAddProps) => {
   };
   const [chooseClassState, setClassState] = React.useState<string>("");
   const [chooseGradeState, setChooseGradeSate] = React.useState<string>("");
-  const [classesState, setClassesState] = React.useState<ClassAttributes[]>([]);
   const [infoGrade, setInfoGrade] = React.useState<ClassAttributes>({
     total: 0,
     id: 0,
@@ -73,16 +72,8 @@ export const FormTemplate = (props: FormAddProps) => {
       return students.find((student) => student.id === id) || empty;
     }
     return teachers.find((student) => student.id === id) || empty;
-  }, []);
-
-  // fetch class
-  React.useEffect(() => {
-    async function fetchClasses() {
-      const classes = await getAllClass();
-      setClassesState(classes);
-    }
-    fetchClasses();
-  }, []);
+  }, [classes]);
+  
 
   React.useEffect(() => {
     if (typeForm === "edit") {
@@ -93,13 +84,13 @@ export const FormTemplate = (props: FormAddProps) => {
 
   // watch when grade change
   React.useEffect(() => {
-    const newInfoGrade = classesState.find(
+    const newInfoGrade = classes.find(
       (grade) => grade.id === toNumber(chooseGradeState)
     );
     if (newInfoGrade) {
       setInfoGrade(newInfoGrade);
     }
-  }, [chooseGradeState, classesState]);
+  }, [chooseGradeState, classes]);
 
   // update total
   const updateTotalGrade = () => {
@@ -170,7 +161,6 @@ export const FormTemplate = (props: FormAddProps) => {
     }
     turnOffForm();
   };
-  console.log(errors);
 
   const renderForm = () => {
     return (
@@ -262,7 +252,7 @@ export const FormTemplate = (props: FormAddProps) => {
                 }}
               >
                 <option> Select grade</option>
-                {classesState.map((Class, index) => (
+                {classes.map((Class, index) => (
                   <option key={index} value={toString(Class.id)}>
                     {Class.id}
                   </option>
