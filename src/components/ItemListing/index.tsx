@@ -16,7 +16,7 @@ interface ItemListProps {
 export const ItemListing = (props: ItemListProps) => {
     const { info, index } = props;
     const history = useHistory();
-    const { deleteItem, typeTab } = useContext(GlobalContext);
+    const { deleteItem } = useContext(GlobalContext);
     const { setOpenForm } = useContext(controlFormContext)
     const [openFunctionState, setOpenFunctionState] = React.useState(false);
     const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -38,9 +38,9 @@ export const ItemListing = (props: ItemListProps) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 await toast.promise(deleteItem(info.id), {
-                    success: `Deleting  ${typeTab} resolved 👌`,
-                    error: `Deleting  ${typeTab}rejected 🤯`,
-                    pending: `Deleting ${typeTab} is pending🦄`,
+                    success: `Deleting  ${type} resolved 👌`,
+                    error: `Deleting  ${type}rejected 🤯`,
+                    pending: `Deleting ${type} is pending🦄`,
                 });
             }
 

@@ -15,15 +15,16 @@ const history = createBrowserHistory();
 
 function App() {
   React.useEffect(() => {
-    // if (!isSafePath(history.location.pathname)) {
-    //   history.push('/');
-    // }
+    if (!isSafePath(history.location.pathname)) {
+      history.push('/teacher');
+    }
   }, []);
 
   return (
     <React.Fragment>
       <GlobalProvider>
         <ToastContainer />
+        
         <Router history={history}>
           <Switch>
             <React.Fragment>

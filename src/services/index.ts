@@ -14,4 +14,4 @@ export const db = firebase.firestore();
 export * from "./teachers";
 export * from "./classes";
 export * from "./context/index";
-export * from "./students"
+export * from "./students";

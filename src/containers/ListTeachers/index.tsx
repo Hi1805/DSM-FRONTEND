@@ -4,13 +4,14 @@ import "../listingStyle.scss";
 import { GlobalContext } from '../../services';
 import { toString } from 'lodash';
 import { ItemListing } from '../../components/ItemListing/index';
+import { Loading } from '../../components';
 interface ListingTeacherProps {
     valueSeacrch: string;
     mode: boolean;
 }
 export const ListTeachers = (props: ListingTeacherProps) => {
     const { valueSeacrch, mode } = props;
-    const { teachers } = React.useContext(GlobalContext);
+    const { teachers,loadingTeachers:loading } = React.useContext(GlobalContext);
 
     const listingRender = () => {
         const filterList = teachers.filter((teacher) => Object.values(teacher).map((item: string) => toString(item).toLocaleLowerCase()).join("").includes(valueSeacrch.toLocaleLowerCase()));
@@ -53,7 +54,7 @@ export const ListTeachers = (props: ListingTeacherProps) => {
                     )}
                 </tbody>
             </table>
-
+            {loading ? <Loading/> : null}
         </div>
     )
 }

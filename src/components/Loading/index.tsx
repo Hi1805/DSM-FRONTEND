@@ -1,11 +1,9 @@
-import React from 'react'
-
+import React from "react";
+import "./Loading.scss"
 export const Loading = () => {
-    return (
-        <div className="loading p-5 d-flex justify-content-center align-items-center">
-            <div className="spinner-border text-primary" role="status">
-                <span className="sr-only">Loading...</span>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div id="loading" className="w-100 d-flex justify-content-center">
+        <img src="https://cdn.dribbble.com/users/804852/screenshots/2077504/media/64f4ff463dec142fcad79ed4c4a40bd0.gif" alt="loading"></img>
+    </div>
+  );
+};

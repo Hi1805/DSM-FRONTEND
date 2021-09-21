@@ -1,10 +1,12 @@
 import React from 'react'
 import { useHistory } from 'react-router';
-import { TypeTab } from '../../services/context/globalContext';
+import { GlobalContext, TypeTab } from '../../services/context/globalContext';
 import { tabs } from '../../types';
+import { useContext } from 'react';
 
 export const DashBoard = () => {
     const [tabState,setTabState] = React.useState<TypeTab>("teacher");
+    const {setTypeTab:setTypeTabGlobal} = useContext(GlobalContext);
     const history = useHistory();
     const navigationTab = (type:TypeTab) => {
         let pathname = "";
@@ -18,6 +20,7 @@ export const DashBoard = () => {
             case "email":
                 pathname="/email";
         }
+        setTypeTabGlobal(type);
         history.push({pathname})
     }   
 

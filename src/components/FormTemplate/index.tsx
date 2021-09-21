@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { regexEmail, regexNumber, regexOnlyLetter } from "../../helpers/regex";
+import { regexEmail, regexNumber, regexClass, regexOnlyLetter } from "../../helpers/regex";
 import {
   ClassAttributes,
   controlFormContext,
@@ -102,9 +102,12 @@ export const FormTemplate = (props: FormAddProps) => {
       total: infoGradeState.total + 1,
     });
   };
+  console.log(errors);
 
   const onSubmit = (data: ProfileTemplate) => {
     const { date_of_birth } = data;
+    console.log(errors);
+    
     if (
       new Date(date_of_birth).getFullYear() > YEAR_LAST ||
       new Date(date_of_birth).getFullYear() < YEAR_FIRST
@@ -245,13 +248,13 @@ export const FormTemplate = (props: FormAddProps) => {
               <label htmlFor="grade">Grade:</label>
               <select
                 value={chooseGradeState}
-                {...register("grade", { pattern: regexNumber, required: true })}
+                {...register("grade", { required: true})}
                 className="form-select form-control"
                 onChange={(e) => {
                   setChooseGradeSate(e.target.value);
                 }}
               >
-                <option value=""> Select grade</option>
+                <option value="" selected> Select grade</option>
                 {classes.map((Class, index) => (
                   <option key={index} value={toString(Class.id)}>
                     {Class.id}
@@ -264,18 +267,17 @@ export const FormTemplate = (props: FormAddProps) => {
               <label htmlFor="class">Classes:</label>
               <select
                 value={chooseClassState}
-                {...register("class", { required: true })}
+                {...register("class", {  required: true })}
                 className="form-select form-control"
                 onChange={(e) => {
                   setClassState(e.target.value);
                 }}
               >
-                <option value="">
-                  {" "}
+                <option value="" selected>Select
                   Select classes
                 </option>
                 {infoGradeState.values.map((Class) => (
-                  <option key={Class} value={Class}>
+                  <option selected={Class ===chooseClassState} key={Class} value={Class}>
                     {Class}
                   </option>
                 ))}

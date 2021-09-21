@@ -7,7 +7,7 @@ import {
   DashBoard,
   Navbar,
 } from "../../containers";
-import { FormTemplate } from "../../components";
+import { FormTemplate, Loading } from "../../components";
 import { controlFormContext, TypeTab } from "../../services";
 import { useHistory, useParams } from "react-router-dom";
 import { LayoutListing } from "../../template/LayoutListing";

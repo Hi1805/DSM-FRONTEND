@@ -3,6 +3,7 @@ import { GlobalContext } from '../../services/context/globalContext';
 import logoAdmin from "./img/admin.jpg"
 import useOnClickOutside from '../../hooks/useOnclickoutside';
 import { tabs } from '../../types';
+import { useParams } from 'react-router-dom';
 interface NavBarProps {
     handleSearch: (value: string) => void;
     valueSearch: string;
@@ -10,8 +11,9 @@ interface NavBarProps {
 export const Navbar = (props: NavBarProps) => {
     const { handleSearch, valueSearch } = props;
     const [searchActiveState, setSearchActiveState] = React.useState(false);
-    const { typeTab } = useContext(GlobalContext);
     const refSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
+    const {type:typeTab} = useParams<{type: string}>();
+
     useOnClickOutside(refSearch, (e) => {
         if (refSearch.current.contains(e.target as Node)) return;
         setSearchActiveState(false);
