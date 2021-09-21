@@ -6,7 +6,7 @@ import { useOnClickOutside } from '../../hooks';
 import Swal from "sweetalert2"
 import { controlFormContext, GlobalContext } from '../../services';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { ProfileTemplate } from '../../types';
 interface ItemListProps {
     info: ProfileTemplate,
@@ -17,13 +17,15 @@ export const ItemListing = (props: ItemListProps) => {
     const { info, index } = props;
     const history = useHistory();
     const { deleteItem, typeTab } = useContext(GlobalContext);
-    const { setOpenForm, setTypeForm } = useContext(controlFormContext)
+    const { setOpenForm } = useContext(controlFormContext)
     const [openFunctionState, setOpenFunctionState] = React.useState(false);
     const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
     useOnClickOutside(refItem, (e: MouseEvent) => {
         if (refItem.current.contains(e.target as Node)) return;
         setOpenFunctionState(false);
     });
+    const {type} = useParams<{type: string}>();
+    
     const handleDelete = () => {
         Swal.fire({
             title: 'Are you sure?',
@@ -46,11 +48,11 @@ export const ItemListing = (props: ItemListProps) => {
     }
     const handleClickEdit = () => {
         const location = {
-            pathname: `/manage/${info.id}`
+            pathname: `/${type}`,
+            search:`?id=${info.id}&&status=edit`
         }
         history.push(location)
         setOpenForm(true);
-        setTypeForm("edit")
     }
     const renderFunctions = () => {
         if (openFunctionState) {

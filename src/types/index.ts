@@ -1,4 +1,4 @@
-import { typeTab } from "../services";
+export type TypeTab = "teacher" | "student" | "email";
 
 export interface ProfileTemplate{
     id:string;
@@ -12,7 +12,7 @@ export interface ProfileTemplate{
     grade:number;
 }
 export const tabs: Array<{
-    type: typeTab,
+    type: TypeTab,
     render: string;
   }> = [{
     type: "teacher",

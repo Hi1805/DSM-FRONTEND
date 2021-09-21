@@ -1,14 +1,32 @@
-import React, { useContext } from 'react'
-import { GlobalContext } from '../../services';
-import { typeTab } from '../../services/context/globalContext';
+import React from 'react'
+import { useHistory } from 'react-router';
+import { TypeTab } from '../../services/context/globalContext';
 import { tabs } from '../../types';
 
 export const DashBoard = () => {
+    const [tabState,setTabState] = React.useState<TypeTab>("teacher");
+    const history = useHistory();
+    const navigationTab = (type:TypeTab) => {
+        let pathname = "";
+        switch (type) {
+            case "student":
+                pathname="/student";
+                break;
+            case "teacher":
+                pathname="/teacher";
+                break;
+            case "email":
+                pathname="/email";
+        }
+        history.push({pathname})
+    }   
+
     const activeTabClassName = "layout__dashboard__tabs-control__item--active";
-    const { typeTab: type, setTypeTab } = useContext(GlobalContext)
-    const renderTabControl = (icon: JSX.Element, name: string, type: typeTab, active: boolean = false) => {
+
+    const renderTabControl = (icon: JSX.Element, name: string, type: TypeTab, active: boolean = false) => {
         return <div className={`layout__dashboard__tabs-control__item d-flex ${active ? activeTabClassName : ""}`} onClick={() => {
-            setTypeTab(type);
+            setTabState(type);
+            navigationTab(type);
         }}>
             <div className="layout__dashboard__tabs-control__item__icon d-flex justify-content-center align-items-center">
                 {icon}
@@ -18,7 +36,7 @@ export const DashBoard = () => {
             </div>
         </div>
     }
-    const getIconTab = (type: typeTab) => {
+    const getIconTab = (type: TypeTab) => {
         switch (type) {
             case "teacher":
                 return <svg width={24} height={21} viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +83,7 @@ export const DashBoard = () => {
             <div className="layout__dashboard__tabs-control">
                 {(() => {
                     return tabs.map((tab, index) => {
-                        return <React.Fragment key={index}>{renderTabControl(getIconTab(tab.type), tab.render, tab.type, tab.type === type)}</React.Fragment>
+                        return <React.Fragment key={index}>{renderTabControl(getIconTab(tab.type), tab.render, tab.type, tab.type === tabState)}</React.Fragment>
                     });
                 })()}
 

@@ -1,50 +1,28 @@
-import React, { useContext } from 'react';
-import './LayoutManagement.scss';
-import { ListTeachers, ListStudents, SendEmail, DashBoard, Navbar } from '../../containers';
-import { FormTemplate } from '../../components';
-import { controlFormContext, GlobalContext } from "../../services"
+import React, { useContext } from 'react'
+import { useHistory, useParams } from 'react-router';
+import { controlFormContext } from '../../services'
 
+interface LayoutListingProps{
+    children: React.ReactNode;
+    modeSort: boolean;
+    handleSort:(mode:boolean)=>void;
+}
+export const LayoutListing :React.FC<LayoutListingProps>= (props) => {
+    const {children,modeSort,handleSort} = props;
+    const { setOpenForm } = useContext(controlFormContext);
+    const history = useHistory();
+    const {type} = useParams<{type: string}>();
 
-
-export const LayoutManagement: React.FC = () => {
-  //"asc" ->true | "desc"-> false
-  const [modeSortState, setModeSortState] = React.useState<boolean>(true);
-  const [searchValueState, setSearchValueState] = React.useState("");
-  const { typeTab } = useContext(GlobalContext);
-  const { setOpenForm, openForm, setTypeForm } = useContext(controlFormContext)
-  const turnOffForm = () => {
-    setOpenForm(false);
-  }
-  const turnOnForm = () => {
-    setOpenForm(true);
-  }
-  const handleClickAdd = () => {
-    setTypeForm("add");
-    turnOnForm()
-  }
-  const renderTabActive = () => {
-    switch (typeTab) {
-      case "email":
-        return <SendEmail />
-      case "student":
-        return <ListStudents />
-      case "teacher":
-        return <ListTeachers mode={modeSortState} valueSeacrch={searchValueState.trim()} />
+    const handleClickAdd  = ()=>{
+      const location = {
+        pathname: `/${type}`,
+        search:`?status=add`
     }
-  }
-  return (
-    <React.Fragment>
-      {openForm ?
-        <div className='box'>
-          <div className='d-flex justify-content-center align-items-center'>
-            <FormTemplate turnOffForm={turnOffForm} />
-          </div>
-        </div> : null}
-      <div className={`layout d-flex flex-wrap ${openForm ? "layout--disabled" : ""}`}>
-        <DashBoard />
-        <div className="layout__content" >
-          <Navbar valueSearch={searchValueState} handleSearch={setSearchValueState} />
-          {typeTab !== "email" ? <div className="layout__content__listing">
+      history.push(location)
+        setOpenForm(true);
+    }
+    return (
+        <div className="layout__content__listing">
             <div className={`td-listing`}>
               <div className="td-listing__functions d-flex justify-content-end">
                 <button className="td-listing__functions__add" onClick={handleClickAdd}>
@@ -53,7 +31,7 @@ export const LayoutManagement: React.FC = () => {
                 <div className="td-listing__functions__sort d-flex justify-content-center align-items-center"
                   onClick={
                     () => {
-                      setModeSortState(!modeSortState)
+                        handleSort(!modeSort)
                     }
                   }
                 >
@@ -63,13 +41,8 @@ export const LayoutManagement: React.FC = () => {
                   <span>Sort</span>
                 </div>
               </div>
-              {renderTabActive()}
+              {children}
             </div>
-          </div> : renderTabActive()}
-        </div>
-      </div >
-    </React.Fragment>
-  );
-};
-
-//get student , get teacher in here, 
+          </div>
+    )
+}

@@ -8,9 +8,9 @@ import {
 
 } from './screens';
 import { isSafePath } from './helpers';
-import { LayoutManagement } from './template/Layout/layoutManagement';
 import { ControlFormProvider, GlobalProvider } from "../src/services"
 import { ToastContainer } from 'react-toastify';
+import { ManageScreen } from './screens/MangeScreen';
 const history = createBrowserHistory();
 
 function App() {
@@ -27,15 +27,15 @@ function App() {
         <Router history={history}>
           <Switch>
             <React.Fragment>
-              <Route exact path='/login' component={LoginScreen} />
-              <Route exact path='/logout' component={LogoutScreen} />
-              <ControlFormProvider>
+            <ControlFormProvider>
                 <Route
-                  path='/manage/:id'
-                  component={LayoutManagement}
+                  exact
+                  path='/:type'
+                  component={ManageScreen}
                 />
               </ControlFormProvider>
-
+              <Route exact path='/login' component={LoginScreen} />
+              <Route exact path='/logout' component={LogoutScreen} />
             </React.Fragment>
           </Switch>
         </Router>

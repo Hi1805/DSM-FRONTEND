@@ -4,15 +4,15 @@ import { ClassAttributes, deleteStudent, addStudent, getListTeacher, deleteTeach
 import { createID } from '../../helpers';
 import { ProfileTemplate } from '../../types';
 import { addTeacher, setTeacher } from '../teachers/index';
-export type typeTab = "teacher" | "student" | "email";
+export type TypeTab = "teacher" | "student" | "email";
 
 export interface rootState {
     teachers: ProfileTemplate[];
     loadingTeachers: boolean;
     students: ProfileTemplate[];
     loadingStudents?: boolean;
-    typeTab: typeTab,
-    setTypeTab: (tab: typeTab) => void;
+    typeTab: TypeTab,
+    setTypeTab: (tab: TypeTab) => void;
     deleteItem: (id: string) => Promise<boolean>;
     handleEdit: (id: string, teacher: ProfileTemplate) => Promise<void>
     handleAdd: (infoGrade: ClassAttributes, teacher: ProfileTemplate) => Promise<void>
@@ -33,7 +33,7 @@ const GlobalProvider: React.FC = ({ children }) => {
     const [listTeacherState, setListTeacherState] = React.useState<ProfileTemplate[]>([]);
     const [listStudentsState, setListStudentsState] = React.useState<ProfileTemplate[]>([]);
     const [loadingTeachersState, setLoadingTeachersState] = React.useState<boolean>(true);
-    const [typeTabState, setTypeTabState] = React.useState<typeTab>("teacher");
+    const [typeTabState, setTypeTabState] = React.useState<TypeTab>("teacher");
 
     React.useEffect(() => {
         (async () => {
@@ -42,7 +42,7 @@ const GlobalProvider: React.FC = ({ children }) => {
             setLoadingTeachersState(false);
         })();
     }, []);
-    const handleSetTypeTab = (tab: typeTab) => {
+    const handleSetTypeTab = (tab: TypeTab) => {
         setTypeTabState(tab)
     }
 
