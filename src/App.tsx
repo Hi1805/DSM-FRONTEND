@@ -3,10 +3,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { LoginScreen } from './screens/LoginScreen';
-import {
-  LogoutScreen,
-
-} from './screens';
 import { isSafePath } from './helpers';
 import { ControlFormProvider, GlobalProvider } from "../src/services"
 import { ToastContainer } from 'react-toastify';
@@ -24,19 +20,16 @@ function App() {
     <React.Fragment>
       <GlobalProvider>
         <ToastContainer />
-        
         <Router history={history}>
           <Switch>
             <React.Fragment>
             <ControlFormProvider>
                 <Route
-                  exact
                   path='/:type'
                   component={ManageScreen}
                 />
               </ControlFormProvider>
-              <Route exact path='/login' component={LoginScreen} />
-              <Route exact path='/logout' component={LogoutScreen} />
+              <Route  path='/login' component={LoginScreen} />
             </React.Fragment>
           </Switch>
         </Router>

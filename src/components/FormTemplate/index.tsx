@@ -64,6 +64,8 @@ export const FormTemplate = (props: FormAddProps) => {
     values: [],
   });
   // 10A1 -> 10
+  console.log("grade",infoGradeState);
+  
   const getGradeByClass = (Class: string) => {
     return Class.slice(0, 2);
   };
@@ -89,12 +91,17 @@ export const FormTemplate = (props: FormAddProps) => {
   React.useEffect(() => {
     const newInfoGrade = classes.find(
       (grade) => grade.id === toNumber(chooseGradeState)
-    );
-    if (newInfoGrade) {
-      setInfoGrade(newInfoGrade);
-    }
-  }, [chooseGradeState, classes]);
+    ) || {
+      id:1,
+      total:0,
+      values:[]
+    };
+    setInfoGrade(newInfoGrade);
+    
+    setInfoGrade(newInfoGrade);
 
+  }, [chooseGradeState]);
+  
   // update total
   const updateTotalGrade = () => {
     setInfoGrade({
@@ -106,7 +113,6 @@ export const FormTemplate = (props: FormAddProps) => {
 
   const onSubmit = (data: ProfileTemplate) => {
     const { date_of_birth } = data;
-    console.log(errors);
     
     if (
       new Date(date_of_birth).getFullYear() > YEAR_LAST ||
@@ -248,7 +254,7 @@ export const FormTemplate = (props: FormAddProps) => {
               <label htmlFor="grade">Grade:</label>
               <select
                 value={chooseGradeState}
-                {...register("grade", { required: true})}
+                {...register("grade")}
                 className="form-select form-control"
                 onChange={(e) => {
                   setChooseGradeSate(e.target.value);
@@ -267,7 +273,7 @@ export const FormTemplate = (props: FormAddProps) => {
               <label htmlFor="class">Classes:</label>
               <select
                 value={chooseClassState}
-                {...register("class", {  required: true })}
+                {...register("class")}
                 className="form-select form-control"
                 onChange={(e) => {
                   setClassState(e.target.value);
@@ -276,7 +282,7 @@ export const FormTemplate = (props: FormAddProps) => {
                 <option value="" selected>Select
                   Select classes
                 </option>
-                {infoGradeState.values.map((Class) => (
+                {infoGradeState.values||[].map((Class) => (
                   <option selected={Class ===chooseClassState} key={Class} value={Class}>
                     {Class}
                   </option>
