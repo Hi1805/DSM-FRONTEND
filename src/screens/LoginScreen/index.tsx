@@ -1,9 +1,5 @@
-import React from 'react';
-import './LoginScreen.scss';
+import React from "react";
+import "./LoginScreen.scss";
 export const LoginScreen = () => {
-  return (
-    <div id="login-screen">
-</div>
-
-  );
+  return <div id="login-screen"></div>;
 };

@@ -10,7 +10,7 @@ import {
 } from "..";
 import { createID } from "../../helpers";
 import { ProfileTemplate } from "../../types";
-import { addTeacher, setTeacher } from "../teachers/index";
+import { addTeacher, setTeacher } from "../firestore";
 export type TypeTab = "teacher" | "student" | "email";
 
 export interface FunctionGlobal {
@@ -41,7 +41,7 @@ const inititalState: rootState = {
   handleEdit: () => new Promise(() => {}),
 };
 const GlobalContext = React.createContext<rootState>(inititalState);
-
+const PAGE_SIZE = 10;
 const GlobalProvider: React.FC = ({ children }) => {
   const [listTeacherState, setListTeacherState] = React.useState<
     ProfileTemplate[]
@@ -55,15 +55,20 @@ const GlobalProvider: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     (async () => {
-      const teachers = await getListTeacher(1,2);
+      const teachers = await getListTeacher(1, PAGE_SIZE);
       setListTeacherState(teachers);
       setLoadingTeachersState(false);
     })();
   }, []);
+
   const handleSetTypeTab = (tab: TypeTab) => {
     setTypeTabState(tab);
   };
-
+  const fetchListTeacher = async (begin: number, end: number) => {
+    setLoadingTeachersState(false);
+    const teachers = await getListTeacher(begin, end);
+    setListTeacherState(teachers);
+  };
   const handleAddTeacher = async (
     infoGrade: ClassAttributes,
     teacher: ProfileTemplate

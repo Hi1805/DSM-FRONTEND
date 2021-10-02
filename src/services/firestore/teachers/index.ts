@@ -1,16 +1,40 @@
 import { ClassAttributes, db, updateTotalGrade } from "..";
-import { ProfileTemplate } from "../../types";
+import { ProfileTemplate } from "../../../types";
 
 export const addTeacher = (
   id: string,
   infoGrade: ClassAttributes,
   teacher: ProfileTemplate
 ) => {
+  const { grade } = teacher;
+  if (grade) {
+    return db
+      .collection("teachers")
+      .doc(id)
+      .set({
+        ...teacher,
+        id: id,
+      })
+      .then(() => {
+        const newTotal = infoGrade.total + 1;
+        return updateTotalGrade(infoGrade.id, newTotal);
+      });
+  }
+  const { address, date_of_birth, email, first_name, gender, last_name } =
+    teacher;
+  const newTeacher = {
+    address,
+    date_of_birth,
+    email,
+    first_name,
+    gender,
+    last_name,
+  };
   return db
     .collection("teachers")
     .doc(id)
     .set({
-      ...teacher,
+      ...newTeacher,
       id: id,
     })
     .then(() => {
@@ -19,10 +43,7 @@ export const addTeacher = (
     });
 };
 
-export const getListTeacher = async (pageBegin: number,pageSize: number) => {
-   const b =  (await db.collection("teachers").get()).size;
-   console.log(b);
-   
+export const getListTeacher = async (pageBegin: number, pageSize: number) => {
   const first = db
     .collection("teachers")
     .orderBy("first_name")
@@ -49,4 +70,8 @@ export const setTeacher = (id: string, teacher: ProfileTemplate) => {
 };
 export const deleteTeacher = (id: string) => {
   return db.collection("teachers").doc(id).delete();
+};
+
+export const getTotalTeacher = async () => {
+  return (await db.collection("teachers").get()).size;
 };

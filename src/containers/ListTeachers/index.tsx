@@ -2,8 +2,7 @@ import React from "react";
 import "../listingStyle.scss";
 import { GlobalContext } from "../../services";
 import { toString } from "lodash";
-import { ItemListing } from "../../components/ItemListing/index";
-import { Loading } from "../../components";
+import { Loading,ItemListing } from "../../components";
 interface ListingTeacherProps {
   valueSeacrch: string;
   mode: boolean;
@@ -52,7 +51,7 @@ export const ListTeachers = (props: ListingTeacherProps) => {
           </tr>
         </thead>
         <tbody>
-          {listingRender().map((teacher: any, index) => (
+          {listingRender().map((teacher, index) => (
             <ItemListing info={teacher} index={index} key={teacher.id} />
           ))}
         </tbody>

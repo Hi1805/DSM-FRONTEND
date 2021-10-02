@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { regexEmail, regexNumber, regexClass, regexOnlyLetter } from "../../helpers/regex";
+import {
+  regexEmail,
+  regexNumber,
+  regexClass,
+  regexOnlyLetter,
+} from "../../helpers/regex";
 import {
   ClassAttributes,
   controlFormContext,
@@ -40,7 +45,6 @@ export const FormTemplate = (props: FormAddProps) => {
   const id = query.get("id") || "";
   const typeForm = query.get("status") || "";
   const { type: typeTab } = useParams<{ type: TypeTab }>();
-  
   const { classes } = React.useContext(controlFormContext);
   const {
     register,
@@ -64,8 +68,7 @@ export const FormTemplate = (props: FormAddProps) => {
     values: [],
   });
   // 10A1 -> 10
-  console.log("grade",infoGradeState);
-  
+
   const getGradeByClass = (Class: string) => {
     return Class.slice(0, 2);
   };
@@ -78,12 +81,12 @@ export const FormTemplate = (props: FormAddProps) => {
       return students.find((student) => student.id === id) || empty;
     }
     return teachers.find((student) => student.id === id) || empty;
-  }, [classes]);
+  }, [teachers, students]);
 
   React.useEffect(() => {
     if (typeForm === "edit") {
-      setChooseGradeSate(getGradeByClass(infoPerson.class));
-      setClassState(infoPerson.class);
+      setChooseGradeSate(getGradeByClass(infoPerson.class || ""));
+      setClassState(infoPerson.class || "");
     }
   }, []);
 
@@ -92,16 +95,13 @@ export const FormTemplate = (props: FormAddProps) => {
     const newInfoGrade = classes.find(
       (grade) => grade.id === toNumber(chooseGradeState)
     ) || {
-      id:1,
-      total:0,
-      values:[]
+      id: 1,
+      total: 0,
+      values: [],
     };
     setInfoGrade(newInfoGrade);
-    
-    setInfoGrade(newInfoGrade);
-
   }, [chooseGradeState]);
-  
+
   // update total
   const updateTotalGrade = () => {
     setInfoGrade({
@@ -113,7 +113,6 @@ export const FormTemplate = (props: FormAddProps) => {
 
   const onSubmit = (data: ProfileTemplate) => {
     const { date_of_birth } = data;
-    
     if (
       new Date(date_of_birth).getFullYear() > YEAR_LAST ||
       new Date(date_of_birth).getFullYear() < YEAR_FIRST
@@ -129,6 +128,7 @@ export const FormTemplate = (props: FormAddProps) => {
       });
       return;
     }
+    // add
     if (typeForm === "add")
       toast.promise(
         //handle when on sumbit -> edit or add
@@ -141,6 +141,7 @@ export const FormTemplate = (props: FormAddProps) => {
         }),
         message
       );
+    // edit
     else {
       Swal.fire({
         title: "Do you want to save the changes 🤔? ",
@@ -260,7 +261,10 @@ export const FormTemplate = (props: FormAddProps) => {
                   setChooseGradeSate(e.target.value);
                 }}
               >
-                <option value="" selected> Select grade</option>
+                <option value="" selected>
+                  {" "}
+                  Select grade
+                </option>
                 {classes.map((Class, index) => (
                   <option key={index} value={toString(Class.id)}>
                     {Class.id}
@@ -279,11 +283,15 @@ export const FormTemplate = (props: FormAddProps) => {
                   setClassState(e.target.value);
                 }}
               >
-                <option value="" selected>Select
-                  Select classes
+                <option value="" selected>
+                  Select Select classes
                 </option>
-                {infoGradeState.values||[].map((Class) => (
-                  <option selected={Class ===chooseClassState} key={Class} value={Class}>
+                {infoGradeState.values.map((Class) => (
+                  <option
+                    selected={Class === chooseClassState}
+                    key={Class}
+                    value={Class}
+                  >
                     {Class}
                   </option>
                 ))}
@@ -296,12 +304,12 @@ export const FormTemplate = (props: FormAddProps) => {
               <label htmlFor="email">Email:</label>
               <input
                 defaultValue={infoPerson.email}
-                {...register("email", { pattern: regexEmail })}
+                {...register("email", { pattern: regexEmail, required: true })}
                 id="dob"
                 placeholder="example: Huy@gmail.com"
                 type="email"
                 className="form-control"
-              ></input>
+              />
               {errors.email && <span>Please enter email valid</span>}
             </div>
           </div>
@@ -315,7 +323,7 @@ export const FormTemplate = (props: FormAddProps) => {
                 placeholder="example: Da Nang , Viet Nam"
                 type="text"
                 className="form-control"
-              ></input>
+              />
               {errors.address && <span>Please Enter Address</span>}
             </div>
           </div>
