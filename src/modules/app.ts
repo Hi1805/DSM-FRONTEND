@@ -1,5 +1,6 @@
-import { combineReducers } from 'redux';
-import { buildingListReducer } from './building';
-export const buildingReducer = combineReducers({
-	buildings: buildingListReducer,
+import { combineReducers } from "redux";
+import { listTeacherReducer, totalTeacherReducer } from "./teachers/reducers";
+export const teacherReducer = combineReducers({
+  listTeacher: listTeacherReducer,
+  totalTeacher: totalTeacherReducer,
 });

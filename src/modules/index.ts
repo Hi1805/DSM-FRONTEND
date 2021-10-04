@@ -1,20 +1,19 @@
-import { combineReducers } from 'redux';
-import { all, call } from 'redux-saga/effects';
-import { buildingReducer } from './app';
-import { BuildingsState } from './building';
-import { rootSagaBuilding } from './building/saga';
-export * from './building'
+import { combineReducers } from "redux";
+import { all, call } from "redux-saga/effects";
+import { teacherReducer } from "./app";
+import { ListTeacherState, TotalTeacherState } from "./teachers";
+import { rootTeacherSaga } from "./teachers";
+export * from "./teachers";
 export interface RootState {
-	building:{
-		buildings:BuildingsState;
-	}
+  teacher: {
+    listTeacher: ListTeacherState;
+    totalTeacher: TotalTeacherState;
+  };
 }
 export const rootReducer = combineReducers({
-	building: buildingReducer,
+  teacher: teacherReducer,
 });
 
 export function* rootSaga() {
-	yield all([
-		call(rootSagaBuilding),
-	]);
+  yield all([call(rootTeacherSaga)]);
 }
