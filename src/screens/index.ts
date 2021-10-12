@@ -1,2 +1,3 @@
-export * from './LoginScreen';
-export * from './MangeScreen'
+export * from "./LoginScreen";
+export * from "./TeacherScreen";
+export * from "./StudentScreen";

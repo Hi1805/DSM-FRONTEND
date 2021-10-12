@@ -1,27 +1,23 @@
 import React, { useRef } from "react";
 import logoAdmin from "./img/admin.jpg";
-import useOnClickOutside from "../../hooks/useOnclickoutside";
-import { tabs } from "../../types";
-import { useParams } from "react-router-dom";
+import { useOnClickOutside } from "hooks";
+import { startCase } from "lodash";
 interface NavBarProps {
   handleSearch: (value: string) => void;
   valueSearch: string;
+  title: string;
 }
 export const Navbar = (props: NavBarProps) => {
-  const { handleSearch, valueSearch } = props;
+  const { handleSearch, valueSearch, title } = props;
   const [searchActiveState, setSearchActiveState] = React.useState(false);
   const refSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const { type: typeTab } = useParams<{ type: string }>();
-
   useOnClickOutside(refSearch, (e) => {
     if (refSearch.current.contains(e.target as Node)) return;
     setSearchActiveState(false);
   });
   return (
     <div className="layout__content__navbar">
-      <div className="layout__content__navbar__title">
-        {tabs.find((tab) => tab.type === typeTab)?.render}
-      </div>
+      <div className="layout__content__navbar__title">{startCase(title)}</div>
       <div className="layout__content__navbar__tools d-flex flex-wrap">
         <div
           className="layout__content__navbar__tools__search d-flex flex-wrap"
