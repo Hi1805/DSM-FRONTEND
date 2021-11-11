@@ -1,9 +1,9 @@
 import { Teacher } from "../types";
 import axiosClient from "./config";
 export const teacherApi = {
-  getAll: (params: { size: number; page: number }) => {
+  getAll: async (params: { size: number; page: number }) => {
     const url = "/teacher/list";
-    return axiosClient.get(url, { params }); // {params:parmase}
+    return await axiosClient.get<Teacher[]>(url, { params });
   },
   getTotal: () => {
     const url = "/teacher/total";

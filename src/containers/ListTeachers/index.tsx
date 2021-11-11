@@ -1,42 +1,55 @@
 import React from "react";
 import "../listingStyle.scss";
-import { toString } from "lodash";
+import Style from "./style";
 import { Loading, ItemListing } from "../../components";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchListTeacher,
-  fetchTotalTeacher,
-  selectListTeacher,
-  selectTotalTeacher,
-} from "../../modules";
-import ReactPaginate from "react-paginate";
-interface ListingTeacherProps {
-  valueSeacrch: string;
-  mode: boolean;
-}
+import { Teacher } from "types";
+import { teacherApi } from "apis";
 const PAGE = 1;
-const PAGE_SIZE = 10;
-
-export const ListTeachers = (props: ListingTeacherProps) => {
-  const { valueSeacrch, mode } = props;
-
-  const { loading: loadingTeachers, teachers } =
-    useSelector(selectListTeacher).payload;
-  const { total, loading: loadingTotal } =
-    useSelector(selectTotalTeacher).payload;
-
-  const dispatch = useDispatch();
+const MAX_SIZE = 10;
+export const ListTeachers = () => {
+  const [teacherState, setTeacher] = React.useState<{
+    loading: boolean;
+    list: Teacher[];
+  }>({
+    loading: true,
+    list: [],
+  });
+  const [totalState, setTotalState] = React.useState<{
+    loading: boolean;
+    total: number;
+  }>({
+    loading: true,
+    total: 0,
+  });
+  const [panigation, setPanigation] = React.useState<{
+    page: number;
+    size: number;
+  }>({
+    page: PAGE,
+    size: MAX_SIZE,
+  });
   React.useEffect(() => {
-    dispatch(
-      fetchListTeacher({
-        page: PAGE,
-        size: PAGE_SIZE,
-      })
-    );
-    dispatch(fetchTotalTeacher());
+    (async () => {
+      const { total } = await teacherApi.getTotal().then((res) => res.data);
+      setTotalState({
+        total,
+        loading: false,
+      });
+    })();
   }, []);
+  React.useEffect(() => {
+    (async () => {
+      const data = await teacherApi.getAll(panigation).then((res) => res.data);
+
+      setTeacher({
+        list: data,
+        loading: false,
+      });
+    })();
+  }, []);
+
   return (
-    <div className="td-listing__container table-responsive">
+    <Style className="td-listing__container table-responsive">
       <table className="table">
         <thead>
           <tr>
@@ -51,23 +64,33 @@ export const ListTeachers = (props: ListingTeacherProps) => {
           </tr>
         </thead>
         <tbody>
-          {teachers.map((teacher, index) => (
-            <ItemListing info={teacher} index={index} key={teacher.id} />
+          {teacherState.list.map((teacher, index) => (
+            <ItemListing info={teacher} index={index} key={index} />
           ))}
         </tbody>
       </table>
-      {loadingTeachers ? <Loading /> : null}
-      <ReactPaginate
-        pageCount={total / PAGE_SIZE}
-        pageRangeDisplayed={1}
-        marginPagesDisplayed={0}
-        nextLabel={">"}
-        previousLabel="<"
-        breakLabel={"..."}
-        breakClassName={"break-me"}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
-    </div>
+      {teacherState.loading || totalState.loading ? <Loading /> : null}
+      <div className="panigation">
+        <div className="panigation__row-per d-flex flex-wrap">
+          <div className="panigation__detail">Rows per page:</div>
+          <div className="panigation__select">
+            <select
+              onChange={(e) => {
+                console.log(e.target.value);
+              }}
+            >
+              {(() => {
+                const options: JSX.Element[] = [];
+                for (let i = 0; i < MAX_SIZE; i++) {
+                  options.push(<option value={i + 1}>{i + 1}</option>);
+                }
+                return options;
+              })()}
+            </select>
+          </div>
+        </div>
+        <div className=""></div>
+      </div>
+    </Style>
   );
 };
