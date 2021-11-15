@@ -4,7 +4,12 @@ import { tabs, TypeTab } from "../../types";
 
 export const DashBoard = () => {
   const history = useHistory();
-  const [tabState, setTabState] = React.useState<TypeTab>("student");
+  const [tabState, setTabState] = React.useState<TypeTab>("teacher");
+  React.useEffect(() => {
+    if (history.location.state) {
+      setTabState(history.location.state as TypeTab);
+    }
+  }, []);
   const navigationTab = (type: TypeTab) => {
     let pathname = "";
     switch (type) {
@@ -17,7 +22,10 @@ export const DashBoard = () => {
       case "email":
         pathname = "/manage/email";
     }
-    history.push({ pathname });
+    history.push({
+      state: type,
+      pathname,
+    });
   };
 
   const activeTabClassName = "layout__dashboard__tabs-control__item--active";
@@ -35,7 +43,6 @@ export const DashBoard = () => {
         }`}
         onClick={() => {
           navigationTab(type);
-          setTabState(type);
         }}
       >
         <div className="layout__dashboard__tabs-control__item__icon d-flex justify-content-center align-items-center">
@@ -115,6 +122,26 @@ export const DashBoard = () => {
         );
     }
   };
+  const renderNavigation = React.useCallback(() => {
+    return (
+      <div className="layout__dashboard__tabs-control">
+        {(() => {
+          return tabs.map((tab, index) => {
+            return (
+              <React.Fragment key={index}>
+                {renderTabControl(
+                  getIconTab(tab.type),
+                  tab.render,
+                  tab.type,
+                  tab.type === tabState
+                )}
+              </React.Fragment>
+            );
+          });
+        })()}
+      </div>
+    );
+  }, [tabState]);
   return (
     <div className="layout__dashboard">
       <div className="layout__dashboard__title d-flex">
@@ -150,22 +177,7 @@ export const DashBoard = () => {
           School Data Management
         </div>
       </div>
-      <div className="layout__dashboard__tabs-control">
-        {(() => {
-          return tabs.map((tab, index) => {
-            return (
-              <React.Fragment key={index}>
-                {renderTabControl(
-                  getIconTab(tab.type),
-                  tab.render,
-                  tab.type,
-                  tab.type === tabState
-                )}
-              </React.Fragment>
-            );
-          });
-        })()}
-      </div>
+      {renderNavigation()}
     </div>
   );
 };

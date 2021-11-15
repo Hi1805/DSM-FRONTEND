@@ -7,6 +7,8 @@ import { isSafePath } from "helpers";
 import { ToastContainer } from "react-toastify";
 import { StudentScreen, TeacherScreen } from "screens";
 import { SendEmailScreen } from "./screens/SendEmailScreen/index";
+import "reactjs-popup/dist/index.css";
+
 const history = createBrowserHistory();
 
 function App() {

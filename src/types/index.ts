@@ -22,6 +22,17 @@ export interface Teacher {
   address: string;
   grade?: number;
 }
+export interface Student {
+  id: string;
+  first_name: string;
+  last_name: string;
+  date_of_birth: string;
+  gender: string;
+  email: string;
+  class: string;
+  address: string;
+  grade: number;
+}
 export const tabs: Array<{
   type: TypeTab;
   render: string;
@@ -39,3 +50,9 @@ export const tabs: Array<{
     render: "Send E-email",
   },
 ];
+
+export interface ResponseList<T> {
+  loading: boolean;
+  list: T[];
+  total: number;
+}

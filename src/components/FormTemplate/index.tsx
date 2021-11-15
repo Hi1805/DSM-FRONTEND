@@ -1,4 +1,4 @@
-import { startCase, toNumber, toString } from "lodash";
+import { startCase } from "lodash";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import { regexEmail, regexOnlyLetter } from "../../helpers/regex";
 
 import { ProfileTemplate, TypeTab } from "../../types";
-import "./FormAdd.scss";
 import { useQuery } from "./../../hooks/useQuery";
 interface FormAddProps {
   info?: ProfileTemplate;
@@ -16,17 +15,17 @@ interface FormAddProps {
 // grade là khối, class là lớp
 const YEAR_FIRST = 1980;
 const YEAR_LAST = 2005;
-const empty = {
-  first_name: "",
-  last_name: "",
-  address: "",
-  class: "",
-  date_of_birth: "",
-  email: "",
-  gender: "",
-  id: "",
-  grade: -1,
-};
+// const empty = {
+//   first_name: "",
+//   last_name: "",
+//   address: "",
+//   class: "",
+//   date_of_birth: "",
+//   email: "",
+//   gender: "",
+//   id: "",
+//   grade: -1,
+// };
 export const FormTemplate = (props: FormAddProps) => {
   const { turnOffForm } = props;
 
