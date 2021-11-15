@@ -24,6 +24,7 @@ export const ListStudents = () => {
     page: PAGE,
     size: MAX_SIZE,
   });
+
   React.useEffect(() => {
     setStudentState({
       ...studentState,
@@ -33,15 +34,17 @@ export const ListStudents = () => {
     (async () => {
       try {
         const data = await studentApi.getAll(panigation);
+        console.log("fetch");
+
         setStudentState({
           ...data,
           loading: false,
         });
       } catch (error) {
         setStudentState({
-          list: [],
           total: 0,
-          loading: false,
+          loading: true,
+          list: [],
         });
       }
     })();

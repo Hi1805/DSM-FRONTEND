@@ -1,10 +1,14 @@
 import { ListStudents, Navbar } from "containers";
+import { FormAddStudent } from "containers/FormAddStudent";
 import React from "react";
 import { LayoutManage } from "template/LayoutManage";
 
 export const StudentScreen = () => {
   const [searchValueState, setSearchActiveState] = React.useState("");
-
+  const [isOpenFormAdd, setIsOpenForm] = React.useState(false);
+  const closeForm = () => {
+    setIsOpenForm(false);
+  };
   return (
     <LayoutManage>
       <Navbar
@@ -15,11 +19,15 @@ export const StudentScreen = () => {
       <div className="layout__content__listing">
         <div className={`td-listing`}>
           <div className="td-listing__functions d-flex justify-content-end">
-            <button className="td-listing__functions__add">+ Add</button>
-            <div
-              className="td-listing__functions__sort d-flex justify-content-center align-items-center"
-              onClick={() => {}}
+            <button
+              className="td-listing__functions__add"
+              onClick={() => {
+                setIsOpenForm(true);
+              }}
             >
+              + Add
+            </button>
+            <div className="td-listing__functions__sort d-flex justify-content-center align-items-center">
               <svg
                 width="14"
                 height="12"
@@ -36,6 +44,7 @@ export const StudentScreen = () => {
             </div>
           </div>
           <ListStudents />
+          <FormAddStudent isOpen={isOpenFormAdd} closeForm={closeForm} />
         </div>
       </div>
     </LayoutManage>

@@ -11,9 +11,16 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(async (config) => {
-  return config;
-});
+axiosClient.interceptors.request.use(
+  async (config) => {
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+
+    return Promise.reject(error);
+  }
+);
 
 axiosClient.interceptors.response.use(
   (response) => {
@@ -22,8 +29,12 @@ axiosClient.interceptors.response.use(
     }
     return response.data;
   },
-  (error) => {
-    throw error;
+  function (error) {
+    // Do something with response error
+    if (error.response.status === 401) {
+      console.log("unauthorized, logging out ...");
+    }
+    return Promise.reject(error.response.data);
   }
 );
 

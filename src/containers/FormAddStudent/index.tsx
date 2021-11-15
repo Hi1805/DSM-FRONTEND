@@ -3,7 +3,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import { GlobalStyles } from "styles/GlobalStyle";
-import { ProfileTemplate } from "types";
+import { ResponseFormAdd, Student } from "types";
+import { toast } from "react-toastify";
+
+import { studentApi } from "apis";
 interface FormAddStudentProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -15,8 +18,22 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: ProfileTemplate) => {
-    console.log(data);
+  const onSubmit = async (data: Student) => {
+    await toast.promise(studentApi.create(data), {
+      pending: "Adding student",
+      success: {
+        render: ({ data }: { data: ResponseFormAdd }) => {
+          const { message } = data;
+          return message;
+        },
+      },
+      error: {
+        render: ({ data }: { data: ResponseFormAdd }) => {
+          const { message } = data;
+          return message;
+        },
+      },
+    });
   };
   return (
     <Popup
@@ -29,7 +46,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
       <GlobalStyles>
         <form className="td-form-add" onSubmit={handleSubmit(onSubmit)}>
           <div className="td-form-add__title">
-            <span>Form Add Teacher</span>
+            <span>Form Add Student</span>
             <svg
               width="20"
               height="19"
@@ -118,8 +135,9 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                   <option value="" selected>
                     Select Grade
                   </option>
-                  <option value={1}>1</option>
-                  <option value={1}>2</option>
+                  <option value={10}>10</option>
+                  <option value={11}>11</option>
+                  <option value={12}>12</option>
                 </select>
                 {errors.grade && <span>Please Choose Grade</span>}
               </div>
@@ -134,8 +152,8 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                   <option value="" selected>
                     Select Class
                   </option>
-                  <option value={1}>1</option>
-                  <option value={1}>2</option>
+                  <option value={"10A1"}>1</option>
+                  <option value={"10A2"}>2</option>
                 </select>
                 {errors.class && <span>Please choose Classes</span>}
               </div>

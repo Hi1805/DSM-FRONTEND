@@ -1,4 +1,4 @@
-import { ResponseList, Student, Teacher } from "../types";
+import { ResponseFormAdd, ResponseList, Student, Teacher } from "../types";
 import axiosClient from "./config";
 export const teacherApi = {
   getAll: (params: {
@@ -30,7 +30,9 @@ export const studentApi = {
     size: number;
     page: number;
   }): Promise<ResponseList<Student>> => {
-    const url = "/teacher/list";
+    const url = "/student/list";
+    console.log("run api");
+
     return axiosClient.get(url, { params });
   },
   getTotal: () => {
@@ -41,7 +43,7 @@ export const studentApi = {
     const url = `/student/delete/${id}`;
     return axiosClient.delete(url);
   },
-  post: (payload: Teacher) => {
+  create: (payload: Student): Promise<ResponseFormAdd> => {
     const url = "/student/create";
     return axiosClient.post(url, payload);
   },

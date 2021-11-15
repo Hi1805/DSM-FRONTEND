@@ -56,3 +56,7 @@ export interface ResponseList<T> {
   list: T[];
   total: number;
 }
+
+export interface ResponseFormAdd {
+  message: string;
+}
