@@ -50,7 +50,7 @@ export const studentApi = {
     const url = "/student/create";
     return axiosClient.post(url, payload);
   },
-  put: (payload: Teacher) => {
+  put: (payload: Student) => {
     const url = `/student/edit`;
     return axiosClient.put(url, payload);
   },

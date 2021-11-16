@@ -6,12 +6,12 @@ import { toNumber } from "lodash";
 import { FormEditStudent } from "containers/FormEditStudent";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchListStudent, selectListStudent } from "modules/students";
+import { useFetchListStudent } from "hooks/useFetchListStudent";
 const PAGE = 1;
 const MAX_SIZE = 8;
 
 export const ListStudents = () => {
   const { loading, payload } = useSelector(selectListStudent);
-  const dispatch = useDispatch();
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const closeFormEdit = () => {
     setIsOpenEdit(false);
@@ -28,9 +28,7 @@ export const ListStudents = () => {
     size: MAX_SIZE,
   });
   // Fetch List Student
-  React.useEffect(() => {
-    dispatch(fetchListStudent(pagination));
-  }, [pagination]);
+  useFetchListStudent(pagination);
   //when click select
   const handlePagination = (page: string) => {
     setPagination({

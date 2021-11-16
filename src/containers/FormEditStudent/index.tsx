@@ -8,6 +8,9 @@ import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
 import { useQuery } from "hooks";
+import { selectListStudent } from "modules/students";
+import { useSelector } from "react-redux";
+import { useFetchListStudent } from "hooks/useFetchListStudent";
 interface FormEditStudentProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -22,17 +25,16 @@ export const FormEditStudent = ({
     reset,
     formState: { errors },
   } = useForm();
-
+  const { payload } = useSelector(selectListStudent);
   const query = useQuery();
-  const uid = query.get("id");
-
+  const uid = query.get("id") || "";
+  const infoStudent = payload.list.find((item) => item.id === uid);
   const onSubmit = async (data: Student) => {
-    await toast.promise(studentApi.create(data), {
-      pending: "Adding student",
+    await toast.promise(studentApi.put({ ...data, id: uid }), {
+      pending: `Editing student ${uid}`,
       success: {
         render: ({ data }: { data: ResponseFormAdd }) => {
           const { message } = data;
-
           return message;
         },
       },
@@ -81,6 +83,7 @@ export const FormEditStudent = ({
                 <label htmlFor="first_name">First Name:</label>
                 <input
                   placeholder="example: Truong Thanh"
+                  defaultValue={infoStudent?.first_name}
                   className="form-control"
                   {...register("first_name", {
                     pattern: regexOnlyLetter,
@@ -95,6 +98,7 @@ export const FormEditStudent = ({
                 <input
                   placeholder="example: Huy"
                   className="form-control"
+                  defaultValue={infoStudent?.last_name}
                   {...register("last_name", {
                     pattern: regexOnlyLetter,
                     required: true,
@@ -108,6 +112,7 @@ export const FormEditStudent = ({
                 <label htmlFor="dob">Gender:</label>
                 <select
                   className="form-select form-control"
+                  defaultValue={infoStudent?.gender}
                   {...register("gender", {
                     pattern: regexOnlyLetter,
                     required: true,
@@ -128,6 +133,7 @@ export const FormEditStudent = ({
                   id="date_of_birth"
                   placeholder="example: Huy"
                   type="date"
+                  defaultValue={infoStudent?.date_of_birth}
                   className="form-control"
                 ></input>
                 {errors.date_of_birth && (
@@ -140,6 +146,7 @@ export const FormEditStudent = ({
                 <label htmlFor="grade">Grade:</label>
                 <select
                   className="form-select form-control"
+                  defaultValue={infoStudent?.grade}
                   {...register("grade", {
                     required: true,
                   })}
@@ -160,6 +167,7 @@ export const FormEditStudent = ({
                   {...register("Class", {
                     required: true,
                   })}
+                  defaultValue={infoStudent?.Class}
                 >
                   <option value="" selected>
                     Select Class
@@ -178,6 +186,7 @@ export const FormEditStudent = ({
                     pattern: regexEmail,
                     required: true,
                   })}
+                  defaultValue={infoStudent?.email}
                   id="dob"
                   placeholder="example: Huy@gmail.com"
                   type="email"
@@ -191,6 +200,7 @@ export const FormEditStudent = ({
                 <label htmlFor="dob">Address:</label>
                 <input
                   {...register("address", { required: true })}
+                  defaultValue={infoStudent?.address}
                   id="address"
                   placeholder="example: Da Nang , Viet Nam"
                   type="text"
