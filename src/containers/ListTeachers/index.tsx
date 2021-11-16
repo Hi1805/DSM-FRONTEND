@@ -1,7 +1,7 @@
 import React from "react";
 import "../listingStyle.scss";
 import Style from "./style";
-import { Loading, ItemListing } from "../../components";
+import { Loading, ItemStudent } from "../../components";
 import { ResponseList, Teacher } from "types";
 import { teacherApi } from "apis";
 import { toNumber } from "lodash";
@@ -9,7 +9,9 @@ const PAGE = 1;
 const MAX_SIZE = 8;
 
 export const ListTeachers = () => {
-  const [teacherState, setTeacher] = React.useState<ResponseList<Teacher>>({
+  const [teacherState, setTeacher] = React.useState<
+    ResponseList<Teacher> & { loading: boolean }
+  >({
     loading: true,
     list: [],
     total: 0,
@@ -93,7 +95,7 @@ export const ListTeachers = () => {
         </thead>
         <tbody>
           {teacherState.list.map((teacher, index) => (
-            <ItemListing info={teacher} index={index} key={index} />
+            <></>
           ))}
         </tbody>
       </table>

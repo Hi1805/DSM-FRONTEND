@@ -7,17 +7,24 @@ import { ResponseFormAdd, Student } from "types";
 import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
-interface FormAddStudentProps {
+import { useQuery } from "hooks";
+interface FormEditStudentProps {
   closeForm: () => void;
   isOpen: boolean;
 }
-export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
+export const FormEditStudent = ({
+  isOpen,
+  closeForm,
+}: FormEditStudentProps) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  const query = useQuery();
+  const uid = query.get("id");
 
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.create(data), {
@@ -51,7 +58,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
       <GlobalStyles>
         <form className="td-form-add" onSubmit={handleSubmit(onSubmit)}>
           <div className="td-form-add__title">
-            <span>Form Add Student</span>
+            <span>Form Edit Student</span>
             <svg
               width="20"
               height="19"

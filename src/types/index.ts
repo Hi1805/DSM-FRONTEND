@@ -18,7 +18,7 @@ export interface Teacher {
   date_of_birth: string;
   gender: string;
   email: string;
-  class?: string;
+  Class?: string;
   address: string;
   grade?: number;
 }
@@ -29,7 +29,7 @@ export interface Student {
   date_of_birth: string;
   gender: string;
   email: string;
-  class: string;
+  Class: string;
   address: string;
   grade: number;
 }
@@ -52,7 +52,6 @@ export const tabs: Array<{
 ];
 
 export interface ResponseList<T> {
-  loading: boolean;
   list: T[];
   total: number;
 }

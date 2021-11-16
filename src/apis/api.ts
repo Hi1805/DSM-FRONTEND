@@ -31,8 +31,11 @@ export const studentApi = {
     page: number;
   }): Promise<ResponseList<Student>> => {
     const url = "/student/list";
-    console.log("run api");
 
+    return axiosClient.get(url, { params });
+  },
+  getStudent: (params: { id: string }) => {
+    const url = "/student";
     return axiosClient.get(url, { params });
   },
   getTotal: () => {

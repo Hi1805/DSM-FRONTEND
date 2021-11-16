@@ -1,3 +1,2 @@
-export * from './FormTemplate';
-export * from './Loading';
-export * from './ItemListing'
+export * from "./Loading";
+export * from "./ItemListing";

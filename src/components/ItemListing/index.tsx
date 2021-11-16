@@ -4,16 +4,16 @@ import { format } from "date-fns";
 import "./ItemListing.scss";
 import { useOnClickOutside } from "../../hooks";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
-import { useHistory, useParams } from "react-router-dom";
-import { ProfileTemplate } from "../../types";
+import { useHistory } from "react-router-dom";
+import { Student } from "../../types";
 interface ItemListProps {
-  info: ProfileTemplate;
+  info: Student;
   index: number;
+  openFormEdit: () => void;
 }
 
-export const ItemListing = (props: ItemListProps) => {
-  const { info, index } = props;
+export const ItemStudent = (props: ItemListProps) => {
+  const { info, index, openFormEdit } = props;
   const history = useHistory();
   const [openFunctionState, setOpenFunctionState] = React.useState(false);
   const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -21,8 +21,6 @@ export const ItemListing = (props: ItemListProps) => {
     if (refItem.current.contains(e.target as Node)) return;
     setOpenFunctionState(false);
   });
-  const { type } = useParams<{ type: string }>();
-
   const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -39,10 +37,10 @@ export const ItemListing = (props: ItemListProps) => {
   };
   const handleClickEdit = () => {
     const location = {
-      pathname: `/${type}`,
-      search: `?id=${info.id}&&status=edit`,
+      search: `?id=${info.id}`,
     };
     history.push(location);
+    openFormEdit();
   };
   const renderFunctions = () => {
     if (openFunctionState) {
@@ -130,7 +128,7 @@ export const ItemListing = (props: ItemListProps) => {
           <span>{info.gender}</span>
         </td>
         <td>{info.email}</td>
-        <td>{info.class}</td>
+        <td>{info.Class}</td>
         <td>{info.address}</td>
         <td
           onClick={handleMore}
