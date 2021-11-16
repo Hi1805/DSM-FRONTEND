@@ -1,7 +1,1 @@
-export const ROUTES = [
-  '/login',
-  '/logout',
-  '/teacher',
-  '/student',
-  '/email'
-];
+export const ROUTES = ["/login", "/logout", "/teacher", "/student", "/email"];

@@ -16,6 +16,7 @@ export function* getListStudentSaga(action: StudentListFetch) {
       pagination: {
         size: 1,
         page: 0,
+        isSort: false,
       },
     });
   }

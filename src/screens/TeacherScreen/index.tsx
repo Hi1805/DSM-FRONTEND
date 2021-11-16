@@ -1,4 +1,4 @@
-import { ListStudents, Navbar } from "containers";
+import { ListTeachers, Navbar } from "containers";
 import { FormAddTeacher } from "containers/FormAddTeacher";
 import React from "react";
 import { LayoutManage } from "template/LayoutManage";
@@ -43,7 +43,7 @@ export const TeacherScreen = () => {
               <span>Sort</span>
             </div>
           </div>
-          <ListStudents />
+          <ListTeachers isSort={true} />
           <FormAddTeacher isOpen={isOpenFormAdd} closeForm={closeForm} />
         </div>
       </div>
