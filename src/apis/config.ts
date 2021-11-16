@@ -2,9 +2,12 @@ import axios from "axios";
 import queryString from "query-string";
 
 export type typeAPI = "teacher" | "student" | "dsm";
-
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_URL
+    : "http://localhost:4000/api";
 const axiosClient = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: baseURL,
   headers: {
     "content-type": "application/json",
   },
