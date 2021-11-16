@@ -1,3 +1,5 @@
+import { ResponseList } from "types";
+
 export interface Teacher {
   id: string;
   first_name: string;
@@ -11,10 +13,8 @@ export interface Teacher {
 }
 
 export interface ListTeacherState {
-  payload: {
-    teachers: Teacher[];
-    loading: boolean;
-  };
+  payload: ResponseList<Teacher>;
+  loading: boolean;
 }
 export interface TotalTeacherState {
   payload: {

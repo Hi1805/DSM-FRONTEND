@@ -9,6 +9,7 @@ export const initListStudent: ListStudentState = {
     pagination: {
       size: 1,
       page: 8,
+      isSort: true,
     },
   },
   loading: true,

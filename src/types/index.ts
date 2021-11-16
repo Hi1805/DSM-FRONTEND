@@ -53,6 +53,7 @@ export const tabs: Array<{
 export interface Pagination {
   size: number;
   page: number;
+  isSort: boolean;
 }
 export interface ResponseList<T> {
   list: T[];

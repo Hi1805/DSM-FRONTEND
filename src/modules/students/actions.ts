@@ -6,6 +6,7 @@ export interface StudentListFetch {
   payload: {
     page: number;
     size: number;
+    isSort: boolean;
   };
 }
 export interface StudentListData extends ListStudentState {

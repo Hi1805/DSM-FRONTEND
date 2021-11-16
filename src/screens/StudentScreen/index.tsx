@@ -6,6 +6,7 @@ import { LayoutManage } from "template/LayoutManage";
 export const StudentScreen = () => {
   const [searchValueState, setSearchActiveState] = React.useState("");
   const [isOpenFormAdd, setIsOpenForm] = React.useState(false);
+  const [isSortState, setIsSortState] = React.useState(true);
   const closeForm = () => {
     setIsOpenForm(false);
   };
@@ -27,7 +28,10 @@ export const StudentScreen = () => {
             >
               + Add
             </button>
-            <div className="td-listing__functions__sort d-flex justify-content-center align-items-center">
+            <div
+              className="td-listing__functions__sort d-flex justify-content-center align-items-center"
+              onClick={() => setIsSortState(!isSortState)}
+            >
               <svg
                 width="14"
                 height="12"
@@ -43,7 +47,7 @@ export const StudentScreen = () => {
               <span>Sort</span>
             </div>
           </div>
-          <ListStudents />
+          <ListStudents isSort={isSortState} />
           <FormAddStudent isOpen={isOpenFormAdd} closeForm={closeForm} />
         </div>
       </div>

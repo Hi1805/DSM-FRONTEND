@@ -16,9 +16,3 @@ export interface ListStudentState {
   payload: ResponseList<Student>;
   loading: boolean;
 }
-export interface TotalStudentState {
-  payload: {
-    total: number;
-    loading: boolean;
-  };
-}

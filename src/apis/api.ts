@@ -9,6 +9,8 @@ import axiosClient from "./config";
 export const teacherApi = {
   getAll: (params: Pagination): Promise<ResponseList<Teacher>> => {
     const url = "/teacher/list";
+    console.log(params);
+
     return axiosClient.get(url, { params });
   },
   getTotal: () => {
@@ -19,7 +21,7 @@ export const teacherApi = {
     const url = `/teacher/delete/${id}`;
     return axiosClient.delete(url);
   },
-  post: (payload: Teacher) => {
+  create: (payload: Teacher) => {
     const url = "/teacher/create";
     return axiosClient.post(url, payload);
   },

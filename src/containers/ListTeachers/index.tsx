@@ -1,58 +1,71 @@
 import React from "react";
 import "../listingStyle.scss";
 import Style from "./style";
-import { Loading, ItemStudent } from "../../components";
-import { ResponseList, Teacher } from "types";
-import { teacherApi } from "apis";
+import { Loading, ItemTeacher } from "../../components";
 import { toNumber } from "lodash";
-const PAGE = 1;
-const MAX_SIZE = 8;
+import { FormEditStudent } from "containers/FormEditStudent";
+import { useSelector } from "react-redux";
+import { PAGE, SIZE } from "constants/constants";
+import { useFetchListTeacher } from "hooks/useFetchListTeacher";
+import { selectListTeacher } from "modules/teachers";
 
-export const ListTeachers = () => {
-  const [teacherState, setTeacher] = React.useState({
-    loading: true,
-    list: [],
-    total: 0,
-  });
-  const pageCount = Math.ceil(teacherState.total / MAX_SIZE);
-  const [panigation, setPanigation] = React.useState<{
+export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
+  const { loading, payload } = useSelector(selectListTeacher);
+  const [fetchListTeacher] = useFetchListTeacher();
+  const [isOpenEdit, setIsOpenEdit] = React.useState(false);
+  const closeFormEdit = () => {
+    setIsOpenEdit(false);
+  };
+  const openFormEdit = () => {
+    setIsOpenEdit(true);
+  };
+  const pageCount = Math.ceil(payload.total / SIZE);
+  const [pagination, setPagination] = React.useState<{
     page: number;
     size: number;
   }>({
     page: PAGE,
-    size: MAX_SIZE,
+    size: SIZE,
   });
 
-  const handlePanigation = (page: string) => {
-    setPanigation({
+  // Fetch List Teacher
+  React.useEffect(() => {
+    fetchListTeacher({
+      ...pagination,
+      isSort,
+    });
+  }, [pagination, isSort, fetchListTeacher]);
+  //when click select
+  const handlePagination = (page: string) => {
+    setPagination({
       page: toNumber(page),
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
-  const handlePrevious = () => {
-    if (panigation.page === 1) {
-      setPanigation({
+  const handlePreviousPage = () => {
+    if (pagination.page === 1) {
+      setPagination({
         page: pageCount,
-        size: MAX_SIZE,
+        size: SIZE,
       });
       return;
     }
-    setPanigation({
-      page: panigation.page - 1,
-      size: MAX_SIZE,
+    setPagination({
+      page: pagination.page - 1,
+      size: SIZE,
     });
   };
   const handleNextPage = () => {
-    if (panigation.page === pageCount) {
-      setPanigation({
+    if (pagination.page === pageCount) {
+      setPagination({
         page: 1,
-        size: MAX_SIZE,
+        size: SIZE,
       });
       return;
     }
-    setPanigation({
-      page: panigation.page + 1,
-      size: MAX_SIZE,
+    setPagination({
+      page: pagination.page + 1,
+      size: SIZE,
     });
   };
   return (
@@ -71,19 +84,26 @@ export const ListTeachers = () => {
           </tr>
         </thead>
         <tbody>
-          {teacherState.list.map((teacher, index) => (
-            <></>
-          ))}
+          {!loading
+            ? payload.list.map((teacher, index) => (
+                <ItemTeacher
+                  openFormEdit={openFormEdit}
+                  info={teacher}
+                  index={index}
+                  key={index}
+                />
+              ))
+            : null}
         </tbody>
       </table>
-      {teacherState.loading ? <Loading /> : null}
-      <div className="panigation d-flex flex-wrap">
-        <div className="panigation__row-per d-flex flex-wrap">
-          <div className="panigation__detail">Rows per page:</div>
-          <div className="panigation__select">
+      {loading ? <Loading /> : null}
+      <div className="pagination d-flex flex-wrap">
+        <div className="pagination__row-per d-flex flex-wrap">
+          <div className="pagination__row">Rows per page:</div>
+          <div className="pagination__select">
             <select
               onChange={(e) => {
-                handlePanigation(e.target.value);
+                handlePagination(e.target.value);
               }}
             >
               {(() => {
@@ -92,7 +112,7 @@ export const ListTeachers = () => {
                   options.push(
                     <option
                       key={i}
-                      selected={i + 1 === panigation.page}
+                      selected={i + 1 === pagination.page}
                       value={i + 1}
                     >
                       {i + 1}
@@ -105,8 +125,8 @@ export const ListTeachers = () => {
           </div>
         </div>
         <div className="d-flex flex-wrap">
-          {`1 - ${pageCount} of ${teacherState.total}`}
-          <div className="panigation__prev" onClick={handlePrevious}>
+          {`1 - ${pageCount} of ${payload.total}`}
+          <div className="pagination__prev" onClick={handlePreviousPage}>
             <svg
               width="8"
               height="14"
@@ -122,7 +142,7 @@ export const ListTeachers = () => {
               />
             </svg>
           </div>
-          <div className="panigation__next" onClick={handleNextPage}>
+          <div className="pagination__next" onClick={handleNextPage}>
             <svg
               width="8"
               height="14"
@@ -140,6 +160,7 @@ export const ListTeachers = () => {
           </div>
         </div>
       </div>
+      <FormEditStudent isOpen={isOpenEdit} closeForm={closeFormEdit} />
     </Style>
   );
 };

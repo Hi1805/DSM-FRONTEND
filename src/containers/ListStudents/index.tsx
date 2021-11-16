@@ -7,10 +7,9 @@ import { FormEditStudent } from "containers/FormEditStudent";
 import { useSelector } from "react-redux";
 import { selectListStudent } from "modules/students";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
-const PAGE = 1;
-const MAX_SIZE = 8;
+import { PAGE, SIZE } from "constants/constants";
 
-export const ListStudents = () => {
+export const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListStudent);
   const [fetchListStudent] = useFetchListStudent();
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
@@ -20,49 +19,52 @@ export const ListStudents = () => {
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
-  const pageCount = Math.ceil(payload.total / MAX_SIZE);
+  const pageCount = Math.ceil(payload.total / SIZE);
   const [pagination, setPagination] = React.useState<{
     page: number;
     size: number;
   }>({
     page: PAGE,
-    size: MAX_SIZE,
+    size: SIZE,
   });
   // Fetch List Student
   React.useEffect(() => {
-    fetchListStudent(pagination);
-  }, [pagination]);
+    fetchListStudent({
+      ...pagination,
+      isSort,
+    });
+  }, [pagination, isSort, fetchListStudent]);
   //when click select
   const handlePagination = (page: string) => {
     setPagination({
       page: toNumber(page),
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
   const handlePreviousPage = () => {
     if (pagination.page === 1) {
       setPagination({
         page: pageCount,
-        size: MAX_SIZE,
+        size: SIZE,
       });
       return;
     }
     setPagination({
       page: pagination.page - 1,
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
   const handleNextPage = () => {
     if (pagination.page === pageCount) {
       setPagination({
         page: 1,
-        size: MAX_SIZE,
+        size: SIZE,
       });
       return;
     }
     setPagination({
       page: pagination.page + 1,
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
   return (
