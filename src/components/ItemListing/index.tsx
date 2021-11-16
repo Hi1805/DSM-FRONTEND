@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { convertFullName } from "../../helpers";
 import { format } from "date-fns";
 import "./ItemListing.scss";
@@ -6,6 +6,9 @@ import { useOnClickOutside } from "../../hooks";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 import { Student } from "../../types";
+import { toast } from "react-toastify";
+import { studentApi } from "apis";
+import { useFetchListStudent } from "hooks/useFetchListStudent";
 interface ItemListProps {
   info: Student;
   index: number;
@@ -16,6 +19,7 @@ export const ItemStudent = (props: ItemListProps) => {
   const { info, index, openFormEdit } = props;
   const history = useHistory();
   const [openFunctionState, setOpenFunctionState] = React.useState(false);
+  const [fetchListStudent] = useFetchListStudent();
   const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
   useOnClickOutside(refItem, (e: MouseEvent) => {
     if (refItem.current.contains(e.target as Node)) return;
@@ -32,6 +36,16 @@ export const ItemStudent = (props: ItemListProps) => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        toast.promise(studentApi.delete(info.id), {
+          pending: `deleting ${info.id}`,
+          success: {
+            render: () => {
+              fetchListStudent();
+              return "hâhah";
+            },
+          },
+          error: "haha",
+        });
       }
     });
   };

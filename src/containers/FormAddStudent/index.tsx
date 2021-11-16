@@ -7,6 +7,7 @@ import { ResponseFormAdd, Student } from "types";
 import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
+import { useFetchListStudent } from "./../../hooks/useFetchListStudent";
 interface FormAddStudentProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -18,14 +19,14 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
     reset,
     formState: { errors },
   } = useForm();
-
+  const [fetchListStudent] = useFetchListStudent();
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.create(data), {
       pending: "Adding student",
       success: {
         render: ({ data }: { data: ResponseFormAdd }) => {
           const { message } = data;
-
+          fetchListStudent();
           return message;
         },
       },

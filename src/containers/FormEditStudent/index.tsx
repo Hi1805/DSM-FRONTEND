@@ -28,6 +28,7 @@ export const FormEditStudent = ({
   const { payload } = useSelector(selectListStudent);
   const query = useQuery();
   const uid = query.get("id") || "";
+  const [dispatchFetchStudent] = useFetchListStudent();
   const infoStudent = payload.list.find((item) => item.id === uid);
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.put({ ...data, id: uid }), {
@@ -35,6 +36,7 @@ export const FormEditStudent = ({
       success: {
         render: ({ data }: { data: ResponseFormAdd }) => {
           const { message } = data;
+          dispatchFetchStudent();
           return message;
         },
       },

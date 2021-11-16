@@ -1,21 +1,19 @@
 import { fetchListStudent } from "modules/students";
 import React from "react";
 import { useDispatch } from "react-redux";
-
-export const useFetchListStudent = ({
-  size,
-  page,
-}: {
+interface useFetchParams {
   size: number;
   page: number;
-}) => {
+}
+export const useFetchListStudent = () => {
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(
+  const dispatchFetch = (props?: useFetchParams) => {
+    return dispatch(
       fetchListStudent({
-        size,
-        page,
+        size: props ? props.size : 8,
+        page: props ? props.page : 1,
       })
     );
-  }, [size, page]);
+  };
+  return [dispatchFetch];
 };
