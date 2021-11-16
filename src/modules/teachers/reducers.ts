@@ -21,15 +21,15 @@ export const listTeacherReducer = (
 ): ListTeacherState => {
   switch (action.type) {
     case TEACHER_FETCH_LIST:
-      console.log("run reducer");
-
       return {
         ...state,
+        loading: true,
       };
     case TEACHER_LIST_DATA:
       return {
         ...state,
         ...action,
+        loading: false,
       };
     default:
       return {

@@ -1,9 +1,12 @@
+import { teacherApi } from "apis";
 import { regexEmail, regexOnlyLetter } from "helpers";
+import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import { GlobalStyles } from "styles/GlobalStyle";
-import { ProfileTemplate } from "types";
+import { ResponseMessage, Teacher } from "types";
 interface FormAddTeacherProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -14,9 +17,27 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [fetchListTeacher] = useFetchListTeacher();
 
-  const onSubmit = (data: ProfileTemplate) => {
+  const onSubmit = async (data: Teacher) => {
     console.log(data);
+
+    await toast.promise(teacherApi.create(data), {
+      pending: "Adding Teacher",
+      success: {
+        render: ({ data }: { data: ResponseMessage }) => {
+          const { message } = data;
+          fetchListTeacher();
+          return message;
+        },
+      },
+      error: {
+        render: ({ data }: { data: ResponseMessage }) => {
+          const { message } = data;
+          return message;
+        },
+      },
+    });
   };
   return (
     <Popup
@@ -59,7 +80,9 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                     maxLength: 50,
                   })}
                 />
-                {errors.first_name && <span>Please enter firstname valid</span>}
+                {errors.first_name && (
+                  <span>Please enter first name valid</span>
+                )}
               </div>
               <div className="td-form-add__body__form-input">
                 <label htmlFor="last_name">Last Name:</label>
@@ -71,7 +94,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                     required: true,
                   })}
                 />
-                {errors.last_name && <span>Please enter lastname valid</span>}
+                {errors.last_name && <span>Please enter last name valid</span>}
               </div>
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-4">
@@ -111,15 +134,14 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 <label htmlFor="grade">Grade:</label>
                 <select
                   className="form-select form-control"
-                  {...register("grade", {
-                    required: true,
-                  })}
+                  {...register("grade")}
                 >
                   <option value="" selected>
                     Select Grade
                   </option>
-                  <option value={1}>1</option>
-                  <option value={1}>2</option>
+                  <option value={10}>10</option>
+                  <option value={11}>11</option>
+                  <option value={12}>12</option>
                 </select>
                 {errors.grade && <span>Please Choose Grade</span>}
               </div>
@@ -127,9 +149,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 <label htmlFor="class">Classes:</label>
                 <select
                   className="form-select form-control"
-                  {...register("class", {
-                    required: true,
-                  })}
+                  {...register("Class")}
                 >
                   <option value="" selected>
                     Select Class

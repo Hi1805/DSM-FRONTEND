@@ -21,7 +21,7 @@ export const teacherApi = {
     const url = `/teacher/delete/${id}`;
     return axiosClient.delete(url);
   },
-  post: (payload: Teacher) => {
+  create: (payload: Teacher) => {
     const url = "/teacher/create";
     return axiosClient.post(url, payload);
   },

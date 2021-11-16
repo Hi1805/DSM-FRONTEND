@@ -34,7 +34,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
       ...pagination,
       isSort,
     });
-  }, [pagination.size, pagination.page, isSort]);
+  }, [pagination, isSort, fetchListTeacher]);
   //when click select
   const handlePagination = (page: string) => {
     setPagination({

@@ -29,13 +29,11 @@ export const ListStudents = ({ isSort }: { isSort: boolean }) => {
   });
   // Fetch List Student
   React.useEffect(() => {
-    console.log(isSort);
-
     fetchListStudent({
       ...pagination,
       isSort,
     });
-  }, [pagination.size, pagination.page, isSort]);
+  }, [pagination, isSort, fetchListStudent]);
   //when click select
   const handlePagination = (page: string) => {
     setPagination({
