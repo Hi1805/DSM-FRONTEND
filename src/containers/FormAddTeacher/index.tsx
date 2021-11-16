@@ -15,13 +15,12 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const [fetchListTeacher] = useFetchListTeacher();
 
   const onSubmit = async (data: Teacher) => {
-    console.log(data);
-
     await toast.promise(teacherApi.create(data), {
       pending: "Adding Teacher",
       success: {
@@ -45,7 +44,10 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
       nested
       open={isOpen}
       closeOnDocumentClick
-      onClose={() => closeForm()}
+      onClose={() => {
+        closeForm();
+        reset();
+      }}
     >
       <GlobalStyles>
         <form className="td-form-add" onSubmit={handleSubmit(onSubmit)}>
