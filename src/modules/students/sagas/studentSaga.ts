@@ -4,22 +4,19 @@ import { getStudents, Student, StudentListFetch } from "..";
 import { studentApi } from "apis";
 export function* getListStudentSaga(action: StudentListFetch) {
   try {
-    const { list, total }: ResponseList<Student> = yield call(
+    const data: ResponseList<Student> = yield call(
       studentApi.getAll,
       action.payload
     );
-    console.log({ list, total });
-
-    yield put(
-      getStudents({
-        list,
-        total,
-      })
-    );
+    yield put(getStudents(data));
   } catch (error) {
     getStudents({
       list: [],
       total: 0,
+      pagination: {
+        size: 1,
+        page: 0,
+      },
     });
   }
 }

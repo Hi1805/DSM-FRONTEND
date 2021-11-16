@@ -50,12 +50,16 @@ export const tabs: Array<{
     render: "Send E-email",
   },
 ];
-
+export interface Pagination {
+  size: number;
+  page: number;
+}
 export interface ResponseList<T> {
   list: T[];
   total: number;
+  pagination: Pagination;
 }
 
-export interface ResponseFormAdd {
+export interface ResponseMessage {
   message: string;
 }

@@ -97,7 +97,7 @@ export const ListStudents = () => {
       <div className="pagination d-flex flex-wrap">
         <div className="pagination__row-per d-flex flex-wrap">
           <div className="pagination__row">Rows per page:</div>
-          <div className="pagination__row">
+          <div className="pagination__select">
             <select
               onChange={(e) => {
                 handlePagination(e.target.value);
@@ -123,7 +123,7 @@ export const ListStudents = () => {
         </div>
         <div className="d-flex flex-wrap">
           {`1 - ${pageCount} of ${payload.total}`}
-          <div className="pagination__row" onClick={handlePreviousPage}>
+          <div className="pagination__prev" onClick={handlePreviousPage}>
             <svg
               width="8"
               height="14"
@@ -139,7 +139,7 @@ export const ListStudents = () => {
               />
             </svg>
           </div>
-          <div className="pagination__row" onClick={handleNextPage}>
+          <div className="pagination__next" onClick={handleNextPage}>
             <svg
               width="8"
               height="14"

@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import { GlobalStyles } from "styles/GlobalStyle";
-import { ResponseFormAdd, Student } from "types";
+import { ResponseMessage, Student } from "types";
 import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
@@ -24,14 +24,14 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
     await toast.promise(studentApi.create(data), {
       pending: "Adding student",
       success: {
-        render: ({ data }: { data: ResponseFormAdd }) => {
+        render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           fetchListStudent();
           return message;
         },
       },
       error: {
-        render: ({ data }: { data: ResponseFormAdd }) => {
+        render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           return message;
         },

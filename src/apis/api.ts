@@ -1,10 +1,13 @@
-import { ResponseFormAdd, ResponseList, Student, Teacher } from "../types";
+import {
+  ResponseMessage,
+  ResponseList,
+  Student,
+  Teacher,
+  Pagination,
+} from "../types";
 import axiosClient from "./config";
 export const teacherApi = {
-  getAll: (params: {
-    size: number;
-    page: number;
-  }): Promise<ResponseList<Teacher>> => {
+  getAll: (params: Pagination): Promise<ResponseList<Teacher>> => {
     const url = "/teacher/list";
     return axiosClient.get(url, { params });
   },
@@ -26,10 +29,7 @@ export const teacherApi = {
   },
 };
 export const studentApi = {
-  getAll: (params: {
-    size: number;
-    page: number;
-  }): Promise<ResponseList<Student>> => {
+  getAll: (params: Pagination): Promise<ResponseList<Student>> => {
     const url = "/student/list";
 
     return axiosClient.get(url, { params });
@@ -46,7 +46,7 @@ export const studentApi = {
     const url = `/student/delete/${id}`;
     return axiosClient.delete(url);
   },
-  create: (payload: Student): Promise<ResponseFormAdd> => {
+  create: (payload: Student): Promise<ResponseMessage> => {
     const url = "/student/create";
     return axiosClient.post(url, payload);
   },

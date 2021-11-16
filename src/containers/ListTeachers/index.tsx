@@ -9,9 +9,7 @@ const PAGE = 1;
 const MAX_SIZE = 8;
 
 export const ListTeachers = () => {
-  const [teacherState, setTeacher] = React.useState<
-    ResponseList<Teacher> & { loading: boolean }
-  >({
+  const [teacherState, setTeacher] = React.useState({
     loading: true,
     list: [],
     total: 0,
@@ -24,28 +22,7 @@ export const ListTeachers = () => {
     page: PAGE,
     size: MAX_SIZE,
   });
-  React.useEffect(() => {
-    setTeacher({
-      ...teacherState,
-      loading: true,
-      list: [],
-    });
-    (async () => {
-      try {
-        const data = await teacherApi.getAll(panigation);
-        setTeacher({
-          ...data,
-          loading: false,
-        });
-      } catch (error) {
-        setTeacher({
-          list: [],
-          total: 0,
-          loading: false,
-        });
-      }
-    })();
-  }, [panigation]);
+
   const handlePanigation = (page: string) => {
     setPanigation({
       page: toNumber(page),

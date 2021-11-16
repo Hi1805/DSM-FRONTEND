@@ -6,6 +6,10 @@ export const initListStudent: ListStudentState = {
   payload: {
     list: [],
     total: 0,
+    pagination: {
+      size: 1,
+      page: 8,
+    },
   },
   loading: true,
 };

@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import { GlobalStyles } from "styles/GlobalStyle";
-import { ResponseFormAdd, Student } from "types";
+import { ResponseMessage, Student } from "types";
 import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
@@ -34,14 +34,14 @@ export const FormEditStudent = ({
     await toast.promise(studentApi.put({ ...data, id: uid }), {
       pending: `Editing student ${uid}`,
       success: {
-        render: ({ data }: { data: ResponseFormAdd }) => {
+        render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           dispatchFetchStudent();
           return message;
         },
       },
       error: {
-        render: ({ data }: { data: ResponseFormAdd }) => {
+        render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           return message;
         },

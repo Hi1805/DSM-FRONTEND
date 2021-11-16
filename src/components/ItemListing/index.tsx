@@ -5,10 +5,12 @@ import "./ItemListing.scss";
 import { useOnClickOutside } from "../../hooks";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
-import { Student } from "../../types";
+import { ResponseMessage, Student } from "../../types";
 import { toast } from "react-toastify";
 import { studentApi } from "apis";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
+import { useSelector } from "react-redux";
+import { selectListStudent } from "modules/students";
 interface ItemListProps {
   info: Student;
   index: number;
@@ -19,6 +21,7 @@ export const ItemStudent = (props: ItemListProps) => {
   const { info, index, openFormEdit } = props;
   const history = useHistory();
   const [openFunctionState, setOpenFunctionState] = React.useState(false);
+  const { payload } = useSelector(selectListStudent);
   const [fetchListStudent] = useFetchListStudent();
   const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
   useOnClickOutside(refItem, (e: MouseEvent) => {
@@ -37,14 +40,20 @@ export const ItemStudent = (props: ItemListProps) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         toast.promise(studentApi.delete(info.id), {
-          pending: `deleting ${info.id}`,
+          pending: `Deleting ${info.id}`,
           success: {
-            render: () => {
-              fetchListStudent();
-              return "hâhah";
+            render: ({ data }: { data: ResponseMessage }) => {
+              const { message } = data;
+              fetchListStudent(payload.pagination);
+              return message;
             },
           },
-          error: "haha",
+          error: {
+            render: ({ data }: { data: ResponseMessage }) => {
+              const { message } = data;
+              return message;
+            },
+          },
         });
       }
     });
