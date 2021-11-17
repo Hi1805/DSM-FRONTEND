@@ -2,10 +2,10 @@ import { PAGE, SIZE } from "constants/constants";
 import { fetchListStudent } from "modules/students";
 import { useDispatch } from "react-redux";
 import { Pagination } from "types";
-
+import React from "react";
 export const useFetchListStudent = () => {
   const dispatch = useDispatch();
-  const dispatchFetch = (props?: Pagination) => {
+  const dispatchFetch = React.useCallback((props?: Pagination) => {
     return dispatch(
       fetchListStudent({
         size: props ? props.size : SIZE,
@@ -13,6 +13,6 @@ export const useFetchListStudent = () => {
         isSort: props ? props.isSort : true,
       })
     );
-  };
-  return [dispatchFetch];
+  }, []);
+  return [dispatchFetch] as const;
 };

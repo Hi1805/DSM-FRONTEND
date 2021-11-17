@@ -1,7 +1,6 @@
 import { ListStudents, Navbar } from "containers";
 import { FormAddStudent } from "containers/FormAddStudent";
 import React from "react";
-import { LayoutManage } from "template/LayoutManage";
 
 export const StudentScreen = () => {
   const [searchValueState, setSearchActiveState] = React.useState("");
@@ -11,7 +10,7 @@ export const StudentScreen = () => {
     setIsOpenForm(false);
   };
   return (
-    <LayoutManage>
+    <React.Fragment>
       <Navbar
         title="Student"
         valueSearch={searchValueState}
@@ -51,6 +50,6 @@ export const StudentScreen = () => {
           <FormAddStudent isOpen={isOpenFormAdd} closeForm={closeForm} />
         </div>
       </div>
-    </LayoutManage>
+    </React.Fragment>
   );
 };

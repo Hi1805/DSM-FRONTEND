@@ -11,6 +11,7 @@ import { PAGE, SIZE } from "constants/constants";
 
 export const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListStudent);
+
   const [fetchListStudent] = useFetchListStudent();
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const closeFormEdit = () => {
@@ -29,6 +30,8 @@ export const ListStudents = ({ isSort }: { isSort: boolean }) => {
   });
   // Fetch List Student
   React.useEffect(() => {
+    console.log("run useEffect", isSort);
+
     fetchListStudent({
       ...pagination,
       isSort,
