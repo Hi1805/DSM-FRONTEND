@@ -1,22 +1,31 @@
 import React from "react";
-import { Route, Router, Switch } from "react-router";
-import { StudentScreen, TeacherScreen } from "screens";
-import { SendEmailScreen } from "screens/SendEmailScreen";
-import { LayoutManage } from "template/LayoutManage";
-import { createBrowserHistory } from "history";
+import { Route } from "react-router";
+import { Redirect } from "react-router-dom";
 
-export const ManagementViews = () => {
+const LayoutManage = React.lazy(() => import("template/LayoutManage"));
+export default function ManagementViews() {
   return (
     <React.Fragment>
       <Route
         path="/manage"
         render={({ match: { url } }) => (
           <LayoutManage>
-            <Route path={`${url}/teacher`} component={TeacherScreen} exact />
-            <Route path={`${url}/student`} component={StudentScreen} exact />
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <Route
+                path={`${url}/teacher`}
+                component={React.lazy(() => import("screens/TeacherScreen"))}
+                exact
+              />
+              <Route
+                path={`${url}/student`}
+                component={React.lazy(() => import("screens/StudentScreen"))}
+                exact
+              />
+            </React.Suspense>
           </LayoutManage>
         )}
       />
+      <Redirect from="/manage" to={`/manage/teacher`} />
     </React.Fragment>
   );
-};
+}

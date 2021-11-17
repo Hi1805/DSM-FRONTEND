@@ -11,7 +11,7 @@ export function* getListStudentSaga(action: StudentListFetch) {
     );
     yield put(getStudents(data));
   } catch (error) {
-    toast.warning("Some things went wrong");
+    toast.warning("Student: Some things went wrong");
     yield put(
       getStudents({
         list: [],

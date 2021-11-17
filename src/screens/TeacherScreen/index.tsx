@@ -2,9 +2,11 @@ import { ListTeachers, Navbar } from "containers";
 import { FormAddTeacher } from "containers/FormAddTeacher";
 import React from "react";
 
-export const TeacherScreen = () => {
+export default function TeacherScreen() {
   const [searchValueState, setSearchActiveState] = React.useState("");
   const [isOpenFormAdd, setIsOpenForm] = React.useState(false);
+  const [isSortState, setIsSortState] = React.useState(true);
+
   const closeForm = () => {
     setIsOpenForm(false);
   };
@@ -26,7 +28,10 @@ export const TeacherScreen = () => {
             >
               + Add
             </button>
-            <div className="td-listing__functions__sort d-flex justify-content-center align-items-center">
+            <div
+              className="td-listing__functions__sort d-flex justify-content-center align-items-center"
+              onClick={() => setIsSortState(!isSortState)}
+            >
               <svg
                 width="14"
                 height="12"
@@ -42,10 +47,10 @@ export const TeacherScreen = () => {
               <span>Sort</span>
             </div>
           </div>
-          <ListTeachers isSort={true} />
+          <ListTeachers isSort={isSortState} />
           <FormAddTeacher isOpen={isOpenFormAdd} closeForm={closeForm} />
         </div>
       </div>
     </React.Fragment>
   );
-};
+}

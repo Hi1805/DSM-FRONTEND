@@ -2,7 +2,7 @@ import React from "react";
 import "./ManageScreen.scss";
 import { DashBoard } from "../../containers";
 
-export const LayoutManage: React.FC = ({ children }) => {
+const LayoutManage: React.FC = ({ children }) => {
   return (
     <React.Fragment>
       <div className="layout d-flex flex-wrap">
@@ -12,3 +12,4 @@ export const LayoutManage: React.FC = ({ children }) => {
     </React.Fragment>
   );
 };
+export default LayoutManage;

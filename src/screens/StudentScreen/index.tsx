@@ -2,7 +2,7 @@ import { ListStudents, Navbar } from "containers";
 import { FormAddStudent } from "containers/FormAddStudent";
 import React from "react";
 
-export const StudentScreen = () => {
+export default function StudentScreen() {
   const [searchValueState, setSearchActiveState] = React.useState("");
   const [isOpenFormAdd, setIsOpenForm] = React.useState(false);
   const [isSortState, setIsSortState] = React.useState(true);
@@ -52,4 +52,4 @@ export const StudentScreen = () => {
       </div>
     </React.Fragment>
   );
-};
+}

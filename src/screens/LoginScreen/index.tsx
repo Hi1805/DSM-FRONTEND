@@ -1,5 +1,5 @@
 import React from "react";
 import "./LoginScreen.scss";
-export const LoginScreen = () => {
+export default function LoginScreen() {
   return <div id="login-screen"></div>;
-};
+}
