@@ -30,10 +30,10 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
 
   // Fetch List Teacher
   React.useEffect(() => {
-    fetchListTeacher({
-      ...pagination,
-      isSort,
-    });
+    // fetchListTeacher({
+    //   ...pagination,
+    //   isSort,
+    // });
   }, [pagination, isSort, fetchListTeacher]);
   //when click select
   const handlePagination = (page: string) => {

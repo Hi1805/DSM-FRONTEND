@@ -2,16 +2,17 @@ import { call, put } from "redux-saga/effects";
 import { getTeachers, TeacherListFetch } from "..";
 import { teacherApi } from "apis";
 import { ResponseList, Teacher } from "types";
+import { toast } from "react-toastify";
 export function* getListTeacherSaga(action: TeacherListFetch) {
   try {
-    console.log("run saga teacherApi");
-
     const res: ResponseList<Teacher> = yield call(
       teacherApi.getAll,
       action.payload
     );
     yield put(getTeachers(res));
   } catch (error) {
+    toast.warning("Some things went wrong");
+
     yield put(
       getTeachers({
         list: [],

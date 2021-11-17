@@ -1,7 +1,6 @@
 import { ListTeachers, Navbar } from "containers";
 import { FormAddTeacher } from "containers/FormAddTeacher";
 import React from "react";
-import { LayoutManage } from "template/LayoutManage";
 
 export const TeacherScreen = () => {
   const [searchValueState, setSearchActiveState] = React.useState("");
@@ -10,7 +9,7 @@ export const TeacherScreen = () => {
     setIsOpenForm(false);
   };
   return (
-    <LayoutManage>
+    <React.Fragment>
       <Navbar
         title="Teacher"
         valueSearch={searchValueState}
@@ -47,6 +46,6 @@ export const TeacherScreen = () => {
           <FormAddTeacher isOpen={isOpenFormAdd} closeForm={closeForm} />
         </div>
       </div>
-    </LayoutManage>
+    </React.Fragment>
   );
 };

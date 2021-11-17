@@ -34,6 +34,7 @@ export const listTeacherReducer = (
     default:
       return {
         ...state,
+        loading: false,
       };
   }
 };
