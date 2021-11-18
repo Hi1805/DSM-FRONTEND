@@ -8,18 +8,19 @@ import { useSelector } from "react-redux";
 import { selectListStudent } from "modules/students";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { PAGE, SIZE } from "constants/constants";
-
-export const ListStudents = ({ isSort }: { isSort: boolean }) => {
+import { memo } from "react";
+const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListStudent);
-
   const [fetchListStudent] = useFetchListStudent();
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const closeFormEdit = () => {
     setIsOpenEdit(false);
   };
+
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
+
   const pageCount = Math.ceil(payload.total / SIZE);
   const [pagination, setPagination] = React.useState<{
     page: number;
@@ -30,13 +31,14 @@ export const ListStudents = ({ isSort }: { isSort: boolean }) => {
   });
   // Fetch List Student
   React.useEffect(() => {
-    console.log("run useEffect", isSort);
+    console.log("run fetchListStudent");
 
     fetchListStudent({
       ...pagination,
       isSort,
     });
   }, [pagination, isSort, fetchListStudent]);
+
   //when click select
   const handlePagination = (page: string) => {
     setPagination({
@@ -166,3 +168,5 @@ export const ListStudents = ({ isSort }: { isSort: boolean }) => {
     </Style>
   );
 };
+
+export default memo(ListStudents);

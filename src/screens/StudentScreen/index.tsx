@@ -1,4 +1,5 @@
-import { ListStudents, Navbar } from "containers";
+import { Navbar } from "containers";
+import ListStudents from "containers/ListStudents";
 import { FormAddStudent } from "containers/FormAddStudent";
 import React from "react";
 
@@ -6,6 +7,7 @@ export default function StudentScreen() {
   const [searchValueState, setSearchActiveState] = React.useState("");
   const [isOpenFormAdd, setIsOpenForm] = React.useState(false);
   const [isSortState, setIsSortState] = React.useState(true);
+
   const closeForm = () => {
     setIsOpenForm(false);
   };

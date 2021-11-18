@@ -61,6 +61,7 @@ export const ItemStudent = (props: ItemListProps) => {
   const handleClickEdit = () => {
     const location = {
       search: `?id=${info.id}`,
+      pathname: "/manage/student",
     };
     history.push(location);
     openFormEdit();

@@ -23,8 +23,9 @@ export const DashBoard = () => {
         pathname = "/manage/email";
     }
     history.push({
-      state: type,
       pathname,
+      search: "",
+      state: type,
     });
   };
 
