@@ -3,11 +3,11 @@ import "../listingStyle.scss";
 import Style from "./style";
 import { Loading, ItemTeacher } from "../../components";
 import { toNumber } from "lodash";
-import { FormEditStudent } from "containers/FormEditStudent";
 import { useSelector } from "react-redux";
 import { PAGE, SIZE } from "constants/constants";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { selectListTeacher } from "modules/teachers";
+import { FormEditTeacher } from "./../FormEditTeacher";
 
 export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListTeacher);
@@ -159,7 +159,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
           </div>
         </div>
       </div>
-      <FormEditStudent isOpen={isOpenEdit} closeForm={closeFormEdit} />
+      <FormEditTeacher isOpen={isOpenEdit} closeForm={closeFormEdit} />
     </Style>
   );
 };

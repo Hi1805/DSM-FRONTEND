@@ -9,7 +9,6 @@ import { selectListStudent } from "modules/students";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { PAGE, SIZE } from "constants/constants";
 import { memo } from "react";
-import { getListClasses } from "helpers/getListCLasses";
 const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListStudent);
   const [fetchListStudent] = useFetchListStudent();

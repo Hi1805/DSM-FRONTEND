@@ -7,7 +7,7 @@ export interface ProfileTemplate {
   date_of_birth: string;
   gender: string;
   email: string;
-  class?: string;
+  Class?: string;
   address: string;
   grade?: number;
 }
