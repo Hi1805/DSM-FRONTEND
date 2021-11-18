@@ -32,7 +32,6 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
           const { message } = data;
           fetchListStudent();
           closeForm();
-
           return message;
         },
       },

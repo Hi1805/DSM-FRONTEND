@@ -19,7 +19,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
-  const pageCount = Math.ceil(payload.total / SIZE);
+  const pageCount = Math.ceil(payload.total / SIZE) || 1;
   const [pagination, setPagination] = React.useState<{
     page: number;
     size: number;
@@ -105,7 +105,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
               onChange={(e) => {
                 handlePagination(e.target.value);
               }}
-              defaultValue=""
+              defaultValue={1}
             >
               {(() => {
                 const options: JSX.Element[] = [];
@@ -113,7 +113,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
                   options.push(
                     <option
                       key={i}
-                      selected={i + 1 === pagination.page}
+                      selected={i === pagination.page}
                       value={i + 1}
                     >
                       {i + 1}

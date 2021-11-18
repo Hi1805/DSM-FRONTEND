@@ -57,8 +57,6 @@ export const FormEditTeacher = ({
   };
   const renderOptionsClasses = () => {
     const list = getListClasses(gradeChoose);
-    console.log(list);
-
     return list.map((item) => <option value={item}>{item}</option>);
   };
   return (

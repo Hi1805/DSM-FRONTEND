@@ -20,7 +20,7 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
     setIsOpenEdit(true);
   };
 
-  const pageCount = Math.ceil(payload.total / SIZE);
+  const pageCount = Math.ceil(payload.total / SIZE) || 1;
   const [pagination, setPagination] = React.useState<{
     page: number;
     size: number;
