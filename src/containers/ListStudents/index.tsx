@@ -9,6 +9,7 @@ import { selectListStudent } from "modules/students";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { PAGE, SIZE } from "constants/constants";
 import { memo } from "react";
+import { getListClasses } from "helpers/getListCLasses";
 const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListStudent);
   const [fetchListStudent] = useFetchListStudent();
@@ -16,7 +17,6 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const closeFormEdit = () => {
     setIsOpenEdit(false);
   };
-
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
@@ -141,8 +141,8 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
               <path
                 d="M7 13L1.07071 7.07071C1.03166 7.03166 1.03166 6.96834 1.07071 6.92929L7 1"
                 stroke="#9FA2B4"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </svg>
           </div>
@@ -157,8 +157,8 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
               <path
                 d="M1 13L6.92929 7.07071C6.96834 7.03166 6.96834 6.96834 6.92929 6.92929L1 1"
                 stroke="#9FA2B4"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </svg>
           </div>

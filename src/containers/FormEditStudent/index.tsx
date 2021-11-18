@@ -11,6 +11,9 @@ import { useQuery } from "hooks";
 import { selectListStudent } from "modules/students";
 import { useSelector } from "react-redux";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
+import { getListClasses } from "helpers/getListCLasses";
+import { toNumber } from "lodash";
+
 interface FormEditStudentProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -30,6 +33,8 @@ export const FormEditStudent = ({
   const uid = query.get("id") || "";
   const [dispatchFetchStudent] = useFetchListStudent();
   const infoStudent = payload.list.find((item) => item.id === uid);
+  const [gradeChoose, setGradeChoose] = React.useState(0);
+
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.put({ ...data, id: uid }), {
       pending: `Editing student ${uid}`,
@@ -47,6 +52,10 @@ export const FormEditStudent = ({
         },
       },
     });
+  };
+  const renderOptionsClasses = () => {
+    const list = getListClasses(gradeChoose);
+    return list.map((item) => <option value={item}>{item}</option>);
   };
   return (
     <Popup
@@ -152,6 +161,7 @@ export const FormEditStudent = ({
                   {...register("grade", {
                     required: true,
                   })}
+                  onChange={(e) => setGradeChoose(toNumber(e.target.value))}
                 >
                   <option value="" selected>
                     Select Grade
@@ -174,8 +184,7 @@ export const FormEditStudent = ({
                   <option value="" selected>
                     Select Class
                   </option>
-                  <option value={"10A1"}>10A1</option>
-                  <option value={"10A2"}>10A2</option>
+                  {renderOptionsClasses()}
                 </select>
                 {errors.class && <span>Please choose Classes</span>}
               </div>

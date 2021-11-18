@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
 import { useFetchListStudent } from "./../../hooks/useFetchListStudent";
+import { getListClasses } from "helpers/getListCLasses";
+import { toNumber } from "lodash";
 interface FormAddStudentProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -20,6 +22,8 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
     formState: { errors },
   } = useForm();
   const [fetchListStudent] = useFetchListStudent();
+  const [gradeChoose, setGradeChoose] = React.useState(0);
+
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.create(data), {
       pending: "Adding student",
@@ -37,6 +41,10 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
         },
       },
     });
+  };
+  const renderOptionsClasses = () => {
+    const list = getListClasses(gradeChoose);
+    return list.map((item) => <option value={item}>{item}</option>);
   };
   return (
     <Popup
@@ -137,6 +145,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                   {...register("grade", {
                     required: true,
                   })}
+                  onChange={(e) => setGradeChoose(toNumber(e.target.value))}
                 >
                   <option value="" selected>
                     Select Grade
@@ -158,8 +167,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                   <option value="" selected>
                     Select Class
                   </option>
-                  <option value={"10A1"}>10A1</option>
-                  <option value={"10A2"}>10A2</option>
+                  {renderOptionsClasses()}
                 </select>
                 {errors.class && <span>Please choose Classes</span>}
               </div>
