@@ -43,6 +43,7 @@ export const FormEditTeacher = ({
         render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           dispatchFetchTeacher();
+          closeForm();
           return message;
         },
       },

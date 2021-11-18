@@ -30,6 +30,8 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
         render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           fetchListTeacher();
+          closeForm();
+
           return message;
         },
       },

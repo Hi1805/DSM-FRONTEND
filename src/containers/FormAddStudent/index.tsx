@@ -31,6 +31,8 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
         render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           fetchListStudent();
+          closeForm();
+
           return message;
         },
       },

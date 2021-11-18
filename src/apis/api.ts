@@ -9,7 +9,6 @@ import axiosClient from "./config";
 export const teacherApi = {
   getAll: (params: Pagination): Promise<ResponseList<Teacher>> => {
     const url = "/teacher/list";
-    console.log(params);
 
     return axiosClient.get(url, { params });
   },

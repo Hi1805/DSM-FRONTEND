@@ -30,8 +30,6 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
   });
   // Fetch List Student
   React.useEffect(() => {
-    console.log("run fetchListStudent");
-
     fetchListStudent({
       ...pagination,
       isSort,

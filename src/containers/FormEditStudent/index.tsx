@@ -44,6 +44,8 @@ export const FormEditStudent = ({
         render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           dispatchFetchStudent();
+          closeForm();
+
           return message;
         },
       },
