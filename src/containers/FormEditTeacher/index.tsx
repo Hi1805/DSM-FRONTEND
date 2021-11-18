@@ -3,12 +3,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import { GlobalStyles } from "styles/GlobalStyle";
-import { ResponseMessage, Student } from "types";
+import { ResponseMessage, Teacher } from "types";
 import { toast } from "react-toastify";
 import { teacherApi } from "apis";
 import { useQuery } from "hooks";
 import { useSelector } from "react-redux";
-import { useFetchListStudent } from "hooks/useFetchListStudent";
+import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { getListClasses } from "helpers/getListCLasses";
 import { toNumber } from "lodash";
 import { selectListTeacher } from "modules";
@@ -30,20 +30,19 @@ export const FormEditTeacher = ({
   const { payload } = useSelector(selectListTeacher);
   const query = useQuery();
   const uid = query.get("id") || "";
-  const [dispatchFetchStudent] = useFetchListStudent();
+  const [dispatchFetchTeacher] = useFetchListTeacher();
   const infoTeacher = payload.list.find((item) => item.id === uid);
   const [gradeChoose, setGradeChoose] = React.useState(infoTeacher?.grade || 0);
-  console.log(infoTeacher?.grade);
   React.useEffect(() => {
     setGradeChoose(infoTeacher?.grade || 0);
   }, [infoTeacher]);
-  const onSubmit = async (data: Student) => {
+  const onSubmit = async (data: Teacher) => {
     await toast.promise(teacherApi.put({ ...data, id: uid }), {
       pending: `Editing teacher ${uid}`,
       success: {
         render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
-          dispatchFetchStudent();
+          dispatchFetchTeacher();
           return message;
         },
       },
