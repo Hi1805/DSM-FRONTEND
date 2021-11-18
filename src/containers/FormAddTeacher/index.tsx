@@ -1,5 +1,6 @@
 import { teacherApi } from "apis";
 import { regexEmail, regexOnlyLetter } from "helpers";
+import { getListClasses } from "helpers/getListCLasses";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import { GlobalStyles } from "styles/GlobalStyle";
 import { ResponseMessage, Teacher } from "types";
+import { toNumber } from "lodash";
 interface FormAddTeacherProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -19,6 +21,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
     formState: { errors },
   } = useForm();
   const [fetchListTeacher] = useFetchListTeacher();
+  const [gradeChoose, setGradeChoose] = React.useState(0);
 
   const onSubmit = async (data: Teacher) => {
     await toast.promise(teacherApi.create(data), {
@@ -37,6 +40,10 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
         },
       },
     });
+  };
+  const renderOptionsClasses = () => {
+    const list = getListClasses(gradeChoose);
+    return list.map((item) => <option value={item}>{item}</option>);
   };
   return (
     <Popup
@@ -137,6 +144,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 <select
                   className="form-select form-control"
                   {...register("grade")}
+                  onChange={(e) => setGradeChoose(toNumber(e.target.value))}
                 >
                   <option value="" selected>
                     Select Grade
@@ -156,8 +164,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                   <option value="" selected>
                     Select Class
                   </option>
-                  <option value={1}>1</option>
-                  <option value={1}>2</option>
+                  {renderOptionsClasses()}
                 </select>
                 {errors.class && <span>Please choose Classes</span>}
               </div>
