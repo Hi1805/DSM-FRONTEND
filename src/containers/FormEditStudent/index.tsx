@@ -34,7 +34,9 @@ export const FormEditStudent = ({
   const [dispatchFetchStudent] = useFetchListStudent();
   const infoStudent = payload.list.find((item) => item.id === uid);
   const [gradeChoose, setGradeChoose] = React.useState(infoStudent?.grade || 0);
-
+  React.useEffect(() => {
+    setGradeChoose(infoStudent?.grade || 0);
+  }, [infoStudent]);
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.put({ ...data, id: uid }), {
       pending: `Editing student ${uid}`,

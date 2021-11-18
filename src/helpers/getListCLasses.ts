@@ -1,7 +1,8 @@
+import { toString } from "lodash";
 export function getListClasses(grade: number): Array<string> {
   const list = require("data/classes.json");
-  if (list[grade]) {
-    return list[grade].classes;
+  if (list[toString(grade)]) {
+    return list[toString(grade)].classes;
   }
   return [];
 }
