@@ -10,7 +10,6 @@ import { teacherApi } from "apis";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { useSelector } from "react-redux";
 import { selectListTeacher } from "modules/teachers";
-import Style from "styles/ItemTableStyle";
 
 interface ItemListProps {
   info: Teacher;
@@ -143,7 +142,7 @@ export const ItemTeacher = (props: ItemListProps) => {
 
   return (
     <React.Fragment>
-      <Style className="item-listing">
+      <tr className="item-listing">
         <th scope="row">{index + 1}</th>
         <td>{info.id}</td>
         <td>{convertFullName(info.first_name, info.last_name)}</td>
@@ -174,7 +173,7 @@ export const ItemTeacher = (props: ItemListProps) => {
             />
           </svg>
         </td>
-      </Style>
+      </tr>
       {renderFunctions()}
     </React.Fragment>
   );

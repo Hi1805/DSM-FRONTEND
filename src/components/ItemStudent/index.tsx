@@ -10,7 +10,6 @@ import { studentApi } from "apis";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { useSelector } from "react-redux";
 import { selectListStudent } from "modules/students";
-import Style from "styles/ItemTableStyle";
 import clsx from "clsx";
 interface ItemListProps {
   info: Student;
@@ -155,7 +154,7 @@ export const ItemStudent = (props: ItemListProps) => {
 
   return (
     <React.Fragment>
-      <Style className="item-listing">
+      <tr className="item-listing">
         <th scope="row">{index + 1}</th>
         <td>{info.id}</td>
         <td>{convertFullName(info.first_name, info.last_name)}</td>
@@ -186,7 +185,7 @@ export const ItemStudent = (props: ItemListProps) => {
             />
           </svg>
         </td>
-      </Style>
+      </tr>
       {renderFunctions()}
     </React.Fragment>
   );
