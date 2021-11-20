@@ -91,7 +91,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                     maxLength: 50,
                   })}
                 />
-                {errors.first_name && <span>Please enter firstname valid</span>}
+                {errors.first_name && <span>{errors.message}</span>}
               </div>
               <div className="td-form-add__body__form-input">
                 <label htmlFor="last_name">Last Name:</label>

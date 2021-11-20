@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { convertFullName } from "../../helpers";
 import { format } from "date-fns";
-import "./ItemListing.scss";
 import { useOnClickOutside } from "../../hooks";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
@@ -11,6 +10,8 @@ import { teacherApi } from "apis";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { useSelector } from "react-redux";
 import { selectListTeacher } from "modules/teachers";
+import Style from "styles/ItemTableStyle";
+
 interface ItemListProps {
   info: Teacher;
   index: number;
@@ -142,7 +143,7 @@ export const ItemTeacher = (props: ItemListProps) => {
 
   return (
     <React.Fragment>
-      <tr className="item-listing">
+      <Style className="item-listing">
         <th scope="row">{index + 1}</th>
         <td>{info.id}</td>
         <td>{convertFullName(info.first_name, info.last_name)}</td>
@@ -173,7 +174,7 @@ export const ItemTeacher = (props: ItemListProps) => {
             />
           </svg>
         </td>
-      </tr>
+      </Style>
       {renderFunctions()}
     </React.Fragment>
   );

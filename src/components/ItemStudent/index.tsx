@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { convertFullName } from "../../helpers";
 import { format } from "date-fns";
-import "./ItemListing.scss";
 import { useOnClickOutside } from "../../hooks";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
@@ -11,6 +10,8 @@ import { studentApi } from "apis";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { useSelector } from "react-redux";
 import { selectListStudent } from "modules/students";
+import Style from "styles/ItemTableStyle";
+import clsx from "clsx";
 interface ItemListProps {
   info: Student;
   index: number;
@@ -87,11 +88,13 @@ export const ItemStudent = (props: ItemListProps) => {
               />
             </svg>
           </div>
-          <div className="item-listing__functions__edit">
+          <div
+            className="item-listing__functions__edit"
+            onClick={handleClickEdit}
+          >
             <button
               type="button"
               className="item-listing__functions__btn btn--edit"
-              onClick={handleClickEdit}
             >
               Edit
             </button>
@@ -108,11 +111,13 @@ export const ItemStudent = (props: ItemListProps) => {
               />
             </svg>
           </div>
-          <div className="item-listing__functions__delete">
+          <div
+            className="item-listing__functions__delete"
+            onClick={handleDelete}
+          >
             <button
               type="button"
               className="item-listing__functions__btn btn--delete"
-              onClick={handleDelete}
             >
               Delete
             </button>
@@ -138,17 +143,24 @@ export const ItemStudent = (props: ItemListProps) => {
   const handleMore = () => {
     setOpenFunctionState(!openFunctionState);
   };
-  const styleGender =
-    info.gender === "female" ? "gender--female" : "gender--male";
+  const genderClasses = clsx(
+    /*eslint no-useless-computed-key: ["off", { "enforceForClassMembers": true }]*/
+    {
+      ["gender--female"]: info.gender === "female",
+    },
+    {
+      ["gender--male"]: info.gender === "male",
+    }
+  );
 
   return (
     <React.Fragment>
-      <tr className="item-listing">
+      <Style className="item-listing">
         <th scope="row">{index + 1}</th>
         <td>{info.id}</td>
         <td>{convertFullName(info.first_name, info.last_name)}</td>
         <td>{format(new Date(info.date_of_birth), "PP")}</td>
-        <td className={styleGender}>
+        <td className={genderClasses}>
           <span>{info.gender}</span>
         </td>
         <td>{info.email}</td>
@@ -174,7 +186,7 @@ export const ItemStudent = (props: ItemListProps) => {
             />
           </svg>
         </td>
-      </tr>
+      </Style>
       {renderFunctions()}
     </React.Fragment>
   );

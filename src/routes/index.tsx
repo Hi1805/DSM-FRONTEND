@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 const LayoutManage = React.lazy(() => import("template/LayoutManage"));
 const TeacherScreen = React.lazy(() => import("screens/TeacherScreen"));
@@ -19,7 +19,7 @@ export default function ManagementViews() {
           </LayoutManage>
         )}
       />
-      <Redirect from="/manage" to={`/manage/teacher`} />
+      {/* <Redirect from="/manage" to={`/manage/teacher`} /> */}
     </React.Fragment>
   );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import "../listingStyle.scss";
 import Style from "./style";
 import { Loading, ItemStudent } from "../../components";
 import { toNumber } from "lodash";
