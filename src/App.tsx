@@ -4,17 +4,18 @@ import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { ToastContainer } from "react-toastify";
 import "reactjs-popup/dist/index.css";
+import { isSafePath } from "helpers";
 
 const history = createBrowserHistory();
 
 const LoginScreen = React.lazy(() => import("screens/LoginScreen"));
 const ManagementViews = React.lazy(() => import("routes"));
 function App() {
-  // React.useEffect(() => {
-  //   if (!isSafePath(history.location.pathname)) {
-  //     history.push("/manage/teacher");
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (!isSafePath(history.location.pathname)) {
+      history.push("/manage/teacher");
+    }
+  }, []);
 
   return (
     <React.Fragment>
