@@ -6,7 +6,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
-import { GlobalStyles } from "styles/GlobalStyle";
+import { FormAddStyle } from "styles/GlobalStyle";
 import { ResponseMessage, Teacher } from "types";
 import { toNumber } from "lodash";
 interface FormAddTeacherProps {
@@ -58,7 +58,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
         reset();
       }}
     >
-      <GlobalStyles>
+      <FormAddStyle>
         <form className="td-form-add" onSubmit={handleSubmit(onSubmit)}>
           <div className="td-form-add__title">
             <span>Form Add Teacher</span>
@@ -217,7 +217,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
             />
           </div>
         </form>
-      </GlobalStyles>
+      </FormAddStyle>
     </Popup>
   );
 };

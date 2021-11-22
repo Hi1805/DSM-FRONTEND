@@ -10,6 +10,7 @@ import { teacherApi } from "apis";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { useSelector } from "react-redux";
 import { selectListTeacher } from "modules/teachers";
+import clsx from "clsx";
 
 interface ItemListProps {
   info: Teacher;
@@ -137,8 +138,15 @@ export const ItemTeacher = (props: ItemListProps) => {
   const handleMore = () => {
     setOpenFunctionState(!openFunctionState);
   };
-  const styleGender =
-    info.gender === "female" ? "gender--female" : "gender--male";
+  const genderClasses = clsx(
+    /*eslint no-useless-computed-key: ["off", { "enforceForClassMembers": true }]*/
+    {
+      ["gender--female"]: info.gender === "female",
+    },
+    {
+      ["gender--male"]: info.gender === "male",
+    }
+  );
 
   return (
     <React.Fragment>
@@ -147,7 +155,7 @@ export const ItemTeacher = (props: ItemListProps) => {
         <td>{info.id}</td>
         <td>{convertFullName(info.first_name, info.last_name)}</td>
         <td>{format(new Date(info.date_of_birth), "PP")}</td>
-        <td className={styleGender}>
+        <td className={genderClasses}>
           <span>{info.gender}</span>
         </td>
         <td>{info.email}</td>

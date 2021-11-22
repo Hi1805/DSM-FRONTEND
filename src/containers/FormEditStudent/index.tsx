@@ -2,7 +2,7 @@ import { regexEmail, regexOnlyLetter } from "helpers";
 import React from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
-import { GlobalStyles } from "styles/GlobalStyle";
+import { FormAddStyle } from "styles/GlobalStyle";
 import { ResponseMessage, Student } from "types";
 import { toast } from "react-toastify";
 
@@ -72,7 +72,7 @@ export const FormEditStudent = ({
         reset();
       }}
     >
-      <GlobalStyles>
+      <FormAddStyle>
         <form className="td-form-add" onSubmit={handleSubmit(onSubmit)}>
           <div className="td-form-add__title">
             <span>Form Edit Student</span>
@@ -241,7 +241,7 @@ export const FormEditStudent = ({
             />
           </div>
         </form>
-      </GlobalStyles>
+      </FormAddStyle>
     </Popup>
   );
 };

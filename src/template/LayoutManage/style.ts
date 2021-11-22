@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { blue } from "styles/color";
 export default styled.div`
   .layout {
     min-height: 100vh;
@@ -69,6 +70,8 @@ export default styled.div`
 
       &__navbar {
         display: flex;
+        position: relative;
+
         justify-content: space-between;
 
         &__title {
@@ -132,6 +135,35 @@ export default styled.div`
 
             to {
               transform: translateX(0);
+            }
+          }
+
+          &__menu {
+            position: absolute;
+            background: #ffffff;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+            top: 50px;
+            right: 0;
+
+            .menu__change-password,
+            .menu__logout {
+              display: flex;
+              cursor: pointer;
+              justify-content: flex-start;
+              align-items: center;
+              width: 100%;
+              padding: 0.5rem;
+              span {
+                margin-left: 10px;
+                font-size: 1.15rem;
+              }
+              &:hover {
+                background-color: #3e4ebb24;
+              }
+            }
+            .menu__logout {
+              color: var(--bs-red);
             }
           }
         }

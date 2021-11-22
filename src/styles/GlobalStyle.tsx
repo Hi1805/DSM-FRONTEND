@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { blue } from "./color";
-export const GlobalStyles = styled.div`
+export const FormAddStyle = styled.div`
   .td-form-add {
     border-radius: 15px;
     &__title {
