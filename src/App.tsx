@@ -13,7 +13,7 @@ const ManagementViews = React.lazy(() => import("routes"));
 function App() {
   React.useEffect(() => {
     if (!isSafePath(history.location.pathname)) {
-      history.push("/login");
+      history.push("/manage/student");
     }
   }, []);
 

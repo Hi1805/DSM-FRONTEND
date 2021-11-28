@@ -5,12 +5,14 @@ import { Container } from "template/Container";
 import PasswordStrengthBar from "react-password-strength-bar";
 import Style from "./style";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router";
 const ChangePasswordScreen = () => {
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [oldPassword, setOldPassword] = React.useState("");
   const [scorePassword, setScorePassword] = React.useState(0);
   const [suggestions, setSuggestions] = React.useState<string[]>();
+  const history = useHistory();
   const onSave = () => {
     if (confirmPassword !== newPassword) {
       toast.error("Your confirm password not match");
@@ -90,7 +92,13 @@ const ChangePasswordScreen = () => {
               </div>
             </div>
             <div className="m-auto mt-5 footer-form d-flex justify-content-between">
-              <button className="footer-form-btn footer-form-btn--cancel">
+              <button
+                className="footer-form-btn footer-form-btn--cancel"
+                onClick={(e) => {
+                  e.preventDefault();
+                  history.push("/manage/student");
+                }}
+              >
                 Cancel
               </button>
 
