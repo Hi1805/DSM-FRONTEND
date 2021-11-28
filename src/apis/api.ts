@@ -4,6 +4,7 @@ import {
   Student,
   Teacher,
   Pagination,
+  BodyLogin,
 } from "../types";
 import axiosClient from "./config";
 export const teacherApi = {
@@ -32,7 +33,6 @@ export const teacherApi = {
 export const studentApi = {
   getAll: (params: Pagination): Promise<ResponseList<Student>> => {
     const url = "/student/list";
-
     return axiosClient.get(url, { params });
   },
   getStudent: (params: { id: string }) => {
@@ -54,5 +54,12 @@ export const studentApi = {
   put: (payload: Student) => {
     const url = `/student/edit`;
     return axiosClient.put(url, payload);
+  },
+};
+
+export const dsmApi = {
+  post: (payload: BodyLogin) => {
+    const url = `dsm/login`;
+    return axiosClient.post(url, payload);
   },
 };

@@ -9521,6 +9521,13 @@ react-paginate@^7.1.3:
   dependencies:
     prop-types "^15.6.1"
 
+react-password-strength-bar@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-password-strength-bar/-/react-password-strength-bar-0.4.0.tgz#8c8814e95fc61bdb2c24f971ec1cd1a810c97887"
+  integrity sha512-gXgFdGJfeqLKC/xR76kqD8z9w84Rb9YOTcJXKopBzMx8dIdxNTfXGZ64Y2yTvpbnfxLdRNSV3vgAGD7CtdcnIQ==
+  dependencies:
+    zxcvbn "4.4.2"
+
 react-redux@^7.2.5:
   version "7.2.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.5.tgz#213c1b05aa1187d9c940ddfc0b29450957f6a3b8"
@@ -12131,3 +12138,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zxcvbn@4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"
+  integrity sha1-KOwXzwl0PtyrBW3dixsGJizHPDA=

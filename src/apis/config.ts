@@ -6,16 +6,20 @@ const baseURL =
   process.env.NODE_ENV === "production"
     ? "https://data-school-mangement-01.herokuapp.com/api"
     : "http://localhost:4000/api";
+const user_agent = navigator.userAgent;
 const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {
     "content-type": "application/json",
+    // "user-agent": user_agent,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.request.use(
   async (config) => {
+    console.log(config.headers);
+
     return config;
   },
   function (error) {

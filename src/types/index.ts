@@ -64,3 +64,8 @@ export interface ResponseList<T> {
 export interface ResponseMessage {
   message: string;
 }
+
+export interface BodyLogin {
+  email: string;
+  password: string;
+}
