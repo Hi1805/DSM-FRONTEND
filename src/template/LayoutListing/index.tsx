@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory, useParams } from "react-router";
 
 interface LayoutListingProps {
@@ -11,23 +11,11 @@ export const LayoutListing: React.FC<LayoutListingProps> = (props) => {
   const history = useHistory();
   const { type } = useParams<{ type: string }>();
 
-  const handleClickAdd = () => {
-    const location = {
-      pathname: `/${type}`,
-      search: `?status=add`,
-    };
-    history.push(location);
-  };
   return (
     <div className="layout__content__listing">
       <div className={`td-listing`}>
         <div className="td-listing__functions d-flex justify-content-end">
-          <button
-            className="td-listing__functions__add"
-            onClick={handleClickAdd}
-          >
-            + Add
-          </button>
+          <button className="td-listing__functions__add">+ Add</button>
           <div
             className="td-listing__functions__sort d-flex justify-content-center align-items-center"
             onClick={() => {

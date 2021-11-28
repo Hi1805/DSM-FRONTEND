@@ -2,8 +2,7 @@ import styled from "styled-components";
 export default styled.div`
 .layout__content__form{
     
-    margin-left: 20%;
-    background: #FFFFFF;
+    
     border: 1px solid #DFE0EB;
     box-sizing: border-box;
     border-radius: 8px;

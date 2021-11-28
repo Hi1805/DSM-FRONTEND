@@ -7,7 +7,7 @@ export interface ProfileTemplate {
   date_of_birth: string;
   gender: string;
   email: string;
-  class?: string;
+  Class?: string;
   address: string;
   grade?: number;
 }
@@ -53,6 +53,7 @@ export const tabs: Array<{
 export interface Pagination {
   size: number;
   page: number;
+  isSort: boolean;
 }
 export interface ResponseList<T> {
   list: T[];

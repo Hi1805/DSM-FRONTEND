@@ -9,7 +9,7 @@ export const DashBoard = () => {
     if (history.location.state) {
       setTabState(history.location.state as TypeTab);
     }
-  }, []);
+  }, [history.location.state]);
   const navigationTab = (type: TypeTab) => {
     let pathname = "";
     switch (type) {
@@ -23,37 +23,14 @@ export const DashBoard = () => {
         pathname = "/manage/email";
     }
     history.push({
-      state: type,
       pathname,
+      search: "",
+      state: type,
     });
   };
 
   const activeTabClassName = "layout__dashboard__tabs-control__item--active";
 
-  const renderTabControl = (
-    icon: JSX.Element,
-    name: string,
-    type: TypeTab,
-    active: boolean = false
-  ) => {
-    return (
-      <div
-        className={`layout__dashboard__tabs-control__item d-flex ${
-          active ? activeTabClassName : ""
-        }`}
-        onClick={() => {
-          navigationTab(type);
-        }}
-      >
-        <div className="layout__dashboard__tabs-control__item__icon d-flex justify-content-center align-items-center">
-          {icon}
-        </div>
-        <div className="layout__dashboard__tabs-control__item__name">
-          {name}
-        </div>
-      </div>
-    );
-  };
   const getIconTab = (type: TypeTab) => {
     switch (type) {
       case "teacher":
@@ -122,7 +99,31 @@ export const DashBoard = () => {
         );
     }
   };
-  const renderNavigation = React.useCallback(() => {
+  const renderNavigation = () => {
+    const renderTabControl = (
+      icon: JSX.Element,
+      name: string,
+      type: TypeTab,
+      active: boolean = false
+    ) => {
+      return (
+        <div
+          className={`layout__dashboard__tabs-control__item d-flex ${
+            active ? activeTabClassName : ""
+          }`}
+          onClick={() => {
+            navigationTab(type);
+          }}
+        >
+          <div className="layout__dashboard__tabs-control__item__icon d-flex justify-content-center align-items-center">
+            {icon}
+          </div>
+          <div className="layout__dashboard__tabs-control__item__name">
+            {name}
+          </div>
+        </div>
+      );
+    };
     return (
       <div className="layout__dashboard__tabs-control">
         {(() => {
@@ -141,7 +142,7 @@ export const DashBoard = () => {
         })()}
       </div>
     );
-  }, [tabState]);
+  };
   return (
     <div className="layout__dashboard">
       <div className="layout__dashboard__title d-flex">

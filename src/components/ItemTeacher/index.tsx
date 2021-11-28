@@ -1,28 +1,29 @@
 import React, { useRef } from "react";
 import { convertFullName } from "../../helpers";
 import { format } from "date-fns";
-import "./ItemListing.scss";
 import { useOnClickOutside } from "../../hooks";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
-import { ResponseMessage, Student } from "../../types";
+import { ResponseMessage, Teacher } from "../../types";
 import { toast } from "react-toastify";
-import { studentApi } from "apis";
-import { useFetchListStudent } from "hooks/useFetchListStudent";
+import { teacherApi } from "apis";
+import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { useSelector } from "react-redux";
-import { selectListStudent } from "modules/students";
+import { selectListTeacher } from "modules/teachers";
+import clsx from "clsx";
+
 interface ItemListProps {
-  info: Student;
+  info: Teacher;
   index: number;
   openFormEdit: () => void;
 }
 
-export const ItemStudent = (props: ItemListProps) => {
+export const ItemTeacher = (props: ItemListProps) => {
   const { info, index, openFormEdit } = props;
   const history = useHistory();
   const [openFunctionState, setOpenFunctionState] = React.useState(false);
-  const { payload } = useSelector(selectListStudent);
-  const [fetchListStudent] = useFetchListStudent();
+  const { payload } = useSelector(selectListTeacher);
+  const [fetchListTeacher] = useFetchListTeacher();
   const refItem = useRef() as React.MutableRefObject<HTMLInputElement>;
   useOnClickOutside(refItem, (e: MouseEvent) => {
     if (refItem.current.contains(e.target as Node)) return;
@@ -39,12 +40,12 @@ export const ItemStudent = (props: ItemListProps) => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        toast.promise(studentApi.delete(info.id), {
+        toast.promise(teacherApi.delete(info.id), {
           pending: `Deleting ${info.id}`,
           success: {
             render: ({ data }: { data: ResponseMessage }) => {
               const { message } = data;
-              fetchListStudent(payload.pagination);
+              fetchListTeacher(payload.pagination);
               return message;
             },
           },
@@ -137,8 +138,15 @@ export const ItemStudent = (props: ItemListProps) => {
   const handleMore = () => {
     setOpenFunctionState(!openFunctionState);
   };
-  const styleGender =
-    info.gender === "female" ? "gender--female" : "gender--male";
+  const genderClasses = clsx(
+    /*eslint no-useless-computed-key: ["off", { "enforceForClassMembers": true }]*/
+    {
+      ["gender--female"]: info.gender === "female",
+    },
+    {
+      ["gender--male"]: info.gender === "male",
+    }
+  );
 
   return (
     <React.Fragment>
@@ -147,7 +155,7 @@ export const ItemStudent = (props: ItemListProps) => {
         <td>{info.id}</td>
         <td>{convertFullName(info.first_name, info.last_name)}</td>
         <td>{format(new Date(info.date_of_birth), "PP")}</td>
-        <td className={styleGender}>
+        <td className={genderClasses}>
           <span>{info.gender}</span>
         </td>
         <td>{info.email}</td>

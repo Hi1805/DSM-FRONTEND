@@ -2,12 +2,14 @@ import { regexEmail, regexOnlyLetter } from "helpers";
 import React from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
-import { GlobalStyles } from "styles/GlobalStyle";
+import { FormAddStyle } from "styles/GlobalStyle";
 import { ResponseMessage, Student } from "types";
 import { toast } from "react-toastify";
 
 import { studentApi } from "apis";
 import { useFetchListStudent } from "./../../hooks/useFetchListStudent";
+import { getListClasses } from "helpers/getListCLasses";
+import { toNumber } from "lodash";
 interface FormAddStudentProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -20,6 +22,8 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
     formState: { errors },
   } = useForm();
   const [fetchListStudent] = useFetchListStudent();
+  const [gradeChoose, setGradeChoose] = React.useState(0);
+
   const onSubmit = async (data: Student) => {
     await toast.promise(studentApi.create(data), {
       pending: "Adding student",
@@ -27,6 +31,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
         render: ({ data }: { data: ResponseMessage }) => {
           const { message } = data;
           fetchListStudent();
+          closeForm();
           return message;
         },
       },
@@ -37,6 +42,10 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
         },
       },
     });
+  };
+  const renderOptionsClasses = () => {
+    const list = getListClasses(gradeChoose);
+    return list.map((item) => <option value={item}>{item}</option>);
   };
   return (
     <Popup
@@ -49,7 +58,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
         reset();
       }}
     >
-      <GlobalStyles>
+      <FormAddStyle>
         <form className="td-form-add" onSubmit={handleSubmit(onSubmit)}>
           <div className="td-form-add__title">
             <span>Form Add Student</span>
@@ -82,7 +91,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                     maxLength: 50,
                   })}
                 />
-                {errors.first_name && <span>Please enter firstname valid</span>}
+                {errors.first_name && <span>{errors.message}</span>}
               </div>
               <div className="td-form-add__body__form-input">
                 <label htmlFor="last_name">Last Name:</label>
@@ -137,6 +146,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                   {...register("grade", {
                     required: true,
                   })}
+                  onChange={(e) => setGradeChoose(toNumber(e.target.value))}
                 >
                   <option value="" selected>
                     Select Grade
@@ -158,8 +168,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
                   <option value="" selected>
                     Select Class
                   </option>
-                  <option value={"10A1"}>10A1</option>
-                  <option value={"10A2"}>10A2</option>
+                  {renderOptionsClasses()}
                 </select>
                 {errors.class && <span>Please choose Classes</span>}
               </div>
@@ -210,7 +219,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
             />
           </div>
         </form>
-      </GlobalStyles>
+      </FormAddStyle>
     </Popup>
   );
 };

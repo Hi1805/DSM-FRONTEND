@@ -1,18 +1,19 @@
-import React from "react";
-import { LayoutManage } from "template/LayoutManage";
-import {  Navbar } from "containers";
-
+import { Navbar } from "containers";
 import { SendEmail } from "containers";
+import React from "react";
+import { Container } from "template/Container";
+import LayoutManage from "template/LayoutManage";
 
-export const SendEmailScreen = () => {
+export default function  SendEmailScreen (){
   
   return (
     
-  <LayoutManage>
+  <React.Fragment>
     <Navbar
       title="Send Email"
-      valueSearch=""
-      handleSearch={()=>{}}/>
-    <SendEmail/>
-  </LayoutManage>);
+      />
+    <Container>
+      <SendEmail/>
+    </Container>
+  </React.Fragment>);
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export default styled.div`
-  .panigation {
+  .pagination {
     justify-content: flex-end;
     li {
       margin: 0 0.5rem;

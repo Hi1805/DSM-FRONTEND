@@ -2,15 +2,14 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { LoginScreen } from "./screens/LoginScreen";
-import { isSafePath } from "helpers";
 import { ToastContainer } from "react-toastify";
-import { StudentScreen, TeacherScreen } from "screens";
-import { SendEmailScreen } from "./screens/SendEmailScreen/index";
 import "reactjs-popup/dist/index.css";
+import { isSafePath } from "helpers";
 
 const history = createBrowserHistory();
 
+const LoginScreen = React.lazy(() => import("screens/LoginScreen"));
+const ManagementViews = React.lazy(() => import("routes"));
 function App() {
   React.useEffect(() => {
     if (!isSafePath(history.location.pathname)) {
@@ -22,14 +21,14 @@ function App() {
     <React.Fragment>
       <ToastContainer />
       <Router history={history}>
-        <Switch>
-          <React.Fragment>
-            <Route exact path="/login" component={LoginScreen} />
-            <Route exact path="/manage/teacher" component={TeacherScreen} />
-            <Route exact path="/manage/student" component={StudentScreen} />
-            <Route exact path="/manage/email" component={SendEmailScreen} />
-          </React.Fragment>
-        </Switch>
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <React.Fragment>
+              <Route exact path="/login" component={LoginScreen} />
+              <ManagementViews />
+            </React.Fragment>
+          </Switch>
+        </React.Suspense>
       </Router>
     </React.Fragment>
   );

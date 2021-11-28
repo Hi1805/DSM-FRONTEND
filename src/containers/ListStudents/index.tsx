@@ -1,5 +1,4 @@
 import React from "react";
-import "../listingStyle.scss";
 import Style from "./style";
 import { Loading, ItemStudent } from "../../components";
 import { toNumber } from "lodash";
@@ -7,10 +6,9 @@ import { FormEditStudent } from "containers/FormEditStudent";
 import { useSelector } from "react-redux";
 import { selectListStudent } from "modules/students";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
-const PAGE = 1;
-const MAX_SIZE = 8;
-
-export const ListStudents = () => {
+import { PAGE, SIZE } from "constants/constants";
+import { memo } from "react";
+const ListStudents = ({ isSort }: { isSort: boolean }) => {
   const { loading, payload } = useSelector(selectListStudent);
   const [fetchListStudent] = useFetchListStudent();
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
@@ -20,49 +18,54 @@ export const ListStudents = () => {
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
-  const pageCount = Math.ceil(payload.total / MAX_SIZE);
+
+  const pageCount = Math.ceil(payload.total / SIZE) || 1;
   const [pagination, setPagination] = React.useState<{
     page: number;
     size: number;
   }>({
     page: PAGE,
-    size: MAX_SIZE,
+    size: SIZE,
   });
   // Fetch List Student
   React.useEffect(() => {
-    fetchListStudent(pagination);
-  }, [pagination]);
+    fetchListStudent({
+      ...pagination,
+      isSort,
+    });
+  }, [pagination, isSort, fetchListStudent]);
+
   //when click select
   const handlePagination = (page: string) => {
     setPagination({
       page: toNumber(page),
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
   const handlePreviousPage = () => {
     if (pagination.page === 1) {
       setPagination({
         page: pageCount,
-        size: MAX_SIZE,
+        size: SIZE,
       });
       return;
     }
     setPagination({
       page: pagination.page - 1,
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
   const handleNextPage = () => {
     if (pagination.page === pageCount) {
       setPagination({
         page: 1,
-        size: MAX_SIZE,
+        size: SIZE,
       });
       return;
     }
     setPagination({
       page: pagination.page + 1,
-      size: MAX_SIZE,
+      size: SIZE,
     });
   };
   return (
@@ -134,8 +137,8 @@ export const ListStudents = () => {
               <path
                 d="M7 13L1.07071 7.07071C1.03166 7.03166 1.03166 6.96834 1.07071 6.92929L7 1"
                 stroke="#9FA2B4"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </svg>
           </div>
@@ -150,8 +153,8 @@ export const ListStudents = () => {
               <path
                 d="M1 13L6.92929 7.07071C6.96834 7.03166 6.96834 6.96834 6.92929 6.92929L1 1"
                 stroke="#9FA2B4"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </svg>
           </div>
@@ -161,3 +164,5 @@ export const ListStudents = () => {
     </Style>
   );
 };
+
+export default memo(ListStudents);
