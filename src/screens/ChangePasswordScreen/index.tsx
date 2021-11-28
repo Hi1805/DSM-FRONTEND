@@ -1,40 +1,53 @@
 import { Navbar } from "containers";
 import React from "react";
-import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import { Container } from "template/Container";
 import PasswordStrengthBar from "react-password-strength-bar";
 import Style from "./style";
+import { toast } from "react-toastify";
 const ChangePasswordScreen = () => {
   const [newPassword, setNewPassword] = React.useState("");
-  const onSubmit = () => {};
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [oldPassword, setOldPassword] = React.useState("");
+  const [scorePassword, setScorePassword] = React.useState(0);
+  const [suggestions, setSuggestions] = React.useState<string[]>();
+  const onSave = () => {
+    if (confirmPassword !== newPassword) {
+      toast.error("Your confirm password not match");
+      return;
+    }
+    if (scorePassword <= 1) {
+      toast.warning("Your New Password is week");
+      return;
+    }
+  };
+
   return (
-    <Style>
+    <React.Fragment>
       <Navbar title="Change Password" />
       <Container>
-        <Popup nested closeOnDocumentClick modal open={true}>
-          <form className="form-change-password">
-            <div className="title text-center p-4">
+        <Popup modal closeOnDocumentClick={false} open={true}>
+          <Style className="form-change-password">
+            <div className="title text-center">
               <h3>Change Password</h3>
             </div>
+            <hr />
             <div className="input-group">
-              <div className="w-50 m-auto">
-                <label>Current Password</label>
+              <div className="w-80 m-auto">
+                <label>Enter Old Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
                 />
               </div>
             </div>
             <div className="input-group mt-2">
-              <div className="w-50 m-auto">
-                <label>New Password</label>
+              <div className="w-80 m-auto">
+                <label>Enter New Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -42,34 +55,59 @@ const ChangePasswordScreen = () => {
                 <PasswordStrengthBar
                   minLength={8}
                   scoreWordClassName="score"
-                  barColors={["red"]}
                   password={newPassword}
-                  onChangeScore={(score) => {
-                    console.log("feedback", score);
+                  onChangeScore={(score, feedback) => {
+                    let suggestion = [];
+                    if (!score) {
+                      suggestion.push(
+                        "Password length must be greater than 8 character"
+                      );
+                    }
+                    setSuggestions([
+                      ...(feedback.suggestions || []),
+                      ...suggestion,
+                    ]);
+                    setScorePassword(score);
                   }}
                 />
+                <div className="password-suggestion">
+                  <strong>Suggestions:</strong>
+                  {suggestions?.map((suggestion, index) => (
+                    <div key={index}>{suggestion}</div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="input-group">
-              <div className="w-50 m-auto">
-                <label>Confirm Password</label>
+              <div className="w-80 m-auto">
+                <label>Confirm New Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              <div className="w-100 footer-form">
-                <button className="btn btn-primary">Cancel</button>
-
-                <button className="btn btn-primary">Save</button>
-              </div>
             </div>
-          </form>
+            <div className="m-auto mt-5 footer-form d-flex justify-content-between">
+              <button className="footer-form-btn footer-form-btn--cancel">
+                Cancel
+              </button>
+
+              <button
+                className="footer-form-btn footer-form-btn--save"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSave();
+                }}
+              >
+                Save
+              </button>
+            </div>
+          </Style>
         </Popup>
       </Container>
-    </Style>
+    </React.Fragment>
   );
 };
 

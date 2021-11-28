@@ -58,8 +58,14 @@ export const studentApi = {
 };
 
 export const dsmApi = {
-  post: (payload: BodyLogin) => {
+  login: (payload: BodyLogin): Promise<{ token: string }> => {
     const url = `dsm/login`;
     return axiosClient.post(url, payload);
+  },
+  changePassword: (newPassword: string) => {
+    const url = `dsm/change-password`;
+    return axiosClient.post(url, {
+      newPassword: newPassword,
+    });
   },
 };

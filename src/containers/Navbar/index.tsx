@@ -103,7 +103,16 @@ export const Navbar = (props: NavBarProps) => {
               <span> Change Password</span>
             </div>
             <hr style={{ margin: "0.25rem" }} />
-            <div className="menu__logout">
+            <div
+              className="menu__logout"
+              onClick={() => {
+                localStorage.clear();
+                const location = {
+                  pathname: "/login",
+                };
+                history.push(location);
+              }}
+            >
               <RiLogoutCircleRLine />
               <span> Logout</span>
             </div>

@@ -11,3 +11,6 @@ body {
 * {
   box-sizing: border-box;
 }
+.popup-content {
+  border-radius: 15px !important;
+}

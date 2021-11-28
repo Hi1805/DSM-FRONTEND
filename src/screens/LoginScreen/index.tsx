@@ -3,22 +3,38 @@ import { useForm } from "react-hook-form";
 import { BodyLogin } from "types";
 import { dsmApi } from "apis";
 import { regexEmail } from "helpers";
-
+import { toast } from "react-toastify";
+import { useHistory } from "react-router";
 export default function LoginScreen() {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = async ({ email, password }: BodyLogin) => {
+  const history = useHistory();
+  const onSubmit = ({ email, password }: BodyLogin) => {
     try {
-      dsmApi.post({
-        email,
-        password,
-      });
+      toast.promise(
+        dsmApi.login({
+          email,
+          password,
+        }),
+        {
+          error: "Your email and password are incorrect",
+          success: {
+            render: ({ data }: { data: any }) => {
+              if (data.token) {
+                localStorage.setItem("us_tk", data.token);
+                history.push("/manage/teacher");
+              } else toast.warning("Some things went wrong");
+              return "Welcome to comeback";
+            },
+          },
+          pending: "Loading Login",
+        }
+      );
     } catch (error) {
-      console.log(error);
+      toast.error("Your network is not connected");
     }
   };
   return (
