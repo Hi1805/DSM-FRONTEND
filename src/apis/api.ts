@@ -62,10 +62,17 @@ export const dsmApi = {
     const url = `dsm/login`;
     return axiosClient.post(url, payload);
   },
-  changePassword: (newPassword: string) => {
+  changePassword: ({
+    newPassword,
+    oldPassword,
+  }: {
+    newPassword: string;
+    oldPassword: string;
+  }): Promise<{ message: string }> => {
     const url = `dsm/change-password`;
     return axiosClient.post(url, {
       newPassword: newPassword,
+      oldPassword,
     });
   },
 };

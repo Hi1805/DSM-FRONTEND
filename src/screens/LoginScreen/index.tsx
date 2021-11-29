@@ -20,13 +20,17 @@ export default function LoginScreen() {
           password,
         }),
         {
-          error: "Your email and password are incorrect",
+          error: {
+            render: ({ data }: { data: any }) => {
+              return data.message;
+            },
+          },
           success: {
             render: ({ data }: { data: any }) => {
               if (data.token) {
                 localStorage.setItem("us_tk", data.token);
                 history.push("/manage/teacher");
-              } else toast.warning("Some things went wrong");
+              } else toast.warning(data.message);
               return "Welcome to comeback";
             },
           },
@@ -44,7 +48,6 @@ export default function LoginScreen() {
           <input
             type="text"
             {...register("email", {
-              pattern: regexEmail,
               required: true,
             })}
             className="form-control"

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router";
+import { Redirect, Route } from "react-router";
 // import { Redirect } from "react-router-dom";
 
 const LayoutManage = React.lazy(() => import("template/LayoutManage"));
@@ -22,6 +22,7 @@ export default function ManagementViews() {
               />
               <Route path={`${url}/teacher`} component={TeacherScreen} />
               <Route path={`${url}/student`} component={StudentScreen} />
+              <Redirect from="manage" to={`${url}/student`} />
             </React.Suspense>
           </LayoutManage>
         )}

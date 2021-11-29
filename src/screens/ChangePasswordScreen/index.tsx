@@ -6,29 +6,49 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import Style from "./style";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
+import { dsmApi } from "apis";
+import { ResponseMessage } from "types";
 const ChangePasswordScreen = () => {
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [oldPassword, setOldPassword] = React.useState("");
   const [scorePassword, setScorePassword] = React.useState(0);
   const [suggestions, setSuggestions] = React.useState<string[]>();
+  const [isOpenForm, setIsOpenForm] = React.useState(true);
   const history = useHistory();
   const onSave = () => {
-    if (confirmPassword !== newPassword) {
-      toast.error("Your confirm password not match");
-      return;
-    }
     if (scorePassword <= 1) {
-      toast.warning("Your New Password is week");
+      toast.warning("Your new password is week");
       return;
     }
+    toast.promise(
+      dsmApi.changePassword({
+        newPassword,
+        oldPassword,
+      }),
+      {
+        error: {
+          render: ({ data }: { data: ResponseMessage }) => {
+            return data.message;
+          },
+        },
+        success: {
+          render: ({ data }: { data: ResponseMessage }) => {
+            setIsOpenForm(false);
+
+            return data.message;
+          },
+        },
+        pending: "Loading change password ....",
+      }
+    );
   };
 
   return (
     <React.Fragment>
       <Navbar title="Change Password" />
       <Container>
-        <Popup modal closeOnDocumentClick={false} open={true}>
+        <Popup modal closeOnDocumentClick={false} open={isOpenForm}>
           <Style className="form-change-password">
             <div className="title text-center">
               <h3>Change Password</h3>
@@ -89,6 +109,17 @@ const ChangePasswordScreen = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
+                {confirmPassword !== newPassword && confirmPassword && (
+                  <div className="password-suggestion mt-2">
+                    <strong
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      confirm password not match
+                    </strong>
+                  </div>
+                )}
               </div>
             </div>
             <div className="m-auto mt-5 footer-form d-flex justify-content-between">
@@ -96,6 +127,7 @@ const ChangePasswordScreen = () => {
                 className="footer-form-btn footer-form-btn--cancel"
                 onClick={(e) => {
                   e.preventDefault();
+                  setIsOpenForm(false);
                   history.push("/manage/student");
                 }}
               >
