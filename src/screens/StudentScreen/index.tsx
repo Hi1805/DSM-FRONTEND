@@ -2,7 +2,6 @@ import { Navbar } from "containers";
 import ListStudents from "containers/ListStudents";
 import { FormAddStudent } from "containers/FormAddStudent";
 import React from "react";
-import ContainerListStyle from "styles/ContainerListStyle";
 import { Container } from "template/Container";
 
 export default function StudentScreen() {

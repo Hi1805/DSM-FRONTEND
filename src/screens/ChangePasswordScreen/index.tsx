@@ -45,7 +45,7 @@ const ChangePasswordScreen = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className="change-password-screen">
       <Navbar title="Change Password" />
       <Container>
         <Popup modal closeOnDocumentClick={false} open={isOpenForm}>
@@ -147,7 +147,7 @@ const ChangePasswordScreen = () => {
           </Style>
         </Popup>
       </Container>
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-export type TypeTab = "teacher" | "student" | "email";
+export type TypeTab = "teacher" | "student" | "email" | "history";
 
 export interface ProfileTemplate {
   id: string;
@@ -48,6 +48,10 @@ export const tabs: Array<{
   {
     type: "email",
     render: "Send E-email",
+  },
+  {
+    type: "history",
+    render: "History Login",
   },
 ];
 export interface Pagination {
