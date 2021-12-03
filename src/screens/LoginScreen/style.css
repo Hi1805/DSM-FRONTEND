@@ -1,0 +1,342 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url(./img/img1.jpg) no-repeat;
+  height: 100vh;
+  overflow: hidden;
+  background-size: cover;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.login {
+  z-index: 22;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 100%;
+  max-width: 380px;
+  max-height: 550px;
+  background-color: #fff;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.login__group {
+  padding: 0 32px;
+}
+
+.login__group--logo {
+  margin: 40px auto 20px;
+  width: 48px;
+  height: 48px;
+}
+
+.login__group p {
+  height: 24px;
+  left: 32px;
+  right: 32px;
+  top: 104px;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.4px;
+  color: #a4a6b3;
+  opacity: 0.7;
+}
+
+.login__group h2 {
+  height: 30px;
+  left: 33px;
+  right: 31px;
+  top: 169px;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 0.3px;
+  margin-top: 20px;
+  margin-bottom: 43px;
+  color: #000000;
+}
+
+.login__group--label {
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #696969;
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 6px;
+  margin-top: 15px;
+}
+
+.login__group--input {
+  text-indent: 18px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  background: #fcfdfe;
+  border: 1px solid #f0f1f7;
+  outline: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.login__group--input::-webkit-input-placeholder {
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  color: #b4b4b4;
+}
+
+.login__group--input::-moz-input-placeholder {
+  font-family: Mulish;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  color: #b4b4b4;
+}
+
+.login__group--forgot {
+  text-decoration: none;
+  font-family: Mulish;
+  font-size: 15px;
+  text-align: right;
+  letter-spacing: 0.1px;
+  color: #808080 !important;
+}
+
+.login__group--button {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 15px;
+  font-size: 18px;
+  text-align: center;
+  border: 0;
+  outline: none;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #3751ff;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: 200;
+  line-height: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.login__group--button:hover {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#9b59b6),
+    to(#3498db)
+  );
+  background: linear-gradient(#9b59b6, #3498db);
+}
+
+.login__group--eye {
+  position: relative;
+  left: 95%;
+  top: 84%;
+  -webkit-transform: translate(-87%, -310%);
+  transform: translate(-87%, -310%);
+  color: #9fa2b4;
+  cursor: pointer;
+}
+
+.formHidden {
+  display: none;
+}
+
+#forgot_pw {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  z-index: 0;
+  opacity: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#forgot_pw:target {
+  height: 550px;
+  opacity: 1;
+}
+
+#forgot_pw {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 380px;
+  max-height: 550px;
+  background-color: white;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+#forgot_pw .forgot__group {
+  padding: 0 32px;
+}
+
+#forgot_pw .forgot__group--close {
+  position: absolute;
+  right: 0.9rem;
+  top: 0.5rem;
+  font-size: 2rem;
+  font-weight: 900;
+  text-decoration: none;
+  color: inherit;
+}
+
+#forgot_pw .forgot__group--logo {
+  margin: 40px auto 20px;
+  width: 48px;
+  height: 48px;
+}
+
+#forgot_pw .forgot__group p {
+  height: 24px;
+  left: 32px;
+  right: 32px;
+  top: 100px;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.4px;
+  color: #a4a6b3;
+  opacity: 0.7;
+}
+
+#forgot_pw .forgot__group h2 {
+  height: 30px;
+  left: 32px;
+  right: 32px;
+  top: 154px;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 0.3px;
+  color: #252733;
+  margin-top: 30px;
+}
+
+#forgot_pw .forgot__group--label {
+  display: inline-block;
+  margin-top: 70px;
+  height: 16px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #9fa2b4;
+}
+
+#forgot_pw .forgot__group--input {
+  display: inline-block;
+  text-indent: 18px;
+  width: 100%;
+  height: 42px;
+  background: #fcfdfe;
+  border: 1px solid #f0f1f7;
+  outline: none;
+  border-radius: 8px;
+  margin-top: 6px;
+  margin-bottom: 65px;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#forgot_pw .forgot__group--input::-webkit-input-placeholder {
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  color: #b4b4b4;
+}
+
+#forgot_pw .forgot__group--input::-moz-input-placeholder {
+  font-family: Mulish;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  color: #b4b4b4;
+}
+
+#forgot_pw .forgot__group--button {
+  display: inline-block;
+  padding: 15px;
+  font-size: 18px;
+  text-align: center;
+  border: 0;
+  outline: none;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #3751ff;
+  cursor: pointer;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: 200;
+  line-height: 20px;
+  margin-top: 23px;
+  color: #fff;
+  margin-bottom: 158px;
+}
+
+#forgot_pw .forgot__group--button:hover {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#9b59b6),
+    to(#3498db)
+  );
+  background: linear-gradient(#9b59b6, #3498db);
+}
+/*# sourceMappingURL=global.css.map */
