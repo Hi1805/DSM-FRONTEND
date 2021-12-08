@@ -13,7 +13,7 @@ export default function StudentScreen() {
     setIsOpenForm(false);
   };
   return (
-    <React.Fragment>
+    <div className="student-screen">
       <Navbar
         title="Student"
         valueSearch={searchValueState}
@@ -51,6 +51,6 @@ export default function StudentScreen() {
         <ListStudents isSort={isSortState} />
         <FormAddStudent isOpen={isOpenFormAdd} closeForm={closeForm} />
       </Container>
-    </React.Fragment>
+    </div>
   );
 }

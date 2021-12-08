@@ -1,7 +1,6 @@
 import { ListTeachers, Navbar } from "containers";
 import { FormAddTeacher } from "containers/FormAddTeacher";
 import React from "react";
-import ContainerListStyle from "styles/ContainerListStyle";
 import { Container } from "template/Container";
 
 export default function TeacherScreen() {

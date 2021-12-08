@@ -1,8 +1,8 @@
 import React from "react";
+import { AiOutlineHistory } from "react-icons/ai";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdPeopleAlt } from "react-icons/md";
 import { SiMinutemailer } from "react-icons/si";
-import { AiOutlineHistory } from "react-icons/ai";
 import { useHistory } from "react-router";
 import { tabs, TypeTab } from "../../types";
 

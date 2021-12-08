@@ -2,17 +2,23 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { BodyLogin } from "types";
 import { dsmApi } from "apis";
-import { regexEmail } from "helpers";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
-import "./style.css";
-
+import Style from "./style";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 export default function LoginScreen() {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+
+  const [isDisplayPassword, setIsDisplayPassword] = React.useState(false);
+  const [isForgotPasswordScreen, setIsForgotPassword] = React.useState(false);
+  const toggleDisplayPassword = () => {
+    setIsDisplayPassword(!isDisplayPassword);
+  };
+  const typePassword = isDisplayPassword ? "text" : "password";
   const history = useHistory();
   const onSubmit = ({ email, password }: BodyLogin) => {
     try {
@@ -43,145 +49,96 @@ export default function LoginScreen() {
       toast.error("Your network is not connected");
     }
   };
+
   return (
-    <div id="login-screen">
-      <div className="container">
-        <div className="login">
-          <div className="login__group">
-            <form className="form" id="form_login">
-              <div className="login__group--logo">
-                <svg
-                  width={48}
-                  height={50}
-                  viewBox="0 0 32 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle cx={16} cy={16} r={16} fill="#3751FF" />
-                  <path
-                    d="M11 10C11 9.44772 11.4477 9 12 9H15.9905C18.2127 9 19.9333 9.60955 21.1524 10.8287C22.3841 12.0478 23 13.765 23 15.9803C23 18.2088 22.3841 19.9391 21.1524 21.1713C19.9333 22.3904 18.2127 23 15.9905 23H12C11.4477 23 11 22.5523 11 22V10Z"
-                    fill="url(#paint0_linear)"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear"
-                      x1={11}
-                      y1={9}
-                      x2={23}
-                      y2={23}
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="white" stopOpacity="0.7" />
-                      <stop offset={1} stopColor="white" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <p>School Data Management</p>
-              <h2>Log In</h2>
-              <label htmlFor="Email" className="login__group--label">
-                Email
-              </label>
-              <input
-                type="text"
-                name="Email"
-                id="Email"
-                className="login__group--input"
-                placeholder="Email address"
-                required
-              />
-              <label htmlFor="Password" className="login__group--label">
-                Password
-              </label>
-              <input
-                type="password"
-                name="Password"
-                id="password"
-                className="login__group--input"
-                placeholder="Password"
-                required
-              />
-              <div className="login__group--icon" id="btnPassword">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={16}
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                  className="login__group--eye"
-                >
-                  <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
-                  <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
-                </svg>
-                {/* <i class="fas fa-eye-slash login-group-icon-eye"></i> */}
-              </div>
-              <div id="forgot" className="login__group--forgot">
-                <a href="#forgot_pw" style={{ textDecoration: "none" }}>
-                  Forgot Password?
-                </a>
-              </div>
-              <button className="login__group--button">Log In</button>
-            </form>
-          </div>
-        </div>
-        {/* Forgot Password */}
-        <div id="forgot_pw">
-          <form className="form" id="form-forgot" />
-          <div className="forgot__group">
-            <a href="#" id="closeModal" className="forgot__group--close">
-              ×
-            </a>
-            <div className="forgot__group--logo">
+    <Style
+      id="login-screen"
+      className="d-flex justify-content-center"
+      style={{ backgroundImage: "url(./images/background-login.png)" }}
+    >
+      <form className="mr-auto ml-auto mt-5">
+        <div className="container">
+          <div className="form-header">
+            <div className="logo">
               <svg
-                width={48}
-                height={50}
-                viewBox="0 0 32 32"
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <circle cx={16} cy={16} r={16} fill="#3751FF" />
+                <circle cx="24" cy="24" r="24" fill="#3751FF" />
                 <path
-                  d="M11 10C11 9.44772 11.4477 9 12 9H15.9905C18.2127 9 19.9333 9.60955 21.1524 10.8287C22.3841 12.0478 23 13.765 23 15.9803C23 18.2088 22.3841 19.9391 21.1524 21.1713C19.9333 22.3904 18.2127 23 15.9905 23H12C11.4477 23 11 22.5523 11 22V10Z"
-                  fill="#fff"
+                  d="M16.5 14.5C16.5 13.9477 16.9477 13.5 17.5 13.5H23.9857C27.319 13.5 29.9 14.4143 31.7286 16.243C33.5762 18.0716 34.5 20.6475 34.5 23.9705C34.5 27.3132 33.5762 29.9087 31.7286 31.757C29.9 33.5857 27.319 34.5 23.9857 34.5H17.5C16.9477 34.5 16.5 34.0523 16.5 33.5V14.5Z"
+                  fill="url(#paint0_linear_4999_2194)"
                 />
                 <defs>
                   <linearGradient
-                    id="paint0_linear"
-                    x1={11}
-                    y1={9}
-                    x2={23}
-                    y2={23}
+                    id="paint0_linear_4999_2194"
+                    x1="16.5"
+                    y1="13.5"
+                    x2="34.5"
+                    y2="34.5"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stopColor="white" stopOpacity="0.7" />
-                    <stop offset={1} stopColor="white" />
+                    <stop stop-color="white" stop-opacity="0.7" />
+                    <stop offset="1" stop-color="white" />
                   </linearGradient>
                 </defs>
               </svg>
             </div>
-            <p>School Data Management</p>
-            <h2>Forgot Password</h2>
-            <label htmlFor="email" className="forgot__group--label">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              className="forgot__group--input"
-              id="email"
-              placeholder="Email address"
-              required
-            />
-            <span id="text" />
-            <input
-              type="submit"
-              defaultValue="Send"
-              className="forgot__group--button"
-              style={{ cursor: "pointer" }}
-            />
+            <div className="title w-100">School Data Management</div>
+          </div>
+
+          <div className="form-body">
+            <div className="form-body__title">
+              {!isForgotPasswordScreen ? "Login" : "Forgot Password"}
+            </div>
+            <div className="form-body__input-group">
+              <label htmlFor="email" className="w-100">
+                Email
+              </label>
+              <input
+                type="text"
+                className="input__group"
+                placeholder="Email or username ..."
+              />
+            </div>
+            {isForgotPasswordScreen ? null : (
+              <div className="form-body__input-group mt-4">
+                <label htmlFor="email" className="w-100">
+                  Password
+                </label>
+
+                <div className="d-flex input__group justify-content-center align-items-center">
+                  <input type={typePassword} placeholder="Enter Password..." />
+                  {isDisplayPassword ? (
+                    <AiFillEye onClick={toggleDisplayPassword} />
+                  ) : (
+                    <AiFillEyeInvisible onClick={toggleDisplayPassword} />
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="form-footer mt-4">
+            <div
+              className="w-100 d-flex justify-content-end"
+              onClick={() => setIsForgotPassword(!isForgotPasswordScreen)}
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              {!isForgotPasswordScreen ? "Forgot Password" : "Go Back to Login"}
+            </div>
+            <div className="w-100 mt-3">
+              <button className="btn w-100 btn-primary">
+                {!isForgotPasswordScreen ? "Login" : "Send OTP"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </form>
+    </Style>
   );
 }

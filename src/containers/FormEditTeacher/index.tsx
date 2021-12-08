@@ -160,9 +160,7 @@ export const FormEditTeacher = ({
                 <select
                   className="form-select form-control"
                   defaultValue={infoTeacher?.grade}
-                  {...register("grade", {
-                    required: true,
-                  })}
+                  {...register("grade")}
                   onChange={(e) => setGradeChoose(toNumber(e.target.value))}
                 >
                   <option value="" selected>
@@ -178,14 +176,13 @@ export const FormEditTeacher = ({
                 <label htmlFor="class">Classes:</label>
                 <select
                   className="form-select form-control"
-                  {...register("Class", {
-                    required: true,
-                  })}
+                  {...register("Class")}
                   defaultValue={infoTeacher?.Class}
                 >
                   <option value="" selected>
                     Select Class
                   </option>
+                  <option value="">No Class Leader</option>
                   {renderOptionsClasses()}
                 </select>
                 {errors.class && <span>Please choose Classes</span>}

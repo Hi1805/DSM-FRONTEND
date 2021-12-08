@@ -35,7 +35,7 @@ const ChangePasswordScreen = () => {
         success: {
           render: ({ data }: { data: ResponseMessage }) => {
             setIsOpenForm(false);
-
+            history.push("/manage/student");
             return data.message;
           },
         },

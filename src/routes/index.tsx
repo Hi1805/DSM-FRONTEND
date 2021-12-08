@@ -5,6 +5,7 @@ import { Redirect, Route } from "react-router";
 const LayoutManage = React.lazy(() => import("template/LayoutManage"));
 const TeacherScreen = React.lazy(() => import("screens/TeacherScreen"));
 const StudentScreen = React.lazy(() => import("screens/StudentScreen"));
+const HistoryScreen = React.lazy(() => import("screens/HistoryScreen"));
 const ChangePasswordScreen = React.lazy(
   () => import("screens/ChangePasswordScreen")
 );
@@ -22,7 +23,8 @@ export default function ManagementViews() {
               />
               <Route path={`${url}/teacher`} component={TeacherScreen} />
               <Route path={`${url}/student`} component={StudentScreen} />
-              <Redirect from="manage" to={`${url}/student`} />
+              <Route path={`${url}/history`} component={HistoryScreen} />
+              <Redirect from="manage" to={`${url}/teacher`} />
             </React.Suspense>
           </LayoutManage>
         )}
