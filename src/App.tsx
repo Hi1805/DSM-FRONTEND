@@ -9,6 +9,9 @@ import { isSafePath } from "helpers";
 const history = createBrowserHistory();
 
 const LoginScreen = React.lazy(() => import("screens/LoginScreen"));
+const ForgotPasswordScreen = React.lazy(
+  () => import("screens/ForgotPasswordScreen")
+);
 const ManagementViews = React.lazy(() => import("routes"));
 function App() {
   React.useEffect(() => {
@@ -24,7 +27,13 @@ function App() {
         <React.Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <React.Fragment>
+              <Route
+                exact
+                path="/forgot-password"
+                component={ForgotPasswordScreen}
+              />
               <Route exact path="/login" component={LoginScreen} />
+
               <ManagementViews />
             </React.Fragment>
           </Switch>

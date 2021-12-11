@@ -12,8 +12,8 @@ export default styled.div`
     box-sizing: border-box;
     border: 1px solid #dfe0eb;
     border-radius: 8px;
-    padding: 1rem 2rem;
-    height: 450px;
+    padding: 2rem;
+    height: 500px;
     .form-header {
       display: flex;
       justify-content: center;
@@ -57,10 +57,11 @@ export default styled.div`
           }
         }
         input {
-          height: 2.5rem;
+          height: 3rem;
           width: 100%;
           outline: none;
           border: none;
+          padding-left: 1rem;
         }
       }
     }

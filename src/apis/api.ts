@@ -75,9 +75,28 @@ export const dsmApi = {
       oldPassword,
     });
   },
+  forgotPassword: ({
+    email,
+  }: {
+    email: string;
+  }): Promise<{ message: string }> => {
+    const url = `public/dsm/forgot-password`;
+    return axiosClient.post(url, {
+      email,
+    });
+  },
+  checkingOtp: ({
+    otp,
+  }: {
+    otp: string;
+  }): Promise<{ message: string }> => {
+    const url = `public/dsm/checking-otp`;
+    return axiosClient.post(url, {
+      otp,
+    });
+  },
   getHistories(params: { page: number; size: number }) {
     const url = `private/dsm/history/list`;
-
     return axiosClient.get(url, { params });
   },
 };
