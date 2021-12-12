@@ -8,7 +8,15 @@ import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
 import { FormAddStyle } from "styles/GlobalStyle";
 import { ResponseMessage, Teacher } from "types";
-import { toNumber } from "lodash";
+import { toNumber, toString } from "lodash";
+import {
+  getAllProvinces,
+  getAllDistricts,
+  getAllCommunes,
+  getCommune,
+  getDistrict,
+  getProvince,
+} from "helpers/country";
 interface FormAddTeacherProps {
   closeForm: () => void;
   isOpen: boolean;
@@ -22,30 +30,62 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
   } = useForm();
   const [fetchListTeacher] = useFetchListTeacher();
   const [gradeChoose, setGradeChoose] = React.useState(0);
-
+  const [provinceChoose, setProvinceChoose] = React.useState("");
+  const [districtChoose, setDistrictChoose] = React.useState("");
   const onSubmit = async (data: Teacher) => {
-    await toast.promise(teacherApi.create(data), {
-      pending: "Adding Teacher",
-      success: {
-        render: ({ data }: { data: ResponseMessage }) => {
-          const { message } = data;
-          fetchListTeacher();
-          closeForm();
+    const province = getProvince(toString(data.province));
+    const district = getDistrict(toString(data.district));
+    const commune = getCommune(toString(data.commune));
+    const address = `${province} - ${district} - ${commune}`;
+    await toast.promise(
+      teacherApi.create({
+        ...data,
+        address,
+      }),
+      {
+        pending: "Adding Teacher",
+        success: {
+          render: ({ data }: { data: ResponseMessage }) => {
+            const { message } = data;
+            fetchListTeacher();
+            closeForm();
 
-          return message;
+            return message;
+          },
         },
-      },
-      error: {
-        render: ({ data }: { data: ResponseMessage }) => {
-          const { message } = data;
-          return message;
+        error: {
+          render: ({ data }: { data: ResponseMessage }) => {
+            const { message } = data;
+            return message;
+          },
         },
-      },
-    });
+      }
+    );
   };
   const renderOptionsClasses = () => {
     const list = getListClasses(gradeChoose);
     return list.map((item) => <option value={item}>{item}</option>);
+  };
+  const renderOptionsProvince = () => {
+    return getAllProvinces().map((province) => (
+      <option key={province.idProvince} value={province.idProvince}>
+        {province.name}
+      </option>
+    ));
+  };
+  const renderOptionsDistrict = () => {
+    return getAllDistricts(provinceChoose).map((district) => (
+      <option key={district.idDistrict} value={district.idDistrict}>
+        {district.name}
+      </option>
+    ));
+  };
+  const renderOptionCommune = () => {
+    return getAllCommunes(districtChoose).map((commune) => (
+      <option key={commune.idCommune} value={commune.idCommune}>
+        {commune.name}
+      </option>
+    ));
   };
   return (
     <Popup
@@ -88,7 +128,6 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                   {...register("first_name", {
                     pattern: regexOnlyLetter,
                     required: true,
-                    maxLength: 50,
                   })}
                 />
                 {errors.first_name && (
@@ -108,7 +147,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 {errors.last_name && <span>Please enter last name valid</span>}
               </div>
             </div>
-            <div className="container-fluid row  flex-wrap justify-content-between mt-4">
+            <div className="container-fluid row  flex-wrap justify-content-between mt-3">
               <div className="td-form-add__body__form-input">
                 <label htmlFor="dob">Gender:</label>
                 <select
@@ -140,12 +179,12 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 )}
               </div>
             </div>
-            <div className="container-fluid row  flex-wrap justify-content-between mt-4">
+            <div className="container-fluid row  flex-wrap justify-content-between mt-3">
               <div className="td-form-add__body__form-input">
                 <label htmlFor="grade">Grade:</label>
                 <select
                   className="form-select form-control"
-                  {...register("grade")}
+                  {...register("grade", {})}
                   onChange={(e) => setGradeChoose(toNumber(e.target.value))}
                 >
                   <option value="" selected>
@@ -161,7 +200,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 <label htmlFor="class">Classes:</label>
                 <select
                   className="form-select form-control"
-                  {...register("Class")}
+                  {...register("Class", {})}
                 >
                   <option value="" selected>
                     Select Class
@@ -171,37 +210,73 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
                 {errors.class && <span>Please choose Classes</span>}
               </div>
             </div>
-            <div className="container-fluid row mt-4">
-              <div className="form-input w-100">
-                <label htmlFor="email">Email:</label>
+            <div className="container-fluid row  flex-wrap justify-content-between mt-3">
+              <div className="td-form-add__body__form-input col-4">
+                <label htmlFor="grade">Province:</label>
+                <select
+                  className="form-select form-control"
+                  {...register("province", {
+                    required: true,
+                  })}
+                  value={provinceChoose}
+                  onChange={(e) => setProvinceChoose(e.target.value)}
+                >
+                  <option value="" selected>
+                    Select Province
+                  </option>
+                  {renderOptionsProvince()}
+                </select>
+                {errors.province && <span>Please Choose Province</span>}
+              </div>
+              <div className="td-form-add__body__form-input ">
+                <label htmlFor="grade">District:</label>
+                <select
+                  className="form-select form-control"
+                  {...register("district", {
+                    required: true,
+                  })}
+                  value={districtChoose}
+                  onChange={(e) => setDistrictChoose(e.target.value)}
+                >
+                  <option value={""} selected>
+                    Select District
+                  </option>
+                  {renderOptionsDistrict()}
+                </select>
+                {errors.province && <span>Please Choose Province</span>}
+              </div>
+            </div>
+            <div className="container-fluid row  flex-wrap justify-content-between mt-3">
+              <div className="td-form-add__body__form-input">
+                <label htmlFor="grade">District:</label>
+                <select
+                  className="form-select form-control"
+                  {...register("commune", {
+                    required: true,
+                  })}
+                >
+                  <option value={""} selected>
+                    Select Commune:
+                  </option>
+                  {renderOptionCommune()}
+                </select>
+                {errors.province && <span>Please Choose Commune</span>}
+              </div>
+              <div className="td-form-add__body__form-input">
+                <label htmlFor="first_name">Email:</label>
                 <input
+                  placeholder="example@example.com"
+                  className="form-control"
                   {...register("email", {
                     pattern: regexEmail,
                     required: true,
                   })}
-                  id="dob"
-                  placeholder="example: Huy@gmail.com"
-                  type="email"
-                  className="form-control"
                 />
-                {errors.email && <span>Please enter email valid</span>}
-              </div>
-            </div>
-            <div className="container-fluid row mt-4">
-              <div className="form-input w-100">
-                <label htmlFor="dob">Address:</label>
-                <input
-                  {...register("address", { required: true })}
-                  id="address"
-                  placeholder="example: Da Nang , Viet Nam"
-                  type="text"
-                  className="form-control"
-                />
-                {errors.address && <span>Please Enter Address</span>}
+                {errors.email && <span>Email is not valid</span>}
               </div>
             </div>
           </div>
-          <div className="td-form-add__control d-flex justify-content-between mt-5">
+          <div className="td-form-add__control d-flex justify-content-between mt-3">
             <input
               type="button"
               className="td-form-add__control__btn-back btn"

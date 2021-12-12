@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
-import { ResponseList } from "types";
-import { getStudents, Student, StudentListFetch } from "..";
+import { ResponseList, Student } from "types";
+import { getStudents, StudentListFetch } from "..";
 import { studentApi } from "apis";
 import { toast } from "react-toastify";
 export function* getListStudentSaga(action: StudentListFetch) {

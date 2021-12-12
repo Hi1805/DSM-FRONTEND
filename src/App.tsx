@@ -5,13 +5,11 @@ import { createBrowserHistory } from "history";
 import { ToastContainer } from "react-toastify";
 import "reactjs-popup/dist/index.css";
 import { isSafePath } from "helpers";
+import ForgotPasswordScreen from "screens/ForgotPasswordScreen";
+import LoginScreen from "screens/LoginScreen";
 
 const history = createBrowserHistory();
 
-const LoginScreen = React.lazy(() => import("screens/LoginScreen"));
-const ForgotPasswordScreen = React.lazy(
-  () => import("screens/ForgotPasswordScreen")
-);
 const ManagementViews = React.lazy(() => import("routes"));
 function App() {
   React.useEffect(() => {
@@ -24,20 +22,19 @@ function App() {
     <React.Fragment>
       <ToastContainer />
       <Router history={history}>
-        <React.Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <React.Fragment>
-              <Route
-                exact
-                path="/forgot-password"
-                component={ForgotPasswordScreen}
-              />
-              <Route exact path="/login" component={LoginScreen} />
-
+        <Switch>
+          <React.Fragment>
+            <React.Suspense fallback={<div>Loading...</div>}>
               <ManagementViews />
-            </React.Fragment>
-          </Switch>
-        </React.Suspense>
+            </React.Suspense>
+            <Route exact path="/login" component={LoginScreen} />
+            <Route
+              exact
+              path="/forgot-password"
+              component={ForgotPasswordScreen}
+            />
+          </React.Fragment>
+        </Switch>
       </Router>
     </React.Fragment>
   );

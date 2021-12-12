@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import StyleLogin from "screens/LoginScreen/style";
 import { BodyLogin } from "types";
 import OtpInput from "react-otp-input";
+import { setToken } from "helpers";
 
 const LENGTH_OTP = 6;
 export default function ForgotPasswordScreen() {
@@ -13,47 +14,53 @@ export default function ForgotPasswordScreen() {
   const history = useHistory();
   const [otpState, setOtpState] = React.useState("");
   const [isOpenOtp, setIsOpenOtp] = React.useState(false);
-
-
-
   const onSubmit = async ({ email }: BodyLogin) => {
-    try {
-      await toast.promise(
-        dsmApi.forgotPassword({
-          email,
-        }),
-        {
-          error: {
-            render: ({ data }: { data: any }) => {
-              return data.message;
-            },
-          },
-          success: {
-            render: ({ data }: { data: any }) => {
-              setIsOpenOtp(true);
-              return "Please Checking Your email";
-            },
-          },
-          pending: "Loading Login",
-        }
-      );
-    } catch (error) {
-      toast.error("Your network is not connected");
+    interface Response {
+      message: string;
+      token: string;
     }
+    await toast.promise(
+      dsmApi.forgotPassword({
+        email,
+      }),
+      {
+        error: {
+          render: ({ data }: { data: Response }) => {
+            return data.message;
+          },
+        },
+        success: {
+          render: ({ data }: { data: Response }) => {
+            setIsOpenOtp(true);
+            setToken({
+              key: "us_tk",
+              value: data.token,
+            });
+            return "Please Checking Your email";
+          },
+        },
+        pending: "Loading Checking Email",
+      }
+    );
   };
   React.useEffect(() => {
+    (async () => {
+      if (otpState.length === LENGTH_OTP) {
+        try {
+          const data = await dsmApi.checkingOtp({
+            otp: otpState,
+          });
+          toast.success(
+            "We have sent you a new password,Please check your email"
+          );
 
-    
-    async function checkingOtp() {
-      try {
-        await dsmApi.checkingOtp({
-          otp: otpState,
-        })
-      } catch (error) {
-        toast.error("Your network is not connected");
+          // history.push("/login");
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
-  },[otpState])
+    })();
+  }, [otpState]);
   const renderOTP = () => {
     return (
       <OtpInput

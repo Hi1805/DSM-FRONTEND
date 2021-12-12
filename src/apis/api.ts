@@ -85,12 +85,8 @@ export const dsmApi = {
       email,
     });
   },
-  checkingOtp: ({
-    otp,
-  }: {
-    otp: string;
-  }): Promise<{ message: string }> => {
-    const url = `public/dsm/checking-otp`;
+  checkingOtp: ({ otp = "" }): Promise<{ message: string }> => {
+    const url = `private/dsm/otp`;
     return axiosClient.post(url, {
       otp,
     });

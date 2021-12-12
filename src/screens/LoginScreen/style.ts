@@ -13,7 +13,7 @@ export default styled.div`
     border: 1px solid #dfe0eb;
     border-radius: 8px;
     padding: 2rem;
-    height: 500px;
+    height: 50%;
     .form-header {
       display: flex;
       justify-content: center;

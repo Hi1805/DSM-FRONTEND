@@ -85,10 +85,10 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
         </thead>
         <tbody>
           {!loading
-            ? payload.list.map((teacher, index) => (
+            ? payload.list.map((student, index) => (
                 <ItemStudent
                   openFormEdit={openFormEdit}
-                  info={teacher}
+                  info={student}
                   index={index}
                   key={index}
                 />

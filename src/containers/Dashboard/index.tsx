@@ -4,7 +4,8 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdPeopleAlt } from "react-icons/md";
 import { SiMinutemailer } from "react-icons/si";
 import { useHistory } from "react-router";
-import { tabs, TypeTab } from "../../types";
+import { TypeTab } from "../../types";
+import { TABS } from "constants/constants";
 
 export const DashBoard = () => {
   const history = useHistory();
@@ -81,7 +82,7 @@ export const DashBoard = () => {
     return (
       <div className="layout__dashboard__tabs-control">
         {(() => {
-          return tabs.map((tab, index) => {
+          return TABS.map((tab, index) => {
             return (
               <React.Fragment key={index}>
                 {renderTabControl(

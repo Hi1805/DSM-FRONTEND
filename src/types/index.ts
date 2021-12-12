@@ -1,16 +1,5 @@
 export type TypeTab = "teacher" | "student" | "email" | "history";
 
-export interface ProfileTemplate {
-  id: string;
-  first_name: string;
-  last_name: string;
-  date_of_birth: string;
-  gender: string;
-  email: string;
-  Class?: string;
-  address: string;
-  grade?: number;
-}
 export interface Teacher {
   id: string;
   first_name: string;
@@ -21,6 +10,9 @@ export interface Teacher {
   Class?: string;
   address: string;
   grade?: number;
+  province?: string;
+  district?: string;
+  commune?: string;
 }
 export interface Student {
   id: string;
@@ -32,28 +24,11 @@ export interface Student {
   Class: string;
   address: string;
   grade: number;
+  province?: string;
+  district?: string;
+  commune?: string;
 }
-export const tabs: Array<{
-  type: TypeTab;
-  render: string;
-}> = [
-  {
-    type: "teacher",
-    render: "Teachers",
-  },
-  {
-    type: "student",
-    render: "Students",
-  },
-  {
-    type: "email",
-    render: "Send E-email",
-  },
-  {
-    type: "history",
-    render: "History Login",
-  },
-];
+
 export interface Pagination {
   size: number;
   page: number;
