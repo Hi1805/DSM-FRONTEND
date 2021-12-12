@@ -2,7 +2,6 @@ import { Navbar } from "containers";
 import ListStudents from "containers/ListStudents";
 import { FormAddStudent } from "containers/FormAddStudent";
 import React from "react";
-import ContainerListStyle from "styles/ContainerListStyle";
 import { Container } from "template/Container";
 
 export default function StudentScreen() {
@@ -14,7 +13,7 @@ export default function StudentScreen() {
     setIsOpenForm(false);
   };
   return (
-    <React.Fragment>
+    <div className="student-screen">
       <Navbar
         title="Student"
         valueSearch={searchValueState}
@@ -52,6 +51,6 @@ export default function StudentScreen() {
         <ListStudents isSort={isSortState} />
         <FormAddStudent isOpen={isOpenFormAdd} closeForm={closeForm} />
       </Container>
-    </React.Fragment>
+    </div>
   );
 }

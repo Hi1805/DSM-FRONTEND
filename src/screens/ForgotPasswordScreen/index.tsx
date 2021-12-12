@@ -1,26 +1,26 @@
+import { dsmApi } from "apis";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { BodyLogin } from "types";
-import { dsmApi } from "apis";
-import { toast } from "react-toastify";
 import { useHistory } from "react-router";
-import Style from "./style";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-export default function LoginScreen() {
-  const { handleSubmit, register } = useForm();
+import { toast } from "react-toastify";
+import StyleLogin from "screens/LoginScreen/style";
+import { BodyLogin } from "types";
+import OtpInput from "react-otp-input";
 
-  const [isDisplayPassword, setIsDisplayPassword] = React.useState(false);
-  const toggleDisplayPassword = () => {
-    setIsDisplayPassword(!isDisplayPassword);
-  };
-  const typePassword = isDisplayPassword ? "text" : "password";
+const LENGTH_OTP = 6;
+export default function ForgotPasswordScreen() {
+  const { handleSubmit, register } = useForm();
   const history = useHistory();
-  const onSubmit = ({ email, password }: BodyLogin) => {
+  const [otpState, setOtpState] = React.useState("");
+  const [isOpenOtp, setIsOpenOtp] = React.useState(false);
+
+
+
+  const onSubmit = async ({ email }: BodyLogin) => {
     try {
-      toast.promise(
-        dsmApi.login({
+      await toast.promise(
+        dsmApi.forgotPassword({
           email,
-          password,
         }),
         {
           error: {
@@ -30,11 +30,8 @@ export default function LoginScreen() {
           },
           success: {
             render: ({ data }: { data: any }) => {
-              if (data.token) {
-                localStorage.setItem("us_tk", data.token);
-                history.push("/manage/teacher");
-              } else toast.warning(data.message);
-              return "Welcome to comeback";
+              setIsOpenOtp(true);
+              return "Please Checking Your email";
             },
           },
           pending: "Loading Login",
@@ -44,9 +41,47 @@ export default function LoginScreen() {
       toast.error("Your network is not connected");
     }
   };
+  React.useEffect(() => {
 
+    
+    async function checkingOtp() {
+      try {
+        await dsmApi.checkingOtp({
+          otp: otpState,
+        })
+      } catch (error) {
+        toast.error("Your network is not connected");
+      }
+    }
+  },[otpState])
+  const renderOTP = () => {
+    return (
+      <OtpInput
+        value={otpState}
+        numInputs={LENGTH_OTP}
+        onChange={(otp: string) => setOtpState(otp)}
+        separator={<span>-</span>}
+        isInputNum={true}
+      />
+    );
+  };
+  const renderInputEmail = () => {
+    return (
+      <div className="form-body__input-group">
+        <label htmlFor="email" className="w-100">
+          Email
+        </label>
+        <input
+          type="text"
+          className="input__group"
+          placeholder="Email or username ..."
+          {...register("email")}
+        />
+      </div>
+    );
+  };
   return (
-    <Style
+    <StyleLogin
       id="login-screen"
       className="d-flex justify-content-center"
       style={{ backgroundImage: "url(./images/background-login.png)" }}
@@ -86,36 +121,8 @@ export default function LoginScreen() {
           </div>
 
           <div className="form-body">
-            <div className="form-body__title">Login</div>
-            <div className="form-body__input-group">
-              <label htmlFor="email" className="w-100">
-                Email
-              </label>
-              <input
-                type="text"
-                className="input__group"
-                placeholder="Email or username ..."
-                {...register("email")}
-              />
-            </div>
-            <div className="form-body__input-group mt-4">
-              <label htmlFor="email" className="w-100">
-                Password
-              </label>
-
-              <div className="d-flex input__group justify-content-center align-items-center">
-                <input
-                  type={typePassword}
-                  placeholder="Enter Password..."
-                  {...register("password")}
-                />
-                {isDisplayPassword ? (
-                  <AiFillEye onClick={toggleDisplayPassword} />
-                ) : (
-                  <AiFillEyeInvisible onClick={toggleDisplayPassword} />
-                )}
-              </div>
-            </div>
+            <div className="form-body__title">Forgot Password</div>
+            {isOpenOtp ? renderOTP() : renderInputEmail()}
           </div>
           <div className="form-footer mt-4">
             <div
@@ -123,16 +130,18 @@ export default function LoginScreen() {
               style={{
                 cursor: "pointer",
               }}
-              onClick={() => history.push("/forgot-password")}
+              onClick={() => history.push("/login")}
             >
-              Forgot Password
+              Go To Login
             </div>
             <div className="w-100 mt-3">
-              <button className="btn w-100 btn-primary">Login</button>
+              <button type="submit" className="btn w-100 btn-primary">
+                Send OTP
+              </button>
             </div>
           </div>
         </div>
       </form>
-    </Style>
+    </StyleLogin>
   );
 }

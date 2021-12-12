@@ -1,6 +1,6 @@
 export const ROUTES = [
   "/login",
-  "/logout",
+  "/forgot-password",
   "/teacher",
   "/student",
   "/email",

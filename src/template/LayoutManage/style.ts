@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { blue } from "styles/color";
 export default styled.div`
   .layout {
     min-height: 100vh;
-    // position: relative;
+    position: relative;
     z-index: 0;
 
     &__dashboard {
