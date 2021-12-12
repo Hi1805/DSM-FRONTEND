@@ -12,7 +12,15 @@ import { selectListStudent } from "modules/students";
 import { useSelector } from "react-redux";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { getListClasses } from "helpers/getListCLasses";
-import { toNumber } from "lodash";
+import { toNumber, toString } from "lodash";
+import {
+  getAllProvinces,
+  getAllDistricts,
+  getAllCommunes,
+  getCommune,
+  getDistrict,
+  getProvince,
+} from "helpers/country";
 
 interface FormEditStudentProps {
   closeForm: () => void;
@@ -34,11 +42,20 @@ export const FormEditStudent = ({
   const [dispatchFetchStudent] = useFetchListStudent();
   const infoStudent = payload.list.find((item) => item.id === uid);
   const [gradeChoose, setGradeChoose] = React.useState(infoStudent?.grade || 0);
+  const [provinceChoose, setProvinceChoose] = React.useState("");
+  const [districtChoose, setDistrictChoose] = React.useState("");
   React.useEffect(() => {
     setGradeChoose(infoStudent?.grade || 0);
+    setProvinceChoose(infoStudent?.province || "");
+    setDistrictChoose(infoStudent?.district || "");
   }, [infoStudent]);
   const onSubmit = async (data: Student) => {
-    await toast.promise(studentApi.put({ ...data, id: uid }), {
+    const province = getProvince(toString(data.province));
+    const district = getDistrict(toString(data.district));
+    const commune = getCommune(toString(data.commune));
+    const address = `${province} - ${district} - ${commune}`;
+
+    await toast.promise(studentApi.put({ ...data, id: uid, address }), {
       pending: `Editing student ${uid}`,
       success: {
         render: ({ data }: { data: ResponseMessage }) => {
@@ -60,6 +77,28 @@ export const FormEditStudent = ({
   const renderOptionsClasses = () => {
     const list = getListClasses(gradeChoose);
     return list.map((item) => <option value={item}>{item}</option>);
+  };
+
+  const renderOptionsProvince = () => {
+    return getAllProvinces().map((province) => (
+      <option key={province.idProvince} value={province.idProvince}>
+        {province.name}
+      </option>
+    ));
+  };
+  const renderOptionsDistrict = () => {
+    return getAllDistricts(provinceChoose).map((district) => (
+      <option key={district.idDistrict} value={district.idDistrict}>
+        {district.name}
+      </option>
+    ));
+  };
+  const renderOptionCommune = () => {
+    return getAllCommunes(districtChoose).map((commune) => (
+      <option key={commune.idCommune} value={commune.idCommune}>
+        {commune.name}
+      </option>
+    ));
   };
   return (
     <Popup
@@ -193,35 +232,69 @@ export const FormEditStudent = ({
                 {errors.class && <span>Please choose Classes</span>}
               </div>
             </div>
-            <div className="container-fluid row mt-4">
-              <div className="form-input w-100">
-                <label htmlFor="email">Email:</label>
+            <div className="container-fluid row  flex-wrap justify-content-between mt-3">
+              <div className="td-form-add__body__form-input col-4">
+                <label htmlFor="grade">Province:</label>
+                <select
+                  className="form-select form-control"
+                  {...register("province", {
+                    required: true,
+                  })}
+                  value={provinceChoose}
+                  onChange={(e) => setProvinceChoose(e.target.value)}
+                >
+                  <option value="" selected>
+                    Select Province
+                  </option>
+                  {renderOptionsProvince()}
+                </select>
+                {errors.province && <span>Please Choose Province</span>}
+              </div>
+              <div className="td-form-add__body__form-input ">
+                <label htmlFor="grade">District:</label>
+                <select
+                  className="form-select form-control"
+                  {...register("district", {
+                    required: true,
+                  })}
+                  value={districtChoose}
+                  onChange={(e) => setDistrictChoose(e.target.value)}
+                >
+                  <option value={""} selected>
+                    Select District
+                  </option>
+                  {renderOptionsDistrict()}
+                </select>
+                {errors.province && <span>Please Choose Province</span>}
+              </div>
+            </div>
+            <div className="container-fluid row  flex-wrap justify-content-between mt-3">
+              <div className="td-form-add__body__form-input">
+                <label htmlFor="grade">District:</label>
+                <select
+                  className="form-select form-control"
+                  {...register("commune", {
+                    required: true,
+                  })}
+                  defaultValue={infoStudent?.commune}
+                >
+                  <option selected>Select Commune:</option>
+                  {renderOptionCommune()}
+                </select>
+                {errors.province && <span>Please Choose Commune</span>}
+              </div>
+              <div className="td-form-add__body__form-input">
+                <label htmlFor="first_name">Email:</label>
                 <input
+                  placeholder="example@example.com"
+                  className="form-control"
+                  defaultValue={infoStudent?.email}
                   {...register("email", {
                     pattern: regexEmail,
                     required: true,
                   })}
-                  defaultValue={infoStudent?.email}
-                  id="dob"
-                  placeholder="example: Huy@gmail.com"
-                  type="email"
-                  className="form-control"
                 />
-                {errors.email && <span>Please enter email valid</span>}
-              </div>
-            </div>
-            <div className="container-fluid row mt-4">
-              <div className="form-input w-100">
-                <label htmlFor="dob">Address:</label>
-                <input
-                  {...register("address", { required: true })}
-                  defaultValue={infoStudent?.address}
-                  id="address"
-                  placeholder="example: Da Nang , Viet Nam"
-                  type="text"
-                  className="form-control"
-                />
-                {errors.address && <span>Please Enter Address</span>}
+                {errors.email && <span>Email is not valid</span>}
               </div>
             </div>
           </div>
