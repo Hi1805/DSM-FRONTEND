@@ -4,13 +4,20 @@ import { toast } from "react-toastify";
 import { getUserToken } from "./../helpers/getUserToken";
 
 export type typeAPI = "teacher" | "student" | "dsm";
-const baseURL =
-  process.env.NODE_ENV === "production"
-    ? "https://data-school-mangement-01.herokuapp.com/api"
-    : "http://localhost:4000/api";
+
+const getUrl = () => {
+  switch (process.env.NODE_ENV) {
+    case "development":
+      return "http://localhost:5000";
+    case "production":
+      return "https://data-school-mangement-01.herokuapp.com/api";
+    default:
+      return "http://data-school-mangement-01.herokuapp.com/api";
+  }
+};
 
 const axiosClient = axios.create({
-  baseURL: baseURL,
+  baseURL: getUrl(),
   headers: {
     "content-type": "application/json",
     // "user-agent": user_agent,
