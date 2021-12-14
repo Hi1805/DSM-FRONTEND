@@ -1,3 +1,4 @@
+import { FileAttribute } from "containers/PopupSendEmail";
 import {
   ResponseMessage,
   ResponseList,
@@ -7,6 +8,12 @@ import {
   BodyLogin,
 } from "../types";
 import axiosClient from "./config";
+interface SendEmailProps {
+  type_send: "students" | "teachers";
+  subject: string;
+  content: string;
+  files: FileAttribute[];
+}
 export const teacherApi = {
   getAll: (params: Pagination): Promise<ResponseList<Teacher>> => {
     const url = "private/teacher/list";
@@ -94,5 +101,10 @@ export const dsmApi = {
   getHistories(params: { page: number; size: number }) {
     const url = `private/dsm/history/list`;
     return axiosClient.get(url, { params });
+  },
+  sendEmail(body: SendEmailProps) {
+    const url = `private/dsm/send-email`;
+    console.log(body);
+    return axiosClient.post(url, body);
   },
 };

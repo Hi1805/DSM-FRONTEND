@@ -48,7 +48,7 @@ export default function TeacherScreen() {
           </div>
         </div>
         <ListTeachers isSort={isSortState} />
-        <FormAddTeacher isOpen={isOpenFormAdd} closeForm={closeForm} />
+        {isOpenFormAdd && <FormAddTeacher closeForm={closeForm} />}
       </Container>
     </React.Fragment>
   );

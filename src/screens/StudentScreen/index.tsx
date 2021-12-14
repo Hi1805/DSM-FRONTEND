@@ -49,7 +49,7 @@ export default function StudentScreen() {
           </div>
         </div>
         <ListStudents isSort={isSortState} />
-        <FormAddStudent isOpen={isOpenFormAdd} closeForm={closeForm} />
+        {isOpenFormAdd && <FormAddStudent closeForm={closeForm} />}
       </Container>
     </div>
   );

@@ -15,12 +15,8 @@ import { selectListTeacher } from "modules";
 
 interface FormEditTeacherProps {
   closeForm: () => void;
-  isOpen: boolean;
 }
-export const FormEditTeacher = ({
-  isOpen,
-  closeForm,
-}: FormEditTeacherProps) => {
+export const FormEditTeacher = ({ closeForm }: FormEditTeacherProps) => {
   const {
     register,
     handleSubmit,
@@ -63,7 +59,7 @@ export const FormEditTeacher = ({
     <Popup
       modal
       nested
-      open={isOpen}
+      open={true}
       closeOnDocumentClick
       onClose={() => {
         closeForm();

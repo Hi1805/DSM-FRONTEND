@@ -24,12 +24,8 @@ import {
 
 interface FormEditStudentProps {
   closeForm: () => void;
-  isOpen: boolean;
 }
-export const FormEditStudent = ({
-  isOpen,
-  closeForm,
-}: FormEditStudentProps) => {
+export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
   const {
     register,
     handleSubmit,
@@ -104,7 +100,7 @@ export const FormEditStudent = ({
     <Popup
       modal
       nested
-      open={isOpen}
+      open={true}
       closeOnDocumentClick
       onClose={() => {
         closeForm();

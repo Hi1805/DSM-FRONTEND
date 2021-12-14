@@ -20,10 +20,9 @@ import {
 } from "helpers/country";
 interface FormAddStudentProps {
   closeForm: () => void;
-  isOpen: boolean;
 }
 
-export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
+export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
   const {
     register,
     handleSubmit,
@@ -99,7 +98,7 @@ export const FormAddStudent = ({ isOpen, closeForm }: FormAddStudentProps) => {
     <Popup
       modal
       nested
-      open={isOpen}
+      open={true}
       closeOnDocumentClick
       onClose={() => {
         closeForm();

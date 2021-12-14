@@ -47,7 +47,7 @@ export default function ForgotPasswordScreen() {
     (async () => {
       if (otpState.length === LENGTH_OTP) {
         try {
-          const data = await dsmApi.checkingOtp({
+          await dsmApi.checkingOtp({
             otp: otpState,
           });
           toast.success(

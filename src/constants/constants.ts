@@ -2,7 +2,7 @@ import { TypeTab } from "types";
 
 export * from "./route";
 export const PAGE = 1;
-export const SIZE = 8;
+export const SIZE = 2;
 export const TABS: Array<{
   type: TypeTab;
   render: string;
@@ -17,7 +17,7 @@ export const TABS: Array<{
   },
   {
     type: "email",
-    render: "Send E-email",
+    render: "Send Email",
   },
   {
     type: "history",

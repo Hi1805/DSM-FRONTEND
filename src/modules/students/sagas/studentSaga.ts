@@ -9,6 +9,8 @@ export function* getListStudentSaga(action: StudentListFetch) {
       studentApi.getAll,
       action.payload
     );
+    console.log(data);
+
     yield put(getStudents(data));
   } catch (error) {
     toast.warning("Student: Some things went wrong");

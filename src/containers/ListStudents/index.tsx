@@ -28,12 +28,13 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
     size: SIZE,
   });
   // Fetch List Student
+
   React.useEffect(() => {
     fetchListStudent({
       ...pagination,
       isSort,
     });
-  }, [pagination, isSort, fetchListStudent]);
+  }, [pagination, isSort]);
 
   //when click select
   const handlePagination = (page: string) => {
@@ -160,7 +161,7 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
           </div>
         </div>
       </div>
-      <FormEditStudent isOpen={isOpenEdit} closeForm={closeFormEdit} />
+      {isOpenEdit && <FormEditStudent closeForm={closeFormEdit} />}
     </Style>
   );
 };

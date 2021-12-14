@@ -19,9 +19,8 @@ import {
 } from "helpers/country";
 interface FormAddTeacherProps {
   closeForm: () => void;
-  isOpen: boolean;
 }
-export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
+export const FormAddTeacher = ({ closeForm }: FormAddTeacherProps) => {
   const {
     register,
     handleSubmit,
@@ -91,7 +90,7 @@ export const FormAddTeacher = ({ isOpen, closeForm }: FormAddTeacherProps) => {
     <Popup
       modal
       nested
-      open={isOpen}
+      open={true}
       closeOnDocumentClick
       onClose={() => {
         closeForm();

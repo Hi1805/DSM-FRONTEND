@@ -158,7 +158,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
           </div>
         </div>
       </div>
-      <FormEditTeacher isOpen={isOpenEdit} closeForm={closeFormEdit} />
+      {isOpenEdit && <FormEditTeacher closeForm={closeFormEdit} />}
     </Style>
   );
 };
