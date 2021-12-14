@@ -2,6 +2,7 @@ import { dsmApi } from "apis";
 import React, { useRef } from "react";
 import { toast } from "react-toastify";
 import Popup from "reactjs-popup";
+import { toNumber } from "lodash";
 export interface FileAttribute {
   filename: string;
   content: string;
@@ -22,17 +23,17 @@ export const PopupSendEmail = (props: PopupSendEmailProps) => {
   const { isOpen, turnOffPopup, type_send, subject, files, content } = props;
   const refCount = useRef<number>(10);
   const refTextCount = useRef<HTMLSpanElement>(null);
-  const refInterval = useRef<NodeJS.Timer>(null);
+  let refInterval = useRef<NodeJS.Timer>();
 
   // fake Loading
   React.useEffect(() => {
     refCount.current = 10;
-    const refInterval = setInterval(() => {
+    refInterval.current = setInterval(() => {
       if (refTextCount.current) {
         refTextCount.current.innerText = `${refCount.current}%`;
       }
       if (refCount.current === 90) {
-        clearInterval(refInterval);
+        clearInterval(toNumber(refInterval.current));
       }
       if (refProgress.current) {
         refProgress.current.style.width = `${refCount.current}%`;
