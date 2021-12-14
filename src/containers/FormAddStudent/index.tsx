@@ -29,6 +29,15 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
     reset,
     formState: { errors },
   } = useForm();
+  const firstName = register("first_name", {
+    pattern: regexOnlyLetter,
+    required: true,
+    setValueAs: (value: string) => {
+      return toString(value.trim());
+    },
+    validate: (value: string) => value.trim() === "",
+  });
+
   const [fetchListStudent] = useFetchListStudent();
   const [gradeChoose, setGradeChoose] = React.useState(0);
   const [provinceChoose, setProvinceChoose] = React.useState("");
@@ -39,7 +48,7 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
     const district = getDistrict(toString(data.district));
     const commune = getCommune(toString(data.commune));
 
-    const address = `${province} - ${district} - ${commune}`;
+    const address = `${commune}, ${district}, ${province}`;
     await toast.promise(
       studentApi.create({
         ...data,
@@ -132,13 +141,10 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                 <input
                   placeholder="example: Truong Thanh"
                   className="form-control"
-                  {...register("first_name", {
-                    pattern: regexOnlyLetter,
-                    required: true,
-                  })}
+                  {...firstName}
                 />
                 {errors.first_name && (
-                  <span>Please enter first name valid</span>
+                  <span>Please enter valid first name </span>
                 )}
               </div>
               <div className="td-form-add__body__form-input">
@@ -150,8 +156,9 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                     pattern: regexOnlyLetter,
                     required: true,
                   })}
+                  onBlur={(e) => (e.target.value = e.target.value.trim())}
                 />
-                {errors.last_name && <span>Please enter last name valid</span>}
+                {errors.last_name && <span>Please enter valid last name </span>}
               </div>
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-3">

@@ -27,18 +27,21 @@ export const PopupSendEmail = (props: PopupSendEmailProps) => {
 
   // fake Loading
   React.useEffect(() => {
-    refCount.current = 10;
+    refCount.current = 5;
     refInterval.current = setInterval(() => {
       if (refTextCount.current) {
         refTextCount.current.innerText = `${refCount.current}%`;
       }
-      if (refCount.current === 90) {
+      if (refCount.current >= 99) {
         clearInterval(toNumber(refInterval.current));
       }
       if (refProgress.current) {
         refProgress.current.style.width = `${refCount.current}%`;
       }
-      refCount.current = refCount.current + 10;
+      refCount.current = refCount.current + Math.floor(Math.random() * 10);
+      if (refCount.current >= 99) {
+        refCount.current = 99;
+      }
     }, 500);
   }, []);
 
@@ -104,9 +107,6 @@ export const PopupSendEmail = (props: PopupSendEmailProps) => {
               className="progress-bar progress-bar-striped progress-bar-animated"
               role="progressbar"
               aria-valuenow={10}
-              style={{
-                width: "10%",
-              }}
               aria-valuemin={0}
               aria-valuemax={100}
             />

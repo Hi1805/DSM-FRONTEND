@@ -35,7 +35,7 @@ export const FormAddTeacher = ({ closeForm }: FormAddTeacherProps) => {
     const province = getProvince(toString(data.province));
     const district = getDistrict(toString(data.district));
     const commune = getCommune(toString(data.commune));
-    const address = `${province} - ${district} - ${commune}`;
+    const address = `${commune}, ${district}, ${province}`;
     await toast.promise(
       teacherApi.create({
         ...data,

@@ -21,7 +21,6 @@ import {
   getDistrict,
   getProvince,
 } from "helpers/country";
-import { watch } from "fs";
 
 interface FormEditStudentProps {
   closeForm: () => void;
@@ -51,11 +50,12 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
     setProvinceChoose(infoStudent?.province || "");
     setDistrictChoose(infoStudent?.district || "");
   }, [infoStudent]);
+
   const onSubmit = async (data: Student) => {
     const province = getProvince(toString(data.province));
     const district = getDistrict(toString(data.district));
     const commune = getCommune(toString(data.commune));
-    const address = `${province} - ${district} - ${commune}`;
+    const address = `${commune}, ${district}, ${province}`;
 
     await toast.promise(studentApi.put({ ...data, id: uid, address }), {
       pending: `Editing student ${uid}`,
