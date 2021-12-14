@@ -20,9 +20,10 @@ export const PopupSendEmail = (props: PopupSendEmailProps) => {
   const refProgress = useRef<HTMLDivElement>(null);
 
   const { isOpen, turnOffPopup, type_send, subject, files, content } = props;
-  const refInterval = useRef<NodeJS.Timer>(null);
   const refCount = useRef<number>(10);
   const refTextCount = useRef<HTMLSpanElement>(null);
+  const refInterval = useRef<NodeJS.Timer>(null);
+
   // fake Loading
   React.useEffect(() => {
     refCount.current = 10;

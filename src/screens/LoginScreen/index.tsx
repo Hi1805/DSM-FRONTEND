@@ -119,7 +119,7 @@ export default function LoginScreen() {
           </div>
           <div className="form-footer mt-4">
             <div
-              className="w-100 d-flex justify-content-end"
+              className="w-100 d-flex justify-content-end go-back"
               style={{
                 cursor: "pointer",
               }}

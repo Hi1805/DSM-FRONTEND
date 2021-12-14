@@ -1,75 +1,99 @@
 import { dsmApi } from "apis";
+import { setToken } from "helpers";
 import React from "react";
 import { useForm } from "react-hook-form";
+import OtpInput from "react-otp-input";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import StyleLogin from "screens/LoginScreen/style";
 import { BodyLogin } from "types";
-import OtpInput from "react-otp-input";
-import { setToken } from "helpers";
-
 const LENGTH_OTP = 6;
 export default function ForgotPasswordScreen() {
   const { handleSubmit, register } = useForm();
   const history = useHistory();
   const [otpState, setOtpState] = React.useState("");
   const [isOpenOtp, setIsOpenOtp] = React.useState(false);
+  const refButton = React.useRef<HTMLButtonElement>(null);
+
   const onSubmit = async ({ email }: BodyLogin) => {
     interface Response {
       message: string;
       token: string;
     }
-    await toast.promise(
-      dsmApi.forgotPassword({
-        email,
-      }),
-      {
-        error: {
-          render: ({ data }: { data: Response }) => {
-            return data.message;
+    if (refButton.current) {
+      refButton.current.disabled = true;
+    }
+    try {
+      await toast.promise(
+        dsmApi.forgotPassword({
+          email,
+        }),
+        {
+          error: {
+            render: ({ data }: { data: Response }) => {
+              return data.message;
+            },
           },
-        },
-        success: {
-          render: ({ data }: { data: Response }) => {
-            setIsOpenOtp(true);
-            setToken({
-              key: "us_tk",
-              value: data.token,
-            });
-            return "Please Checking Your email";
+          success: {
+            render: ({ data }: { data: Response }) => {
+              setIsOpenOtp(true);
+              setToken({
+                key: "us_tk",
+                value: data.token,
+              });
+              return "Please Checking Your email";
+            },
           },
-        },
-        pending: "Loading Checking Email",
+          pending: "Loading Checking Email",
+        }
+      );
+      if (refButton.current) {
+        refButton.current.disabled = false;
       }
-    );
+    } catch (error) {
+      if (refButton.current) {
+        refButton.current.disabled = false;
+      }
+    }
   };
   React.useEffect(() => {
     (async () => {
       if (otpState.length === LENGTH_OTP) {
         try {
-          await dsmApi.checkingOtp({
-            otp: otpState,
-          });
-          toast.success(
-            "We have sent you a new password,Please check your email"
+          await toast.promise(
+            dsmApi.checkingOtp({
+              otp: otpState,
+            }),
+            {
+              error: "OTP is not correct",
+              pending: "Loading Checking OTP",
+              success: {
+                render: () => {
+                  history.push("/login");
+                  return "We sent to you a new password in email, Please checking it";
+                },
+              },
+            }
           );
-
-          // history.push("/login");
         } catch (error) {
           console.log(error);
+          setOtpState("");
         }
       }
     })();
   }, [otpState]);
   const renderOTP = () => {
     return (
-      <OtpInput
-        value={otpState}
-        numInputs={LENGTH_OTP}
-        onChange={(otp: string) => setOtpState(otp)}
-        separator={<span>-</span>}
-        isInputNum={true}
-      />
+      <div className="otp-form">
+        <OtpInput
+          value={otpState}
+          className="otp-input"
+          numInputs={LENGTH_OTP}
+          onChange={(otp: string) => setOtpState(otp)}
+          separator={<span>-</span>}
+          isInputNum={true}
+        />
+      </div>
     );
   };
   const renderInputEmail = () => {
@@ -81,10 +105,63 @@ export default function ForgotPasswordScreen() {
         <input
           type="text"
           className="input__group"
-          placeholder="Email or username ..."
+          placeholder={isOpenOtp ? "Enter Email " : "Enter email or username"}
           {...register("email")}
         />
       </div>
+    );
+  };
+
+  const renderFormCheckOTP = () => {
+    return (
+      <React.Fragment>
+        <div className="form-body">
+          <div className="form-body__title">Your OTP</div>
+          {renderOTP()}
+        </div>
+        <div className="form-footer mt-4">
+          <div className="w-100 d-flex mt-3">
+            <button
+              type="button"
+              className="btn w-50 m-auto btn-primary"
+              onClick={() => setIsOpenOtp(false)}
+            >
+              Go Back
+            </button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  };
+
+  const renderFormGetOTP = () => {
+    return (
+      <React.Fragment>
+        <div className="form-body">
+          <div className="form-body__title">Forgot Password</div>
+          {renderInputEmail()}
+        </div>
+        <div className="form-footer mt-4">
+          <div
+            className="w-100 d-flex justify-content-end go-back"
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/login")}
+          >
+            Go To Login
+          </div>
+          <div className="w-100 d-flex mt-3">
+            <button
+              type="submit"
+              className="btn w-100 m-auto btn-primary"
+              ref={refButton}
+            >
+              Send to OTP
+            </button>
+          </div>
+        </div>
+      </React.Fragment>
     );
   };
   return (
@@ -126,27 +203,7 @@ export default function ForgotPasswordScreen() {
             </div>
             <div className="title w-100">School Data Management</div>
           </div>
-
-          <div className="form-body">
-            <div className="form-body__title">Forgot Password</div>
-            {isOpenOtp ? renderOTP() : renderInputEmail()}
-          </div>
-          <div className="form-footer mt-4">
-            <div
-              className="w-100 d-flex justify-content-end"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={() => history.push("/login")}
-            >
-              Go To Login
-            </div>
-            <div className="w-100 mt-3">
-              <button type="submit" className="btn w-100 btn-primary">
-                Send OTP
-              </button>
-            </div>
-          </div>
+          {isOpenOtp ? renderFormCheckOTP() : renderFormGetOTP()}
         </div>
       </form>
     </StyleLogin>

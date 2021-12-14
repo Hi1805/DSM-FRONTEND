@@ -38,7 +38,7 @@ export default styled.div`
         font-size: 1.5rem;
         font-weight: bold;
         text-align: center;
-        color: #3751ff;
+        color: #000;
       }
       &__input-group {
         label {
@@ -68,6 +68,26 @@ export default styled.div`
     .form-footer {
       button {
         border-radius: 15px;
+      }
+
+      .go-back {
+        :hover {
+          color: #55cbfd;
+        }
+      }
+    }
+    .otp-form {
+      display: flex;
+      justify-content: center;
+      .otp-input {
+        margin-top: 1.5rem;
+        input {
+          width: 2rem !important;
+          height: 2.5rem !important;
+          font-size: 1.5rem;
+          font-weight: bold !important;
+          outline: none !important;
+        }
       }
     }
   }

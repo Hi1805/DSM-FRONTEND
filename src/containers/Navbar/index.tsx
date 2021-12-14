@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import logoAdmin from "./img/admin.jpg";
+import clsx from "clsx";
 import { useOnClickOutside } from "hooks";
 import { startCase } from "lodash";
+import React, { useRef } from "react";
 import { FaKey } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import clsx from "clsx";
 import { useHistory } from "react-router-dom";
+import logoAdmin from "./img/admin.jpg";
 interface NavBarProps {
   handleSearch?: (value: string) => void;
   valueSearch?: string;

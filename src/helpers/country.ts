@@ -1,5 +1,3 @@
-import { toNumber } from "lodash";
-
 interface Province {
   idProvince: string;
   name: string;

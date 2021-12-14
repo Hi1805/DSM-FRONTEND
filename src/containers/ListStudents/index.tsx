@@ -34,7 +34,7 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
       ...pagination,
       isSort,
     });
-  }, [pagination, isSort]);
+  }, [pagination, isSort, fetchListStudent]);
 
   //when click select
   const handlePagination = (page: string) => {
