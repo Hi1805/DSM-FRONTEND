@@ -21,6 +21,7 @@ import {
   getDistrict,
   getProvince,
 } from "helpers/country";
+import { watch } from "fs";
 
 interface FormEditStudentProps {
   closeForm: () => void;
@@ -38,8 +39,13 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
   const [dispatchFetchStudent] = useFetchListStudent();
   const infoStudent = payload.list.find((item) => item.id === uid);
   const [gradeChoose, setGradeChoose] = React.useState(infoStudent?.grade || 0);
-  const [provinceChoose, setProvinceChoose] = React.useState("");
-  const [districtChoose, setDistrictChoose] = React.useState("");
+  const [provinceChoose, setProvinceChoose] = React.useState(
+    infoStudent?.province || ""
+  );
+  const [districtChoose, setDistrictChoose] = React.useState(
+    infoStudent?.district || ""
+  );
+
   React.useEffect(() => {
     setGradeChoose(infoStudent?.grade || 0);
     setProvinceChoose(infoStudent?.province || "");
@@ -140,8 +146,11 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                     required: true,
                     maxLength: 50,
                   })}
+                  onBlur={(e) => (e.target.value = e.target.value.trim())}
                 />
-                {errors.first_name && <span>Please enter firstname valid</span>}
+                {errors.first_name && (
+                  <span>Please enter valid first name </span>
+                )}
               </div>
               <div className="td-form-add__body__form-input">
                 <label htmlFor="last_name">Last Name:</label>
@@ -153,8 +162,9 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                     pattern: regexOnlyLetter,
                     required: true,
                   })}
+                  onBlur={(e) => (e.target.value = e.target.value.trim())}
                 />
-                {errors.last_name && <span>Please enter lastname valid</span>}
+                {errors.last_name && <span>Please enter valid last name </span>}
               </div>
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-4">
@@ -261,12 +271,12 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                   </option>
                   {renderOptionsDistrict()}
                 </select>
-                {errors.province && <span>Please Choose Province</span>}
+                {errors.district && <span>Please Choose District</span>}
               </div>
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-3">
               <div className="td-form-add__body__form-input">
-                <label htmlFor="grade">District:</label>
+                <label htmlFor="grade">Commune:</label>
                 <select
                   className="form-select form-control"
                   {...register("commune", {
@@ -274,10 +284,12 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                   })}
                   defaultValue={infoStudent?.commune}
                 >
-                  <option selected>Select Commune:</option>
+                  <option value="" selected>
+                    Select Commune:
+                  </option>
                   {renderOptionCommune()}
                 </select>
-                {errors.province && <span>Please Choose Commune</span>}
+                {errors.commune && <span>Please Choose Commune</span>}
               </div>
               <div className="td-form-add__body__form-input">
                 <label htmlFor="first_name">Email:</label>
