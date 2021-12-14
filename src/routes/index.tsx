@@ -1,6 +1,5 @@
 import React from "react";
 import { Redirect, Route } from "react-router";
-// import { Redirect } from "react-router-dom";
 
 const LayoutManage = React.lazy(() => import("template/LayoutManage"));
 const TeacherScreen = React.lazy(() => import("screens/TeacherScreen"));

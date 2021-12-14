@@ -104,7 +104,6 @@ export const dsmApi = {
   },
   sendEmail(body: SendEmailProps) {
     const url = `private/dsm/send-email`;
-    console.log(body);
     return axiosClient.post(url, body);
   },
 };

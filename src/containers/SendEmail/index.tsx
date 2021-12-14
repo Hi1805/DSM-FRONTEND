@@ -53,7 +53,6 @@ export const SendEmail = () => {
     if (files) {
       const file = files[0];
       const data = await toBase64(file);
-
       setFilesState([
         ...filesState,
         { filename: file.name, content: data, encoding: "base64" },
@@ -67,7 +66,7 @@ export const SendEmail = () => {
 
   const onSubmit = () => {
     if (dataSend.subject === "" || dataSend.content === "") {
-      toast.error("Please fill subject and content");
+      toast.error("Please fill title and content");
       return;
     }
     setIsOpenSending(true);
