@@ -78,6 +78,7 @@ const ChangePasswordScreen = () => {
                   minLength={8}
                   scoreWordClassName="score"
                   password={newPassword}
+                  className="password-strength-bar"
                   onChangeScore={(score, feedback) => {
                     let suggestion = [];
                     if (!score) {

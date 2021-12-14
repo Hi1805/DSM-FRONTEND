@@ -6,16 +6,21 @@ import { FaKey } from "react-icons/fa";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 import logoAdmin from "./img/admin.jpg";
+import { useFetchListStudent } from "./../../hooks/useFetchListStudent";
+import { useFetchListTeacher } from "hooks/useFetchListTeacher";
+import { SIZE } from "constants/constants";
 interface NavBarProps {
   handleSearch?: (value: string) => void;
-  valueSearch?: string;
   title: string;
 }
 export const Navbar = (props: NavBarProps) => {
-  const { handleSearch, valueSearch, title } = props;
+  const { handleSearch, title } = props;
+  const [valueSearch, setValueSearch] = React.useState("");
   const [searchActiveState, setSearchActiveState] = React.useState(false);
   const history = useHistory();
   const refSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const [fetchListStudent] = useFetchListStudent();
+  const [fetchListTeacher] = useFetchListTeacher();
   useOnClickOutside(refSearch, (e) => {
     if (refSearch.current.contains(e.target as Node)) return;
     setSearchActiveState(false);
@@ -25,7 +30,18 @@ export const Navbar = (props: NavBarProps) => {
   const openMenuClassName = clsx({
     ["d-none"]: !isOpenMenu,
   });
-
+  const handleSubmitSearch = () => {
+    if (history.location.state === "student") {
+      fetchListStudent({
+        searchValue: valueSearch,
+        page: 1,
+        size: SIZE,
+        isSort: true,
+      });
+    } else {
+      fetchListTeacher();
+    }
+  };
   return (
     <div className="layout__content__navbar">
       <div className="layout__content__navbar__title">{startCase(title)}</div>
@@ -40,7 +56,13 @@ export const Navbar = (props: NavBarProps) => {
                 autoFocus={true}
                 value={valueSearch}
                 onChange={(e) => {
-                  handleSearch(e.target.value);
+                  setValueSearch(e.target.value);
+                }}
+                type="text"
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmitSearch();
+                  }
                 }}
                 className="layout__content__navbar__tools__search__input form-success"
                 placeholder="Search......"

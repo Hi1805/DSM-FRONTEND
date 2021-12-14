@@ -9,6 +9,7 @@ import {
   getProvince,
 } from "helpers/country";
 import { getListClasses } from "helpers/getListCLasses";
+import { toUpperString } from "helpers/toUpperString";
 import { useQuery } from "hooks";
 import { useFetchListStudent } from "hooks/useFetchListStudent";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
@@ -31,7 +32,27 @@ export const FormEditTeacher = ({ closeForm }: FormEditTeacherProps) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const first_name = register("first_name", {
+    pattern: regexOnlyLetter,
+    required: true,
+    maxLength: 50,
+    setValueAs: (value: string) => {
+      return toUpperString(value.trim());
+    },
+  });
+
+  const last_name = register("last_name", {
+    pattern: regexOnlyLetter,
+    required: true,
+    maxLength: 50,
+    setValueAs: (value: string) => {
+      return toUpperString(value.trim());
+    },
+  });
   const { payload } = useSelector(selectListTeacher);
   const query = useQuery();
   const uid = query.get("id") || "";
@@ -140,12 +161,10 @@ export const FormEditTeacher = ({ closeForm }: FormEditTeacherProps) => {
                   placeholder="example: Truong Thanh"
                   defaultValue={infoTeacher?.first_name}
                   className="form-control"
-                  {...register("first_name", {
-                    pattern: regexOnlyLetter,
-                    required: true,
-                    maxLength: 50,
-                  })}
-                  onBlur={(e) => (e.target.value = e.target.value.trim())}
+                  {...first_name}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.first_name && (
                   <span>Please enter valid first name </span>
@@ -157,11 +176,10 @@ export const FormEditTeacher = ({ closeForm }: FormEditTeacherProps) => {
                   placeholder="example: Huy"
                   className="form-control"
                   defaultValue={infoTeacher?.last_name}
-                  {...register("last_name", {
-                    pattern: regexOnlyLetter,
-                    required: true,
-                  })}
-                  onBlur={(e) => (e.target.value = e.target.value.trim())}
+                  {...last_name}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.last_name && <span>Please enter valid last name </span>}
               </div>

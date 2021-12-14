@@ -14,11 +14,7 @@ export default function StudentScreen() {
   };
   return (
     <div className="student-screen">
-      <Navbar
-        title="Student"
-        valueSearch={searchValueState}
-        handleSearch={setSearchActiveState}
-      />
+      <Navbar title="Student" handleSearch={setSearchActiveState} />
       <Container>
         <div className="td-listing__functions d-flex justify-content-end">
           <button

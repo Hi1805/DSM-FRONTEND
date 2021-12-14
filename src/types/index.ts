@@ -33,6 +33,7 @@ export interface Pagination {
   size: number;
   page: number;
   isSort: boolean;
+  searchValue?: string;
 }
 export interface ResponseList<T> {
   list: T[];

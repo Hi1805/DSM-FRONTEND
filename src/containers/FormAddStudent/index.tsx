@@ -18,6 +18,7 @@ import {
   getDistrict,
   getProvince,
 } from "helpers/country";
+import { toUpperString } from "helpers/toUpperString";
 interface FormAddStudentProps {
   closeForm: () => void;
 }
@@ -28,14 +29,26 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
-  const firstName = register("first_name", {
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const first_name = register("first_name", {
     pattern: regexOnlyLetter,
     required: true,
+    maxLength: 50,
     setValueAs: (value: string) => {
-      return toString(value.trim());
+      return toUpperString(value.trim());
     },
-    validate: (value: string) => value.trim() === "",
+  });
+
+  const last_name = register("last_name", {
+    pattern: regexOnlyLetter,
+    required: true,
+    maxLength: 50,
+    setValueAs: (value: string) => {
+      return toUpperString(value.trim());
+    },
   });
 
   const [fetchListStudent] = useFetchListStudent();
@@ -141,7 +154,10 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                 <input
                   placeholder="example: Truong Thanh"
                   className="form-control"
-                  {...firstName}
+                  {...first_name}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.first_name && (
                   <span>Please enter valid first name </span>
@@ -152,11 +168,10 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                 <input
                   placeholder="example: Huy"
                   className="form-control"
-                  {...register("last_name", {
-                    pattern: regexOnlyLetter,
-                    required: true,
-                  })}
-                  onBlur={(e) => (e.target.value = e.target.value.trim())}
+                  {...last_name}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.last_name && <span>Please enter valid last name </span>}
               </div>

@@ -10,11 +10,13 @@ import { TABS } from "constants/constants";
 export const DashBoard = () => {
   const history = useHistory();
   const [tabState, setTabState] = React.useState<TypeTab>("teacher");
+
   React.useEffect(() => {
     if (history.location.state) {
       setTabState(history.location.state as TypeTab);
     }
   }, [history.location.state]);
+
   const navigationTab = (type: TypeTab) => {
     let pathname = "";
     switch (type) {

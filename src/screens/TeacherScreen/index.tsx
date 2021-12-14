@@ -13,11 +13,7 @@ export default function TeacherScreen() {
   };
   return (
     <React.Fragment>
-      <Navbar
-        title="Teacher"
-        valueSearch={searchValueState}
-        handleSearch={setSearchActiveState}
-      />
+      <Navbar title="Teacher" handleSearch={setSearchActiveState} />
       <Container>
         <div className="td-listing__functions d-flex justify-content-end">
           <button

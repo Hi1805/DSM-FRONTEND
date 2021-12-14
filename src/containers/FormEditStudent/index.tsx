@@ -1,26 +1,26 @@
-import { regexEmail, regexOnlyLetter } from "helpers";
-import React from "react";
-import { useForm } from "react-hook-form";
-import Popup from "reactjs-popup";
-import { FormAddStyle } from "styles/GlobalStyle";
-import { ResponseMessage, Student } from "types";
-import { toast } from "react-toastify";
-
 import { studentApi } from "apis";
-import { useQuery } from "hooks";
-import { selectListStudent } from "modules/students";
-import { useSelector } from "react-redux";
-import { useFetchListStudent } from "hooks/useFetchListStudent";
-import { getListClasses } from "helpers/getListCLasses";
-import { toNumber, toString } from "lodash";
+import { regexEmail, regexOnlyLetter } from "helpers";
 import {
-  getAllProvinces,
-  getAllDistricts,
   getAllCommunes,
+  getAllDistricts,
+  getAllProvinces,
   getCommune,
   getDistrict,
   getProvince,
 } from "helpers/country";
+import { getListClasses } from "helpers/getListCLasses";
+import { toUpperString } from "helpers/toUpperString";
+import { useQuery } from "hooks";
+import { useFetchListStudent } from "hooks/useFetchListStudent";
+import { toNumber, toString, upperCase } from "lodash";
+import { selectListStudent } from "modules/students";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Popup from "reactjs-popup";
+import { FormAddStyle } from "styles/GlobalStyle";
+import { ResponseMessage, Student } from "types";
 
 interface FormEditStudentProps {
   closeForm: () => void;
@@ -31,7 +31,27 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const first_name = register("first_name", {
+    pattern: regexOnlyLetter,
+    required: true,
+    maxLength: 50,
+    setValueAs: (value: string) => {
+      return toUpperString(value.trim());
+    },
+  });
+
+  const last_name = register("last_name", {
+    pattern: regexOnlyLetter,
+    required: true,
+    maxLength: 50,
+    setValueAs: (value: string) => {
+      return toUpperString(value.trim());
+    },
+  });
   const { payload } = useSelector(selectListStudent);
   const query = useQuery();
   const uid = query.get("id") || "";
@@ -141,12 +161,10 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                   placeholder="example: Truong Thanh"
                   defaultValue={infoStudent?.first_name}
                   className="form-control"
-                  {...register("first_name", {
-                    pattern: regexOnlyLetter,
-                    required: true,
-                    maxLength: 50,
-                  })}
-                  onBlur={(e) => (e.target.value = e.target.value.trim())}
+                  {...first_name}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.first_name && (
                   <span>Please enter valid first name </span>
@@ -158,11 +176,10 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                   placeholder="example: Huy"
                   className="form-control"
                   defaultValue={infoStudent?.last_name}
-                  {...register("last_name", {
-                    pattern: regexOnlyLetter,
-                    required: true,
-                  })}
-                  onBlur={(e) => (e.target.value = e.target.value.trim())}
+                  {...last_name}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.last_name && <span>Please enter valid last name </span>}
               </div>

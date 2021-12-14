@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { blue, red } from "styles/color";
 export default styled.form`
   padding: 1rem 0.5rem;
+  min-height: 550px;
   .title {
     h3 {
       font-size: 2rem;
@@ -44,5 +45,12 @@ export default styled.form`
   }
   .footer-form-btn--save {
     background: ${blue};
+  }
+  .password-strength-bar {
+    div {
+      div {
+        height: 4px !important;
+      }
+    }
   }
 `;

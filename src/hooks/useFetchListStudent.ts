@@ -12,6 +12,7 @@ export const useFetchListStudent = () => {
           size: props ? props.size : SIZE,
           page: props ? props.page : PAGE,
           isSort: props ? props.isSort : true,
+          searchValue: props ? props.searchValue : "",
         })
       );
     },
