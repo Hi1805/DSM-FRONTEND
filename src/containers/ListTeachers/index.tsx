@@ -32,6 +32,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
     fetchListTeacher({
       ...pagination,
       isSort,
+      searchValue: "",
     });
   }, [pagination, isSort, fetchListTeacher]);
   //when click select

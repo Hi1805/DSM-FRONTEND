@@ -39,8 +39,14 @@ export const Navbar = (props: NavBarProps) => {
         isSort: true,
       });
     } else {
-      fetchListTeacher();
+      fetchListTeacher({
+        searchValue: valueSearch,
+        page: 1,
+        size: SIZE,
+        isSort: true,
+      });
     }
+    setValueSearch("");
   };
   return (
     <div className="layout__content__navbar">
@@ -65,7 +71,7 @@ export const Navbar = (props: NavBarProps) => {
                   }
                 }}
                 className="layout__content__navbar__tools__search__input form-success"
-                placeholder="Search......"
+                placeholder="Search by last name......"
               />
             ) : null}
             <div

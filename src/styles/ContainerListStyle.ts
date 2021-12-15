@@ -24,12 +24,30 @@ export default styled.div`
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
         border-radius: 30px;
         color: #fff;
-        margin-right: 52px;
       }
-
+      &__reset {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 20px;
+        outline: none;
+        padding: 9px 10px;
+        background: #56ccf2;
+        border: none;
+        box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        border-radius: 15px;
+        color: #fff;
+        &:hover {
+          background: #131526;
+        }
+        &:active {
+          box-shadow: 2px 8px 4px rgb(127 174 236);
+          transform: translateY(4px);
+        }
+      }
       &__sort {
         cursor: pointer;
-
+        margin: 0 2rem;
         svg {
           margin-right: 9px;
         }

@@ -17,7 +17,6 @@ interface SendEmailProps {
 export const teacherApi = {
   getAll: (params: Pagination): Promise<ResponseList<Teacher>> => {
     const url = "private/teacher/list";
-
     return axiosClient.get(url, { params });
   },
   getTotal: () => {
