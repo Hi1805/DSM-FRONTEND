@@ -1,17 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { sagaMiddleware, store } from "./store";
 import { rootSaga } from "./modules";
-
+import GlobalStyle from "styles";
 sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <GlobalStyle>
+        <App />
+      </GlobalStyle>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")

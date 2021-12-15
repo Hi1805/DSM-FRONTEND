@@ -1,2 +1,0 @@
-(this["webpackJsonpfe-data-manage"]=this["webpackJsonpfe-data-manage"]||[]).push([[6],{130:function(a,e,t){"use strict";t.r(e);var n=t(0),c=t.n(n),s=(t(131),t(120)),i=t(8);e.default=function(a){var e=a.children;return Object(i.jsx)(c.a.Fragment,{children:Object(i.jsxs)("div",{className:"layout d-flex flex-wrap",children:[Object(i.jsx)(s.a,{}),Object(i.jsx)("div",{className:"layout__content",children:e})]})})}},131:function(a,e,t){}}]);
-//# sourceMappingURL=6.bb179629.chunk.js.map
