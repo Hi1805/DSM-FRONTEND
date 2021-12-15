@@ -67,6 +67,7 @@ export const PopupSendEmail = (props: PopupSendEmailProps) => {
         setTimeout(() => {
           turnOffPopup();
           toast.success("Send email success");
+          clearInterval(toNumber(refInterval.current));
         }, 500);
       } catch (error) {
         if (refTextCount.current && refProgress.current) {
@@ -76,6 +77,7 @@ export const PopupSendEmail = (props: PopupSendEmailProps) => {
         setTimeout(() => {
           turnOffPopup();
           toast.error("Send email failed, Please try again.");
+          clearInterval(toNumber(refInterval.current));
         }, 500);
       }
     })();
