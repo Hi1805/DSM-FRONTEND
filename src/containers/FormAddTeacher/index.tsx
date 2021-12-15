@@ -263,7 +263,7 @@ export const FormAddTeacher = ({ closeForm }: FormAddTeacherProps) => {
                   </option>
                   {renderOptionsDistrict()}
                 </select>
-                {errors.province && <span>Please Choose Province</span>}
+                {errors.district && <span>Please Choose District</span>}
               </div>
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-3">

@@ -155,7 +155,9 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                   placeholder="example: Truong Thanh"
                   className="form-control"
                   {...first_name}
-                  onChange={(e) => (e.target.value = e.target.value)}
+                  onChange={(e) =>
+                    (e.target.value = toUpperString(e.target.value))
+                  }
                 />
                 {errors.first_name && (
                   <span>Please enter valid first name </span>
@@ -274,7 +276,7 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                   </option>
                   {renderOptionsDistrict()}
                 </select>
-                {errors.province && <span>Please Choose Province</span>}
+                {errors.district && <span>Please Choose District</span>}
               </div>
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-3">

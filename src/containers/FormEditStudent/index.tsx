@@ -271,7 +271,7 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                   </option>
                   {renderOptionsProvince()}
                 </select>
-                {errors.province && <span>Please Choose Province</span>}
+                {errors.district && <span>Please Choose District</span>}
               </div>
               <div className="td-form-add__body__form-input ">
                 <label htmlFor="grade">District:</label>
