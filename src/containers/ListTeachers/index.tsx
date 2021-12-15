@@ -18,6 +18,10 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
+  React.useEffect(() => {
+    setPagination({ ...payload.pagination });
+  }, [payload.pagination.page]);
+
   const pageCount = Math.ceil(payload.total / SIZE) || 1;
   const [pagination, setPagination] = React.useState<{
     page: number;
@@ -68,6 +72,17 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
       size: SIZE,
     });
   };
+  const renderOptionsPagination = React.useCallback(() => {
+    const options: JSX.Element[] = [];
+    for (let i = 0; i < pageCount; i++) {
+      options.push(
+        <option key={i} selected={i + 1 === pagination.page} value={i + 1}>
+          {i + 1}
+        </option>
+      );
+    }
+    return options;
+  }, [payload.pagination.page]);
   return (
     <Style className="td-listing__container table-responsive">
       <table className="table">
@@ -107,21 +122,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
               }}
               defaultValue={1}
             >
-              {(() => {
-                const options: JSX.Element[] = [];
-                for (let i = 0; i < pageCount; i++) {
-                  options.push(
-                    <option
-                      key={i}
-                      selected={i === pagination.page}
-                      value={i + 1}
-                    >
-                      {i + 1}
-                    </option>
-                  );
-                }
-                return options;
-              })()}
+              {renderOptionsPagination()}
             </select>
           </div>
         </div>

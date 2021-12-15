@@ -9,6 +9,7 @@ import logoAdmin from "./img/admin.jpg";
 import { useFetchListStudent } from "./../../hooks/useFetchListStudent";
 import { useFetchListTeacher } from "hooks/useFetchListTeacher";
 import { SIZE } from "constants/constants";
+import { toUpperString } from "helpers/toUpperString";
 interface NavBarProps {
   handleSearch?: (value: string) => void;
   title: string;
@@ -62,7 +63,7 @@ export const Navbar = (props: NavBarProps) => {
                 autoFocus={true}
                 value={valueSearch}
                 onChange={(e) => {
-                  setValueSearch(e.target.value);
+                  setValueSearch(toUpperString(e.target.value));
                 }}
                 type="text"
                 onKeyPress={(e) => {
