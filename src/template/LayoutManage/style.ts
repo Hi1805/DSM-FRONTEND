@@ -144,7 +144,7 @@ export default styled.div`
             border-radius: 8px;
             top: 50px;
             right: 0;
-
+            z-index: 999;
             .menu__change-password,
             .menu__logout {
               display: flex;
