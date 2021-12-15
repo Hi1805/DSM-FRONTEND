@@ -155,9 +155,7 @@ export const FormAddStudent = ({ closeForm }: FormAddStudentProps) => {
                   placeholder="example: Truong Thanh"
                   className="form-control"
                   {...first_name}
-                  onChange={(e) =>
-                    (e.target.value = toUpperString(e.target.value))
-                  }
+                  onChange={(e) => (e.target.value = e.target.value)}
                 />
                 {errors.first_name && (
                   <span>Please enter valid first name </span>
