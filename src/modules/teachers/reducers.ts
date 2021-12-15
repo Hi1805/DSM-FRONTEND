@@ -8,8 +8,8 @@ export const initListTeacher: ListTeacherState = {
   payload: {
     list: [],
     pagination: {
-      size: PAGE,
-      page: SIZE,
+      size: SIZE,
+      page: PAGE,
       isSort: true,
     },
     total: 0,
