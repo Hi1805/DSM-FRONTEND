@@ -1,13 +1,15 @@
 import { TeacherListActions } from "./actions";
 import { TEACHER_FETCH_LIST, TEACHER_LIST_DATA } from "./constants";
 import { ListTeacherState } from "./types";
+import { PAGE } from "constants/constants";
+import { SIZE } from "constants/constants";
 
 export const initListTeacher: ListTeacherState = {
   payload: {
     list: [],
     pagination: {
-      size: 0,
-      page: 0,
+      size: PAGE,
+      page: SIZE,
       isSort: true,
     },
     total: 0,

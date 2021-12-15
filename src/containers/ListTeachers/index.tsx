@@ -18,9 +18,6 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
   const openFormEdit = () => {
     setIsOpenEdit(true);
   };
-  React.useEffect(() => {
-    setPagination({ ...payload.pagination });
-  }, [payload.pagination.page]);
 
   const pageCount = Math.ceil(payload.total / SIZE) || 1;
   const [pagination, setPagination] = React.useState<{
@@ -72,6 +69,10 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
       size: SIZE,
     });
   };
+
+  React.useEffect(() => {
+    if (payload.pagination.page) setPagination({ ...payload.pagination });
+  }, [payload.pagination.page]);
   const renderOptionsPagination = React.useCallback(() => {
     const options: JSX.Element[] = [];
     for (let i = 0; i < pageCount; i++) {
