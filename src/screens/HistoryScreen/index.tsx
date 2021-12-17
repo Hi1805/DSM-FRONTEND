@@ -8,9 +8,7 @@ export default function HistoryScreen() {
     <div className="history-screen">
       <Navbar title="History Login" />
       <Container>
-        <div className="td-listing__functions d-flex justify-content-end">
-          <ListHistory />
-        </div>
+        <ListHistory />
       </Container>
     </div>
   );

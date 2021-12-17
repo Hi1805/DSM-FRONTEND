@@ -268,7 +268,7 @@ export const FormAddTeacher = ({ closeForm }: FormAddTeacherProps) => {
             </div>
             <div className="container-fluid row  flex-wrap justify-content-between mt-3">
               <div className="td-form-add__body__form-input">
-                <label htmlFor="grade">District:</label>
+                <label htmlFor="grade">Commune:</label>
                 <select
                   className="form-select form-control"
                   {...register("commune", {

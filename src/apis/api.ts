@@ -6,6 +6,7 @@ import {
   Teacher,
   Pagination,
   BodyLogin,
+  HistoryAttributes,
 } from "../types";
 import axiosClient from "./config";
 interface SendEmailProps {
@@ -97,7 +98,7 @@ export const dsmApi = {
       otp,
     });
   },
-  getHistories(params: { page: number; size: number }) {
+  getHistories(params: Pagination): Promise<ResponseList<HistoryAttributes>> {
     const url = `private/dsm/history/list`;
     return axiosClient.get(url, { params });
   },

@@ -32,7 +32,7 @@ export interface Student {
 export interface Pagination {
   size: number;
   page: number;
-  isSort: boolean;
+  isSort?: boolean;
   searchValue?: string;
 }
 export interface ResponseList<T> {
@@ -48,4 +48,28 @@ export interface ResponseMessage {
 export interface BodyLogin {
   email: string;
   password: string;
+}
+
+export interface HistoryAttributes {
+  id: string;
+  client: {
+    engine: string;
+    engineVersion: string;
+    name: string;
+    type: string;
+    version: string;
+  };
+  date: Date;
+  device: {
+    type: string;
+  };
+  location: {
+    country: string;
+    area: number;
+  };
+  os: {
+    name: string;
+    platform: string;
+  };
+  status: "failed" | "success";
 }

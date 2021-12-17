@@ -77,13 +77,17 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
     const options: JSX.Element[] = [];
     for (let i = 0; i < pageCount; i++) {
       options.push(
-        <option key={i} selected={i + 1 === pagination.page} value={i + 1}>
+        <option
+          key={i}
+          selected={i + 1 === toNumber(pagination.page)}
+          value={i + 1}
+        >
           {i + 1}
         </option>
       );
     }
     return options;
-  }, [payload.pagination.page]);
+  }, [pagination.page]);
   return (
     <Style className="td-listing__container table-responsive">
       <table className="table">

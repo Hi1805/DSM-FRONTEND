@@ -105,7 +105,7 @@ export default function ForgotPasswordScreen() {
         <input
           type="text"
           className="input__group"
-          placeholder={isOpenOtp ? "Enter Email " : "Enter email or username"}
+          placeholder={"Enter Email "}
           {...register("email")}
         />
       </div>

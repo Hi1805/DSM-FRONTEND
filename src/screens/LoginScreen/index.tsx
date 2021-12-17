@@ -94,7 +94,7 @@ export default function LoginScreen() {
               <input
                 type="text"
                 className="input__group"
-                placeholder="Email or username ..."
+                placeholder="Email ..."
                 {...register("email")}
               />
             </div>
