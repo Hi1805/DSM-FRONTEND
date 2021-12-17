@@ -76,8 +76,8 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
       toNumber(payload.pagination.size) != pagination.size
     ) {
       setPagination({
-        size: toNumber(payload.pagination.page),
-        page: toNumber(payload.pagination.size),
+        size: toNumber(payload.pagination.size),
+        page: toNumber(payload.pagination.page),
       });
     }
   }, [payload.pagination.page, payload.pagination.size]);

@@ -43,8 +43,8 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
       toNumber(payload.pagination.size) != pagination.size
     ) {
       setPagination({
-        size: toNumber(payload.pagination.page),
-        page: toNumber(payload.pagination.size),
+        size: toNumber(payload.pagination.size),
+        page: toNumber(payload.pagination.page),
       });
     }
   }, [payload.pagination.page, payload.pagination.size]);
@@ -68,13 +68,8 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
       size: SIZE,
     });
   };
-  console.log(pagination);
-  console.log(pageCount);
-  console.log("payload", payload.pagination);
 
   const handleNextPage = () => {
-    console.log("page , 2", pagination.page);
-    console.log("pageCount: ", pageCount);
     if (pagination.page === pageCount) {
       setPagination({
         page: 1,
