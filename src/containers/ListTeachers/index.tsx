@@ -71,8 +71,16 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
   };
 
   React.useEffect(() => {
-    if (payload.pagination.page) setPagination({ ...payload.pagination });
-  }, [payload.pagination.page]);
+    if (
+      toNumber(payload.pagination.page) != pagination.page ||
+      toNumber(payload.pagination.size) != pagination.size
+    ) {
+      setPagination({
+        size: toNumber(payload.pagination.page),
+        page: toNumber(payload.pagination.size),
+      });
+    }
+  }, [payload.pagination.page, payload.pagination.size]);
   const renderOptionsPagination = React.useCallback(() => {
     const options: JSX.Element[] = [];
     for (let i = 0; i < pageCount; i++) {
@@ -133,7 +141,10 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
         </div>
         <div className="d-flex flex-wrap">
           {`1 - ${pageCount} of ${payload.total}`}
-          <div className="pagination__prev" onClick={handlePreviousPage}>
+          <div
+            className="pagination__prev"
+            onClick={() => handlePreviousPage()}
+          >
             <svg
               width="8"
               height="14"
@@ -148,7 +159,7 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
               />
             </svg>
           </div>
-          <div className="pagination__next" onClick={handleNextPage}>
+          <div className="pagination__next" onClick={() => handleNextPage()}>
             <svg
               width="8"
               height="14"

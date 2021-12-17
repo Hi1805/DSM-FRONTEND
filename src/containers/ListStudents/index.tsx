@@ -31,13 +31,22 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
 
   React.useEffect(() => {
     fetchListStudent({
-      ...pagination,
+      page: toNumber(pagination.page),
+      size: toNumber(pagination.size),
       isSort,
     });
   }, [pagination, isSort, fetchListStudent]);
 
   React.useEffect(() => {
-    setPagination({ ...payload.pagination });
+    if (
+      toNumber(payload.pagination.page) != pagination.page ||
+      toNumber(payload.pagination.size) != pagination.size
+    ) {
+      setPagination({
+        size: toNumber(payload.pagination.page),
+        page: toNumber(payload.pagination.size),
+      });
+    }
   }, [payload.pagination.page, payload.pagination.size]);
   //when click select
   const handlePagination = (page: string) => {
@@ -47,7 +56,7 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
     });
   };
   const handlePreviousPage = () => {
-    if (pagination.page === 1) {
+    if (toNumber(pagination.page) === 1) {
       setPagination({
         page: pageCount,
         size: SIZE,
@@ -59,7 +68,13 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
       size: SIZE,
     });
   };
+  console.log(pagination);
+  console.log(pageCount);
+  console.log("payload", payload.pagination);
+
   const handleNextPage = () => {
+    console.log("page , 2", pagination.page);
+    console.log("pageCount: ", pageCount);
     if (pagination.page === pageCount) {
       setPagination({
         page: 1,
@@ -67,6 +82,8 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
       });
       return;
     }
+    console.log("page", pagination.page);
+
     setPagination({
       page: pagination.page + 1,
       size: SIZE,
@@ -132,7 +149,10 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
         </div>
         <div className="d-flex flex-wrap">
           {`1 - ${pageCount} of ${payload.total}`}
-          <div className="pagination__prev" onClick={handlePreviousPage}>
+          <div
+            className="pagination__prev"
+            onClick={() => handlePreviousPage()}
+          >
             <svg
               width="8"
               height="14"
@@ -148,7 +168,7 @@ const ListStudents = ({ isSort }: { isSort: boolean }) => {
               />
             </svg>
           </div>
-          <div className="pagination__next" onClick={handleNextPage}>
+          <div className="pagination__next" onClick={() => handleNextPage()}>
             <svg
               width="8"
               height="14"
