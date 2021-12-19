@@ -8,7 +8,7 @@ export type typeAPI = "teacher" | "student" | "dsm";
 const getUrl = () => {
   switch (process.env.NODE_ENV) {
     case "development":
-      return "https://data-school-mangement-01.herokuapp.com/api";
+      return "http://localhost:4000/api";
     case "production":
       return "https://data-school-mangement-01.herokuapp.com/api";
     default:

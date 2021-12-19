@@ -44,14 +44,6 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
     },
   });
 
-  const last_name = register("last_name", {
-    pattern: regexOnlyLetter,
-    required: true,
-    maxLength: 50,
-    setValueAs: (value: string) => {
-      return toUpperString(value.trim());
-    },
-  });
   const { payload } = useSelector(selectListStudent);
   const query = useQuery();
   const uid = query.get("id") || "";
@@ -84,7 +76,6 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
           const { message } = data;
           dispatchFetchStudent();
           closeForm();
-
           return message;
         },
       },
@@ -162,7 +153,7 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                   defaultValue={infoStudent?.first_name}
                   className="form-control"
                   {...first_name}
-                  onChange={(e) =>
+                  onBlur={(e) =>
                     (e.target.value = toUpperString(e.target.value))
                   }
                 />
@@ -174,10 +165,16 @@ export const FormEditStudent = ({ closeForm }: FormEditStudentProps) => {
                 <label htmlFor="last_name">Last Name:</label>
                 <input
                   placeholder="example: Huy"
-                  className="form-control"
                   defaultValue={infoStudent?.last_name}
-                  {...last_name}
-                  onChange={(e) =>
+                  className="form-control"
+                  {...register("last_name", {
+                    pattern: regexOnlyLetter,
+                    required: true,
+                    setValueAs: (value: string) => {
+                      return toUpperString(value.trim());
+                    },
+                  })}
+                  onBlur={(e) =>
                     (e.target.value = toUpperString(e.target.value))
                   }
                 />

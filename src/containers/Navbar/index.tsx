@@ -20,14 +20,20 @@ export const Navbar = (props: NavBarProps) => {
   const [searchActiveState, setSearchActiveState] = React.useState(false);
   const history = useHistory();
   const refSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const refMenu = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [fetchListStudent] = useFetchListStudent();
   const [fetchListTeacher] = useFetchListTeacher();
+  const [isOpenMenu, setOpenMenu] = React.useState(false);
+
   useOnClickOutside(refSearch, (e) => {
     if (refSearch.current.contains(e.target as Node)) return;
     setSearchActiveState(false);
   });
 
-  const [isOpenMenu, setOpenMenu] = React.useState(false);
+  useOnClickOutside(refMenu, (e) => {
+    if (refMenu.current.contains(e.target as Node)) return;
+    setOpenMenu(false);
+  });
   const openMenuClassName = clsx({
     ["d-none"]: !isOpenMenu,
   });
@@ -118,6 +124,7 @@ export const Navbar = (props: NavBarProps) => {
           </div>
           <div
             className={`layout__content__navbar__tools__menu ${openMenuClassName}`}
+            ref={refMenu}
           >
             <div
               className="menu__change-password"

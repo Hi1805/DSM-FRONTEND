@@ -162,7 +162,7 @@ export const FormEditTeacher = ({ closeForm }: FormEditTeacherProps) => {
                   defaultValue={infoTeacher?.first_name}
                   className="form-control"
                   {...first_name}
-                  onChange={(e) =>
+                  onBlur={(e) =>
                     (e.target.value = toUpperString(e.target.value))
                   }
                 />
@@ -177,7 +177,7 @@ export const FormEditTeacher = ({ closeForm }: FormEditTeacherProps) => {
                   className="form-control"
                   defaultValue={infoTeacher?.last_name}
                   {...last_name}
-                  onChange={(e) =>
+                  onBlur={(e) =>
                     (e.target.value = toUpperString(e.target.value))
                   }
                 />

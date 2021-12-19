@@ -98,9 +98,9 @@ export const dsmApi = {
       otp,
     });
   },
-  getHistories(params: Pagination): Promise<ResponseList<HistoryAttributes>> {
+  getHistories(date?: string): Promise<HistoryAttributes[]> {
     const url = `private/dsm/history/list`;
-    return axiosClient.get(url, { params });
+    return axiosClient.get(url, { params: { date } });
   },
   sendEmail(body: SendEmailProps) {
     const url = `private/dsm/send-email`;

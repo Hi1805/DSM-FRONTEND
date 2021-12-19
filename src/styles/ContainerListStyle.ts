@@ -60,7 +60,7 @@ export default styled.div`
 
     &__container {
       padding: 0 14px 10rem 0;
-      min-height: 550px;
+      min-height: 400px;
 
       tbody {
         position: relative;

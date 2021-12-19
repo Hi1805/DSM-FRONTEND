@@ -63,7 +63,7 @@ export interface HistoryAttributes {
   device: {
     type: string;
   };
-  location: {
+  location?: {
     country: string;
     area: number;
   };
@@ -71,5 +71,6 @@ export interface HistoryAttributes {
     name: string;
     platform: string;
   };
-  status: "failed" | "success";
+  email: string;
+  status: boolean;
 }
