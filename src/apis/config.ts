@@ -50,12 +50,15 @@ axiosClient.interceptors.response.use(
   },
   function (error) {
     // Do something with response error
-    if (error.response.status === 401) {
-      console.log("unauthorized, logging out ...");
-      toast.error("Please Login into System");
-      window.location.href = "/login";
+    if (error.response) {
+      if (error.response.status === 401) {
+        console.log("unauthorized, logging out ...");
+        toast.error("Please Login into System");
+        window.location.href = "/login";
+      }
+
+      return Promise.reject(error.response.data);
     }
-    return Promise.reject(error.response.data);
   }
 );
 

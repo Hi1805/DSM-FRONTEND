@@ -19,8 +19,8 @@ export const TABS: Array<{
     type: "email",
     render: "Send Email",
   },
-  {
-    type: "history",
-    render: "History Login",
-  },
+  // {
+  //   type: "history",
+  //   render: "History Login",
+  // },
 ];
