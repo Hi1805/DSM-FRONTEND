@@ -59,30 +59,30 @@ export const FormAddTeacher = ({ closeForm }: FormAddTeacherProps) => {
     const address = `${commune}, ${district}, ${province}`;
     console.log(data);
 
-    // await toast.promise(
-    //   teacherApi.create({
-    //     ...data,
-    //     address,
-    //   }),
-    //   {
-    //     pending: "Adding Teacher",
-    //     success: {
-    //       render: ({ data }: { data: ResponseMessage }) => {
-    //         const { message } = data;
-    //         fetchListTeacher();
-    //         closeForm();
+    await toast.promise(
+      teacherApi.create({
+        ...data,
+        address,
+      }),
+      {
+        pending: "Adding Teacher",
+        success: {
+          render: ({ data }: { data: ResponseMessage }) => {
+            const { message } = data;
+            fetchListTeacher();
+            closeForm();
 
-    //         return message;
-    //       },
-    //     },
-    //     error: {
-    //       render: ({ data }: { data: ResponseMessage }) => {
-    //         const { message } = data;
-    //         return message;
-    //       },
-    //     },
-    //   }
-    // );
+            return message;
+          },
+        },
+        error: {
+          render: ({ data }: { data: ResponseMessage }) => {
+            const { message } = data;
+            return message;
+          },
+        },
+      }
+    );
   };
   const renderOptionsClasses = () => {
     const list = getListClasses(gradeChoose);
