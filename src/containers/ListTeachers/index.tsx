@@ -126,6 +126,18 @@ export const ListTeachers = ({ isSort }: { isSort: boolean }) => {
       </table>
       {loading ? <Loading /> : null}
       <div className="pagination d-flex flex-wrap">
+        <div className="pagination__row-per d-flex flex-wrap">
+          <div className="pagination__row">Page:</div>
+          <div className="pagination__select">
+            <select
+              onChange={(e) => {
+                handlePagination(e.target.value);
+              }}
+            >
+              {renderOptionsPagination()}
+            </select>
+          </div>
+        </div>
         <div className="d-flex flex-wrap">
           {`1 - ${pageCount} of ${payload.total}`}
           <div
